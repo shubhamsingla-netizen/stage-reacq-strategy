@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Re-acquisition Strategy — STAGE</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700&family=JetBrains+Mono:wght@400;500&display=swap');
+*{margin:0;padding:0;box-sizing:border-box}
+:root{--bg:#0a0b0f;--s1:#12131a;--s2:#1a1b25;--bd:#2a2b38;--tx:#e8e8ed;--dim:#8888a0;--cy:#06b6d4;--am:#f59e0b;--ro:#f43f5e;--gn:#258d58;--pu:#a78bfa}
+body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--tx);line-height:1.6}
+.wrap{max-width:860px;margin:0 auto;padding:32px 24px 120px}
+
+/* Header */
+.top{padding:40px 0 20px;border-bottom:1px solid var(--bd);margin-bottom:40px}
+.top h1{font-size:32px;font-weight:700;letter-spacing:-0.03em;margin-bottom:4px}
+.top h1 span{color:var(--cy)}
+.top .sub{color:var(--dim);font-size:14px;margin-bottom:20px}
+.kpis{display:flex;gap:32px;flex-wrap:wrap}
+.kpi{text-align:center}
+.kpi .v{font-size:24px;font-weight:700;font-family:'JetBrains Mono',monospace}
+.kpi .l{font-size:11px;color:var(--dim);text-transform:uppercase;letter-spacing:0.08em;margin-top:2px}
+
+/* Section */
+.sec{margin-bottom:48px}
+.sec-h{display:flex;align-items:center;gap:10px;margin-bottom:6px}
+.sec-h .dot{width:10px;height:10px;border-radius:50%}
+.sec-h h2{font-size:22px;font-weight:700;letter-spacing:-0.02em}
+.sec-sub{color:var(--dim);font-size:13px;margin-bottom:24px}
+
+/* Cards */
+.card{background:var(--s1);border:1px solid var(--bd);border-radius:12px;padding:20px;margin-bottom:12px}
+.card-title{font-size:15px;font-weight:600;margin-bottom:6px;display:flex;align-items:center;gap:8px}
+.card p,.card li{font-size:13px;color:var(--dim);line-height:1.7}
+.card li{margin-left:16px;margin-bottom:4px}
+.card strong{color:var(--tx);font-weight:500}
+.card .highlight{color:var(--cy);font-weight:500}
+
+/* Tags */
+.tag{display:inline-block;padding:2px 10px;border-radius:100px;font-size:11px;font-family:'JetBrains Mono',monospace;font-weight:500;margin-top:6px}
+.tag.cy{background:rgba(6,182,212,0.12);color:var(--cy);border:1px solid rgba(6,182,212,0.25)}
+.tag.am{background:rgba(245,158,11,0.12);color:var(--am);border:1px solid rgba(245,158,11,0.25)}
+.tag.gn{background:rgba(37,141,88,0.12);color:var(--gn);border:1px solid rgba(37,141,88,0.25)}
+.tag.ro{background:rgba(244,63,94,0.12);color:var(--ro);border:1px solid rgba(244,63,94,0.25)}
+.tag.pu{background:rgba(167,139,250,0.12);color:var(--pu);border:1px solid rgba(167,139,250,0.25)}
+
+/* Table */
+table{width:100%;border-collapse:collapse;font-size:13px;margin-top:12px}
+th{text-align:left;padding:10px 12px;font-size:11px;text-transform:uppercase;letter-spacing:0.06em;color:var(--dim);background:var(--s2);border-bottom:1px solid var(--bd)}
+td{padding:10px 12px;border-bottom:1px solid rgba(255,255,255,0.04)}
+td strong{color:var(--tx);font-weight:600}
+
+/* Flow steps */
+.steps{margin-top:10px;padding-left:0}
+.step{display:flex;gap:8px;padding:6px 0;font-size:13px;color:var(--dim)}
+.step .label{color:var(--tx);font-weight:500;min-width:100px;flex-shrink:0}
+.step .arrow{color:var(--cy)}
+
+/* Nested card */
+.nested{background:var(--s2);border:1px solid var(--bd);border-radius:8px;padding:14px;margin-top:10px;margin-bottom:8px}
+.nested h4{font-size:13px;font-weight:600;margin-bottom:4px}
+.nested .tag{margin-top:0;margin-bottom:4px}
+
+/* Divider */
+hr{border:none;border-top:1px solid var(--bd);margin:48px 0}
+
+/* Callout */
+.callout{background:linear-gradient(135deg,var(--s1),rgba(6,182,212,0.08));border:1px solid rgba(6,182,212,0.2);border-radius:12px;padding:20px;margin-bottom:12px}
+.callout h4{font-size:14px;font-weight:600;color:var(--cy);margin-bottom:6px}
+.callout p{font-size:13px;color:var(--dim);line-height:1.7}
+
+.amber-callout{background:linear-gradient(135deg,var(--s1),rgba(245,158,11,0.08));border:1px solid rgba(245,158,11,0.2)}
+.amber-callout h4{color:var(--am)}
+
+.green-callout{background:linear-gradient(135deg,var(--s1),rgba(37,141,88,0.08));border:1px solid rgba(37,141,88,0.2)}
+.green-callout h4{color:var(--gn)}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<!-- HEADER -->
+<div class="top">
+  <h1><span>STAGE</span> Re-acquisition Strategy</h1>
+  <p class="sub">April 2026 | Shubham Singla</p>
+  <div class="kpis">
+    <div class="kpi"><div class="v" style="color:var(--cy)">4.26M</div><div class="l">Churned Users</div></div>
+    <div class="kpi"><div class="v" style="color:var(--am)">36,506</div><div class="l">Re-subscribed Mar'26</div></div>
+    <div class="kpi"><div class="v" style="color:var(--gn)">1.4x</div><div class="l">Revenue Target</div></div>
+    <div class="kpi"><div class="v" style="color:var(--ro)">5K→10K</div><div class="l">Daily Users Goal</div></div>
+  </div>
+</div>
+
+<!-- ===== MARKETING ===== -->
+<div class="sec">
+  <div class="sec-h"><div class="dot" style="background:var(--cy)"></div><h2>Marketing — Bring Them Back</h2></div>
+  <p class="sec-sub">Scale from Gold-tier ads → full 4.2M base. Exclude from cold acquisition campaigns (discuss Maino).</p>
+
+  <div class="card">
+    <div class="card-title">Phase 1: Intent Building <span class="tag cy">10% of budget</span></div>
+    <p>Slate + Bouquet Value Promos on Meta & Google. Show platform variety, not a single title. Run as <strong>engagement ads</strong> — target frequency of <strong>2 videos per user</strong>. Goal: build "shelf value" so users know Stage has more than the one movie they watched.</p>
+  </div>
+
+  <div class="card">
+    <div class="card-title">Phase 2: Conversion <span class="tag cy">90% of budget</span></div>
+    <p>Retarget warm audience with title-specific ads. Budget split <strong>50-50</strong>:</p>
+    <ul>
+      <li><strong>50% on Naate</strong> — currently driving lowest CAC, keep what's working</li>
+      <li><strong>50% on Content Intelligence titles</strong> — data-driven selection (explained below). Mix of bridge titles + Parveen's recommended slate</li>
+    </ul>
+  </div>
+
+  <div class="callout">
+    <h4>What is Content Intelligence?</h4>
+    <p>We analysed 4.01M churned users' viewing history in Snowflake. For each user, we know their <strong>acquisition content</strong> (first thing they watched) and where they <strong>naturally migrated</strong> during subscription.</p>
+    <p style="margin-top:8px">Some titles are <strong>"bridge titles"</strong> — content users organically discover after their acquisition title. These bridges correlate with higher engagement (more completions, more subscription cycles). Instead of re-acquiring users with the same title that brought them originally (they already watched it), we use bridge titles in ads.</p>
+    <p style="margin-top:8px"><strong>Example:</strong> 863K users were acquired via punarjanam. Among those who explored, users who ended up on vidshi-bahu or kaand-2010 had 4.2-4.8 avg completions (vs 3.0 average). These are the natural "next watch" — use them in re-acquisition ads.</p>
+
+    <table>
+      <thead><tr><th>Acquired Via</th><th>Users</th><th>Bridge Title for Ads</th><th>Why</th></tr></thead>
+      <tbody>
+        <tr><td><strong>punarjanam</strong></td><td>863K</td><td>vidshi-bahu, kaand-2010, crime-haryana</td><td>4.2-4.8 completions among punarjanam explorers</td></tr>
+        <tr><td><strong>saanwari</strong></td><td>310K</td><td>akhada, college-kaand, opri-paraai</td><td>Dead-end title (61% stuck). Use Tier A titles (93%+ exploration)</td></tr>
+        <tr><td><strong>12vi-aala-pyar</strong></td><td>310K</td><td>12vi-aala-pyar-rj, punarjanam</td><td>Natural cross-dialect bridge</td></tr>
+        <tr><td><strong>mewat</strong></td><td>173K</td><td>What's new on Stage</td><td>88% already explored — need fresh content, not old titles</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="card">
+    <div class="card-title">Content Slate (Parveen & Kunal)</div>
+    <ul>
+      <li><strong>March:</strong> Naate, Bhairavi, Kayantar, Vaada</li>
+      <li><strong>April:</strong> Kota Secret, Kesh Tantra, Khejdi</li>
+    </ul>
+  </div>
+</div>
+
+<hr>
+
+<!-- ===== PRODUCT ===== -->
+<div class="sec">
+  <div class="sec-h"><div class="dot" style="background:var(--am)"></div><h2>Product — Convert When They Arrive</h2></div>
+  <p class="sec-sub">When a churned user opens the app, check <strong>subscription_cycle_count</strong> + <strong>content_complete_count</strong>. Based on this, they see a different experience.</p>
+
+  <!-- COHORT A -->
+  <div class="card">
+    <div class="card-title" style="font-size:17px">Cohort A: One-timers <span class="tag am">2.08M | 1 cycle</span></div>
+    <p>Took trial → paid 1 month → cancelled. Never renewed. <strong>Don't show tiered paywall</strong> (₹699 pickup = 0%).</p>
+
+    <div class="nested">
+      <span class="tag gn">A1</span>
+      <h4>Zero completions (697K)</h4>
+      <p style="font-size:13px;color:var(--dim);margin-bottom:8px">Paid but never watched. Don't know what Stage offers.</p>
+      <div class="steps">
+        <div class="step"><span class="label">1st visit</span><span class="arrow">→</span> Normal ₹99 paywall</div>
+        <div class="step"><span class="label">Return</span><span class="arrow">→</span> Freemium (personalised free content based on acquisition title)</div>
+        <div class="step"><span class="label">After consumption</span><span class="arrow">→</span> Monetisation or normal paywall (to be experimented)</div>
+      </div>
+      <p style="font-size:12px;color:var(--pu);margin-top:8px">Experiment: also test freemium FIRST (before any paywall) — does consumption-first convert better than paywall-first?</p>
+    </div>
+
+    <div class="nested">
+      <span class="tag gn">A2</span>
+      <h4>Has completions (1.38M)</h4>
+      <p style="font-size:13px;color:var(--dim);margin-bottom:8px">Watched content. Knows Stage. Didn't renew after 1 month.</p>
+      <div class="steps">
+        <div class="step"><span class="label">1st visit</span><span class="arrow">→</span> Normal ₹99 paywall</div>
+        <div class="step"><span class="label">Return</span><span class="arrow">→</span> Monetisation (weekly plan / single movie pass)</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- COHORT B -->
+  <div class="card">
+    <div class="card-title" style="font-size:17px">Cohort B: Returners <span class="tag cy">2.18M | 2+ cycles</span></div>
+    <p>Renewed at least once before churning. They know Stage's value. <strong>Show tiered paywall</strong>.</p>
+
+    <div class="nested">
+      <span class="tag gn">B1</span>
+      <h4>Zero completions (495K)</h4>
+      <p style="font-size:13px;color:var(--dim);margin-bottom:8px">Auto-renewed multiple times but never watched. Need value proof.</p>
+      <div class="steps">
+        <div class="step"><span class="label">1st visit</span><span class="arrow">→</span> Tiered paywall (₹199/399/699)</div>
+        <div class="step"><span class="label">Return</span><span class="arrow">→</span> Freemium (personalised free content)</div>
+        <div class="step"><span class="label">After consumption</span><span class="arrow">→</span> Tiered paywall again</div>
+      </div>
+      <p style="font-size:12px;color:var(--pu);margin-top:8px">Same experiments as A1: test freemium-first vs paywall-first, monetisation vs paywall after consumption.</p>
+    </div>
+
+    <div class="nested">
+      <span class="tag gn">B2</span>
+      <h4>Has completions (1.69M) — Highest potential</h4>
+      <p style="font-size:13px;color:var(--dim);margin-bottom:8px">Watched, renewed, know Stage's value. Loyalists.</p>
+      <div class="steps">
+        <div class="step"><span class="label">1st visit</span><span class="arrow">→</span> "Since you left" tiered paywall (new content count + thumbnails since churn)</div>
+        <div class="step"><span class="label">4+ cycles</span><span class="arrow">→</span> Nudge higher plan — potentially ₹1,299 annual</div>
+        <div class="step"><span class="label">Return</span><span class="arrow">→</span> Weekend pass fallback (₹29-49)</div>
+        <div class="step"><span class="label">Coins</span><span class="arrow">→</span> Give coins on return (bonus for 4+ cycle veterans) — earn/redeem system to boost SR</div>
+      </div>
+    </div>
+
+    <div class="nested" style="border-color:rgba(167,139,250,0.3)">
+      <span class="tag pu">Experiment</span>
+      <h4>Referral for Loyalists</h4>
+      <p style="font-size:13px;color:var(--dim)">Users with 4+ cycles are proven Stage believers. Test a referral program: "Bring a friend, both get [reward]." To be planned separately.</p>
+    </div>
+  </div>
+</div>
+
+<hr>
+
+<!-- ===== TRACKS DETAIL ===== -->
+<div class="sec">
+  <div class="sec-h"><div class="dot" style="background:var(--gn)"></div><h2>Product Tracks — Detail</h2></div>
+  <p class="sec-sub">Three tracks applied across cohorts. Freemium builds habit. Monetisation captures value. Coins boost SR.</p>
+
+  <!-- TRACK 1 -->
+  <div class="card">
+    <div class="card-title" style="color:var(--gn)">Track 1: Freemium <span class="tag gn">A1, B1 — Primary</span></div>
+    <p><strong>"Watch for Free"</strong> section on home screen — personalised, not random. Always visible, not gated.</p>
+    <ul>
+      <li><strong>2-3 full movies free</strong> — bridge titles based on acquisition content (punarjanam user → show vidshi-bahu, not punarjanam again)</li>
+      <li><strong>Microdramas</strong> — 10 episodes free per series</li>
+      <li><strong>All series</strong> — 1st episode free (hook them into wanting more)</li>
+      <li><strong>Tambola + chatbot games</strong> (already built — adds stickiness beyond watching)</li>
+      <li><strong>Selection-based onboarding</strong> — "What do you want to watch?" → genre/mood pick → curated free content. This is how they enter the free section.</li>
+    </ul>
+    <p style="margin-top:8px">After free consumption → monetisation or paywall kicks in.</p>
+  </div>
+
+  <!-- TRACK 2 -->
+  <div class="card">
+    <div class="card-title" style="color:var(--am)">Track 2: Monetisation Models <span class="tag am">A2 — Primary | A1/B1 — After free</span></div>
+    <p>For users who won't pay ₹199/month. Same price ballpark, different packaging. <strong>No mandate. No auto-renewal.</strong></p>
+    <table>
+      <thead><tr><th>Model</th><th>Price</th><th>What</th></tr></thead>
+      <tbody>
+        <tr><td><strong>TVOD</strong></td><td>₹51</td><td>Single movie. One-time. "Watch [Naate] — ₹51"</td></tr>
+        <tr><td><strong>Day Pass</strong></td><td>₹51</td><td>24 hours unlimited. Everything unlocked.</td></tr>
+        <tr><td><strong>Weekend Pass</strong></td><td>₹29</td><td>48 hours. Friday to Sunday.</td></tr>
+        <tr><td><strong>Episode Pack</strong></td><td>₹19</td><td>Next 10 episodes after free ones run out.</td></tr>
+        <tr><td><strong>Starter Bundle</strong></td><td>₹99</td><td>3 movies + 1 series + microdramas. 15 days.</td></tr>
+        <tr><td><strong>Coin Unlock</strong></td><td>Free</td><td>Earn 500 coins via watching → unlock a movie.</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- TRACK 3 -->
+  <div class="card">
+    <div class="card-title" style="color:var(--pu)">Track 3: Coin System <span class="tag pu">B2 — Loyalists</span></div>
+    <p>Not a standalone PLG play — a <strong>conversion lever</strong> for 1.69M returners. Makes the return feel rewarding.</p>
+    <table>
+      <thead><tr><th colspan="3">Earn Coins</th></tr></thead>
+      <tbody>
+        <tr><td>Sign up / return</td><td>200 coins</td><td>500 for 4+ cycle veterans</td></tr>
+        <tr><td>Watch a movie</td><td>500 coins</td><td>Drives consumption</td></tr>
+        <tr><td>Take subscription</td><td>1,000 coins</td><td>Fastest path to big rewards</td></tr>
+        <tr><td>Refer a friend</td><td>300 coins</td><td>Drives acquisition</td></tr>
+        <tr><td>7-day login streak</td><td>100 coins</td><td>Drives retention</td></tr>
+      </tbody>
+    </table>
+    <table style="margin-top:8px">
+      <thead><tr><th colspan="2">Redeem Coins</th></tr></thead>
+      <tbody>
+        <tr><td>Selfie with star</td><td>50 coins (free from initial 200 — instant gratification)</td></tr>
+        <tr><td>Stage kit / merch</td><td>500 coins</td></tr>
+        <tr><td>Dinner with actor</td><td>1,000 coins</td></tr>
+        <tr><td>Act in movie chance</td><td>1,000 coins</td></tr>
+      </tbody>
+    </table>
+    <p style="margin-top:8px;font-size:12px;color:var(--dim)">Initial 200 coins → try selfie instantly → sees coins have value → motivation to earn → fastest earn path: subscribe (1,000 coins).</p>
+  </div>
+
+  <!-- MAPPING -->
+  <div class="card">
+    <div class="card-title">Cohort x Track Mapping</div>
+    <table>
+      <thead><tr><th>Cohort</th><th>Size</th><th>Freemium</th><th>Monetisation</th><th>Coins</th></tr></thead>
+      <tbody>
+        <tr><td><strong style="color:var(--am)">A1</strong></td><td>697K</td><td style="color:var(--gn)">Primary</td><td style="color:var(--dim)">After free</td><td style="color:var(--dim)">Maybe</td></tr>
+        <tr><td><strong style="color:var(--am)">A2</strong></td><td>1.38M</td><td style="color:var(--dim)">—</td><td style="color:var(--am)">Primary</td><td style="color:var(--dim)">Maybe</td></tr>
+        <tr><td><strong style="color:var(--cy)">B1</strong></td><td>495K</td><td style="color:var(--gn)">Primary</td><td style="color:var(--dim)">After free</td><td style="color:var(--dim)">Maybe</td></tr>
+        <tr><td><strong style="color:var(--cy)">B2</strong></td><td>1.69M</td><td style="color:var(--dim)">Light</td><td style="color:var(--am)">Tiered + fallback</td><td style="color:var(--pu)">Primary</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<hr>
+
+<!-- ===== ADDITIONAL IDEAS ===== -->
+<div class="sec">
+  <div class="sec-h"><div class="dot" style="background:var(--dim)"></div><h2>Additional Ideas (Stakeholder Input)</h2></div>
+  <p class="sec-sub">From last review. May or may not try — included for completeness.</p>
+
+  <div class="card">
+    <div class="card-title">Special Content Access</div>
+    <p>Exclusive early access or premium content for re-acquisition users as a comeback incentive. "Only for returning members."</p>
+  </div>
+
+  <div class="card">
+    <div class="card-title">TV Offers</div>
+    <p>"Activate via TV first & get Stage at ₹29." Use TV as a low-friction entry point for users who have smart TVs.</p>
+  </div>
+
+  <div class="card">
+    <div class="card-title">CLM + Bot Calls for Dormant Users</div>
+    <p><strong>60% of churned users still have the app installed</strong>, but 70% of those never open it. Run push notifications via CleverTap + automated voice calls + WhatsApp messages for users with app installed but dormant. Bring them to the app — then product catches them.</p>
+  </div>
+</div>
+
+<hr>
+
+<!-- ===== GOALS ===== -->
+<div class="sec">
+  <div class="sec-h"><div class="dot" style="background:var(--ro)"></div><h2>Goals</h2></div>
+
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+    <div class="callout">
+      <h4>Volume</h4>
+      <p><strong style="font-size:20px;color:var(--tx)">5,000 → 10,000/day</strong><br>Subscription_over users viewing paywall. Double by month end via scaled marketing.</p>
+    </div>
+    <div class="amber-callout callout">
+      <h4>Revenue</h4>
+      <p><strong style="font-size:20px;color:var(--tx)">1.4x</strong><br>Current revenue per user. From mix of ₹29-₹99 monetisation + improved tiered conversion.</p>
+    </div>
+    <div class="green-callout callout">
+      <h4>Freemium</h4>
+      <p><strong style="font-size:20px;color:var(--tx)">30%+</strong><br>Free content consumption rate for A1 & B1 users.</p>
+    </div>
+    <div class="callout" style="background:linear-gradient(135deg,var(--s1),rgba(244,63,94,0.08));border-color:rgba(244,63,94,0.2)">
+      <h4 style="color:var(--ro)">Marketing</h4>
+      <p><strong style="font-size:20px;color:var(--tx)">CAC x Quality</strong><br>Bridge title vs acquisition title performance. Naate vs Content Intelligence split ROI.</p>
+    </div>
+  </div>
+</div>
+
+</div>
+</body>
+</html>
