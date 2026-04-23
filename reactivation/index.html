@@ -140,7 +140,7 @@ td strong{color:var(--tx);font-weight:600}
 <!-- ===== SLIDE 1 — TITLE + GOALS ===== -->
 <div class="slide active" data-slide="1">
   <div class="slide-inner">
-    <div class="slide-label">Walkthrough · 1 of 10</div>
+    <div class="slide-label">Walkthrough · 1 of 11</div>
     <h1 class="slide-title">Re-activation <span style="color:var(--cy)">Walkthrough</span></h1>
     <p class="slide-sub">The 2.56 Cr users who signed up and the 38.8L who trialed but never paid</p>
 
@@ -178,7 +178,7 @@ td strong{color:var(--tx);font-weight:600}
 <!-- ===== SLIDE 2 — TWO SEGMENTS ===== -->
 <div class="slide" data-slide="2">
   <div class="slide-inner">
-    <div class="slide-label">Walkthrough · 2 of 10</div>
+    <div class="slide-label">Walkthrough · 2 of 11</div>
     <h1 class="slide-title">Two segments, different tactics</h1>
     <p class="slide-sub">Different drop-off points → different levers</p>
 
@@ -213,39 +213,41 @@ td strong{color:var(--tx);font-weight:600}
   </div>
 </div>
 
-<!-- ===== SLIDE 3 — LIVE NUMBERS ===== -->
+<!-- ===== SLIDE 3 — SEG A LIVE NUMBERS ===== -->
 <div class="slide" data-slide="3">
   <div class="slide-inner">
-    <div class="slide-label">Walkthrough · 3 of 10</div>
-    <h1 class="slide-title">Live numbers</h1>
-    <p class="slide-sub">Seg B after-trial returners — monthly rate &amp; LTV. Last 7 months.</p>
+    <div class="slide-label">Walkthrough · 3 of 11 · Seg A</div>
+    <h1 class="slide-title">Seg A · Live numbers</h1>
+    <p class="slide-sub">Monthly re-activation rate &amp; reactivated users. Last 13 months.</p>
 
     <div class="chart-box">
-      <div class="chart-canvas-wrap"><canvas id="reactChart"></canvas></div>
+      <div class="chart-canvas-wrap"><canvas id="segAChart"></canvas></div>
       <p style="font-size:11px;color:var(--dim);text-align:center;margin-top:10px">
-        <span style="color:#88BF4D">● Seg B Rate %</span> &nbsp; • &nbsp;
-        <span style="color:#509EE3">● Seg B LTV ₹L</span> &nbsp; • &nbsp;
+        <span style="color:#88BF4D">● Seg A Rate %</span> &nbsp; • &nbsp;
+        <span style="color:#F2A86F">● Reactivated users (K)</span> &nbsp; • &nbsp;
         Solid = matured, Dashed = current month (partial)
       </p>
     </div>
 
     <div class="card">
-      <div class="card-title">Seg B · Raw numbers (verified + dynamic pool)</div>
+      <div class="card-title">Seg A · Raw numbers (verified + dynamic pool)</div>
       <table>
         <thead>
-          <tr><th>Month</th><th style="text-align:right">Pool</th><th style="text-align:right">Returners</th><th style="text-align:right">LTV ₹L</th><th style="text-align:right">Rate %</th></tr>
+          <tr><th>Month</th><th style="text-align:right">Pool</th><th style="text-align:right">Reactivated</th><th style="text-align:right">Rate %</th></tr>
         </thead>
         <tbody>
-          <tr><td><strong>Oct 2025</strong></td><td style="text-align:right">10.8L</td><td style="text-align:right">5,838</td><td style="text-align:right">4.81</td><td style="text-align:right">0.54%</td></tr>
-          <tr><td><strong>Nov 2025</strong></td><td style="text-align:right">13.0L</td><td style="text-align:right">10,341</td><td style="text-align:right">7.84</td><td style="text-align:right">0.79%</td></tr>
-          <tr><td><strong>Dec 2025</strong></td><td style="text-align:right">14.9L</td><td style="text-align:right">11,950</td><td style="text-align:right">9.06</td><td style="text-align:right;color:var(--gn)"><strong>0.80%</strong> peak</td></tr>
-          <tr><td><strong>Jan 2026</strong></td><td style="text-align:right">17.1L</td><td style="text-align:right">8,263</td><td style="text-align:right">6.89</td><td style="text-align:right">0.48%</td></tr>
-          <tr><td><strong>Feb 2026</strong></td><td style="text-align:right">19.6L</td><td style="text-align:right">8,504</td><td style="text-align:right">7.27</td><td style="text-align:right">0.43%</td></tr>
-          <tr><td><strong>Mar 2026</strong></td><td style="text-align:right">21.4L</td><td style="text-align:right">12,032</td><td style="text-align:right;color:var(--cy)"><strong>14.55</strong> peak</td><td style="text-align:right">0.56%</td></tr>
-          <tr style="opacity:0.55"><td><strong>Apr 2026*</strong></td><td style="text-align:right">24.1L</td><td style="text-align:right">2,674</td><td style="text-align:right">6.19</td><td style="text-align:right">0.11%</td></tr>
+          <tr><td><strong>Jun 2025</strong></td><td style="text-align:right">20.3M</td><td style="text-align:right">56,704</td><td style="text-align:right">0.28%</td></tr>
+          <tr><td><strong>Sep 2025</strong></td><td style="text-align:right">22.3M</td><td style="text-align:right">111,746</td><td style="text-align:right;color:var(--gn)"><strong>0.50%</strong> peak</td></tr>
+          <tr><td><strong>Oct 2025</strong></td><td style="text-align:right">23.5M</td><td style="text-align:right">110,144</td><td style="text-align:right">0.47%</td></tr>
+          <tr><td><strong>Nov 2025</strong></td><td style="text-align:right">24.4M</td><td style="text-align:right">101,526</td><td style="text-align:right">0.42%</td></tr>
+          <tr><td><strong>Dec 2025</strong></td><td style="text-align:right">25.0M</td><td style="text-align:right;color:var(--cy)"><strong>120,958</strong> peak</td><td style="text-align:right">0.48%</td></tr>
+          <tr><td><strong>Jan 2026</strong></td><td style="text-align:right">25.8M</td><td style="text-align:right">114,292</td><td style="text-align:right">0.44%</td></tr>
+          <tr><td><strong>Feb 2026</strong></td><td style="text-align:right">26.4M</td><td style="text-align:right">92,644</td><td style="text-align:right">0.35%</td></tr>
+          <tr><td><strong>Mar 2026</strong></td><td style="text-align:right">26.8M</td><td style="text-align:right">109,697</td><td style="text-align:right">0.41%</td></tr>
+          <tr style="opacity:0.55"><td><strong>Apr 2026*</strong></td><td style="text-align:right">27.4M</td><td style="text-align:right">47,772</td><td style="text-align:right">0.17%</td></tr>
         </tbody>
       </table>
-      <p style="font-size:11px;color:var(--dim);margin-top:10px">*Apr 2026 partial. LTV calc: per-user plan price × duration multiplier (monthly 1.5× / quarterly 1.489× / yearly 1.35×).</p>
+      <p style="font-size:11px;color:var(--dim);margin-top:10px">*Apr 2026 partial. Numerator: verified users whose first trial is in month M, signed up before M. Denominator: dynamic Seg A pool at M_start.</p>
     </div>
   </div>
 </div>
@@ -253,7 +255,7 @@ td strong{color:var(--tx);font-weight:600}
 <!-- ===== SLIDE 4 — SEG A · BRING USERS ===== -->
 <div class="slide" data-slide="4">
   <div class="slide-inner">
-    <div class="slide-label">Walkthrough · 4 of 10 · Seg A</div>
+    <div class="slide-label">Walkthrough · 4 of 11 · Seg A</div>
     <h1 class="slide-title">Seg A · Bring Users</h1>
     <p class="slide-sub">Performance marketing + AI calls + CLM workflows</p>
 
@@ -303,7 +305,7 @@ td strong{color:var(--tx);font-weight:600}
 <!-- ===== SLIDE 5 — SEG A · IMPROVE CONVERSIONS ===== -->
 <div class="slide" data-slide="5">
   <div class="slide-inner">
-    <div class="slide-label">Walkthrough · 5 of 10 · Seg A</div>
+    <div class="slide-label">Walkthrough · 5 of 11 · Seg A</div>
     <h1 class="slide-title">Seg A · Improve Conversions</h1>
     <p class="slide-sub">Product levers to convert returning users at the paywall</p>
 
@@ -329,10 +331,47 @@ td strong{color:var(--tx);font-weight:600}
   </div>
 </div>
 
-<!-- ===== SLIDE 6 — SEG B · BRING USERS ===== -->
+<!-- ===== SLIDE 6 — SEG B LIVE NUMBERS ===== -->
 <div class="slide" data-slide="6">
   <div class="slide-inner">
-    <div class="slide-label">Walkthrough · 6 of 10 · Seg B</div>
+    <div class="slide-label">Walkthrough · 6 of 11 · Seg B</div>
+    <h1 class="slide-title">Seg B · Live numbers</h1>
+    <p class="slide-sub">After-trial returners — monthly rate &amp; LTV. Last 7 months.</p>
+
+    <div class="chart-box">
+      <div class="chart-canvas-wrap"><canvas id="segBChart"></canvas></div>
+      <p style="font-size:11px;color:var(--dim);text-align:center;margin-top:10px">
+        <span style="color:#88BF4D">● Seg B Rate %</span> &nbsp; • &nbsp;
+        <span style="color:#509EE3">● Seg B LTV ₹L</span> &nbsp; • &nbsp;
+        Solid = matured, Dashed = current month (partial)
+      </p>
+    </div>
+
+    <div class="card">
+      <div class="card-title">Seg B · Raw numbers (verified + dynamic pool)</div>
+      <table>
+        <thead>
+          <tr><th>Month</th><th style="text-align:right">Pool</th><th style="text-align:right">Returners</th><th style="text-align:right">LTV ₹L</th><th style="text-align:right">Rate %</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>Oct 2025</strong></td><td style="text-align:right">10.8L</td><td style="text-align:right">5,838</td><td style="text-align:right">4.81</td><td style="text-align:right">0.54%</td></tr>
+          <tr><td><strong>Nov 2025</strong></td><td style="text-align:right">13.0L</td><td style="text-align:right">10,341</td><td style="text-align:right">7.84</td><td style="text-align:right">0.79%</td></tr>
+          <tr><td><strong>Dec 2025</strong></td><td style="text-align:right">14.9L</td><td style="text-align:right">11,950</td><td style="text-align:right">9.06</td><td style="text-align:right;color:var(--gn)"><strong>0.80%</strong> peak</td></tr>
+          <tr><td><strong>Jan 2026</strong></td><td style="text-align:right">17.1L</td><td style="text-align:right">8,263</td><td style="text-align:right">6.89</td><td style="text-align:right">0.48%</td></tr>
+          <tr><td><strong>Feb 2026</strong></td><td style="text-align:right">19.6L</td><td style="text-align:right">8,504</td><td style="text-align:right">7.27</td><td style="text-align:right">0.43%</td></tr>
+          <tr><td><strong>Mar 2026</strong></td><td style="text-align:right">21.4L</td><td style="text-align:right">12,032</td><td style="text-align:right;color:var(--cy)"><strong>14.55</strong> peak</td><td style="text-align:right">0.56%</td></tr>
+          <tr style="opacity:0.55"><td><strong>Apr 2026*</strong></td><td style="text-align:right">24.1L</td><td style="text-align:right">2,674</td><td style="text-align:right">6.19</td><td style="text-align:right">0.11%</td></tr>
+        </tbody>
+      </table>
+      <p style="font-size:11px;color:var(--dim);margin-top:10px">*Apr 2026 partial. LTV calc: per-user plan price × duration multiplier (monthly 1.5× / quarterly 1.489× / yearly 1.35×).</p>
+    </div>
+  </div>
+</div>
+
+<!-- ===== SLIDE 7 — SEG B · BRING USERS ===== -->
+<div class="slide" data-slide="7">
+  <div class="slide-inner">
+    <div class="slide-label">Walkthrough · 7 of 11 · Seg B</div>
     <h1 class="slide-title">Seg B · Bring Users</h1>
     <p class="slide-sub">CLM journeys for users who trialed but didn't pay</p>
 
@@ -359,10 +398,10 @@ td strong{color:var(--tx);font-weight:600}
   </div>
 </div>
 
-<!-- ===== SLIDE 7 — SEG B · IMPROVE CONVERSIONS ===== -->
-<div class="slide" data-slide="7">
+<!-- ===== SLIDE 8 — SEG B · IMPROVE CONVERSIONS ===== -->
+<div class="slide" data-slide="8">
   <div class="slide-inner">
-    <div class="slide-label">Walkthrough · 7 of 10 · Seg B</div>
+    <div class="slide-label">Walkthrough · 8 of 11 · Seg B</div>
     <h1 class="slide-title">Seg B · Improve Conversions</h1>
     <p class="slide-sub">Product experiments targeting the drop-off patterns</p>
 
@@ -387,10 +426,10 @@ td strong{color:var(--tx);font-weight:600}
   </div>
 </div>
 
-<!-- ===== SLIDE 8 — NEW PAYWALL CONCEPT ===== -->
-<div class="slide" data-slide="8">
+<!-- ===== SLIDE 9 — NEW PAYWALL CONCEPT ===== -->
+<div class="slide" data-slide="9">
   <div class="slide-inner">
-    <div class="slide-label">Walkthrough · 8 of 10 · New Paywall</div>
+    <div class="slide-label">Walkthrough · 9 of 11 · New Paywall</div>
     <h1 class="slide-title">Free till hook → 3-option decoy</h1>
     <p class="slide-sub">A new paywall concept for re-activation cohorts</p>
 
@@ -425,10 +464,10 @@ td strong{color:var(--tx);font-weight:600}
   </div>
 </div>
 
-<!-- ===== SLIDE 9 — NEXT STEPS ===== -->
-<div class="slide" data-slide="9">
+<!-- ===== SLIDE 10 — NEXT STEPS ===== -->
+<div class="slide" data-slide="10">
   <div class="slide-inner">
-    <div class="slide-label">Walkthrough · 9 of 10 · What's Next</div>
+    <div class="slide-label">Walkthrough · 10 of 11 · What's Next</div>
     <h1 class="slide-title">What's next — stitched workflows</h1>
     <p class="slide-sub">Marketing + Product — roadmap across both segments</p>
 
@@ -462,10 +501,10 @@ td strong{color:var(--tx);font-weight:600}
   </div>
 </div>
 
-<!-- ===== SLIDE 10 — TL;DR ===== -->
-<div class="slide" data-slide="10">
+<!-- ===== SLIDE 11 — TL;DR ===== -->
+<div class="slide" data-slide="11">
   <div class="slide-inner">
-    <div class="slide-label">Walkthrough · 10 of 10 · Wrap</div>
+    <div class="slide-label">Walkthrough · 11 of 11 · Wrap</div>
     <h1 class="slide-title">TL;DR</h1>
     <p class="slide-sub">Four beats for stakeholders</p>
 
@@ -534,7 +573,8 @@ function goTo(n) {
   prevBtn.disabled = n === 0;
   nextBtn.disabled = n === totalSlides - 1;
   window.scrollTo(0, 0);
-  if (n === 2 && window._reactChart) window._reactChart.resize();
+  if (n === 2 && window._segAChart) window._segAChart.resize();
+  if (n === 5 && window._segBChart) window._segBChart.resize();
 }
 
 prevBtn.onclick = () => goTo(current - 1);
@@ -550,21 +590,66 @@ document.addEventListener('keydown', e => {
 
 prevBtn.disabled = true;
 
-const labels = ['Oct 2025','Nov 2025','Dec 2025','Jan 2026','Feb 2026','Mar 2026','Apr 2026'];
-const pct = [0.54, 0.79, 0.80, 0.48, 0.43, 0.56, null];
-const pctPartial = [null, null, null, null, null, 0.56, 0.11];
-const ltv = [4.81, 7.84, 9.06, 6.89, 7.27, 14.55, null];
-const ltvPartial = [null, null, null, null, null, 14.55, 6.19];
+// ---- Seg A chart (trial re-activation) ----
+const aLabels = ['Apr 25','May 25','Jun 25','Jul 25','Aug 25','Sep 25','Oct 25','Nov 25','Dec 25','Jan 26','Feb 26','Mar 26','Apr 26'];
+const aPct  = [0.09, 0.22, 0.28, 0.25, 0.33, 0.50, 0.47, 0.42, 0.48, 0.44, 0.35, 0.41, null];
+const aPctU = [null,null,null,null,null,null,null,null,null,null,null,0.41,0.17];
+const aReact  = [18.2, 43.7, 56.7, 52.8, 71.3, 111.7, 110.1, 101.5, 120.9, 114.3, 92.6, 109.7, null]; // in thousands
+const aReactU = [null,null,null,null,null,null,null,null,null,null,null,109.7, 47.8];
 
-window._reactChart = new Chart(document.getElementById('reactChart'), {
+window._segAChart = new Chart(document.getElementById('segAChart'), {
   type: 'line',
   data: {
-    labels,
+    labels: aLabels,
     datasets: [
-      { label: 'Rate % (matured)', data: pct, borderColor: '#88BF4D', yAxisID: 'y', tension: 0.3, borderWidth: 2.5, pointRadius: 4, pointBackgroundColor: '#88BF4D', fill: false },
-      { label: 'Rate % (current)', data: pctPartial, borderColor: '#88BF4D', borderDash: [5, 5], yAxisID: 'y', tension: 0.3, borderWidth: 2, pointRadius: 3, pointBackgroundColor: '#88BF4D', fill: false },
-      { label: 'LTV ₹L (matured)', data: ltv, borderColor: '#509EE3', yAxisID: 'y1', tension: 0.3, borderWidth: 2.5, pointRadius: 4, pointBackgroundColor: '#509EE3', fill: false },
-      { label: 'LTV ₹L (current)', data: ltvPartial, borderColor: '#509EE3', borderDash: [5, 5], yAxisID: 'y1', tension: 0.3, borderWidth: 2, pointRadius: 3, pointBackgroundColor: '#509EE3', fill: false }
+      { label: 'Rate % (matured)', data: aPct, borderColor: '#88BF4D', yAxisID: 'y', tension: 0.3, borderWidth: 2.5, pointRadius: 3.5, pointBackgroundColor: '#88BF4D', fill: false },
+      { label: 'Rate % (current)', data: aPctU, borderColor: '#88BF4D', borderDash: [5, 5], yAxisID: 'y', tension: 0.3, borderWidth: 2, pointRadius: 3, pointBackgroundColor: '#88BF4D', fill: false },
+      { label: 'Reactivated (K)', data: aReact, borderColor: '#F2A86F', yAxisID: 'y1', tension: 0.3, borderWidth: 2.5, pointRadius: 3.5, pointBackgroundColor: '#F2A86F', fill: false },
+      { label: 'Reactivated K (current)', data: aReactU, borderColor: '#F2A86F', borderDash: [5, 5], yAxisID: 'y1', tension: 0.3, borderWidth: 2, pointRadius: 3, pointBackgroundColor: '#F2A86F', fill: false }
+    ]
+  },
+  options: {
+    responsive: true,
+    maintainAspectRatio: false,
+    interaction: { mode: 'index', intersect: false },
+    plugins: {
+      legend: { display: false },
+      tooltip: {
+        backgroundColor: '#1a1b25', titleColor: '#e8e8ed', bodyColor: '#e8e8ed', borderColor: '#2a2b38', borderWidth: 1, padding: 10,
+        callbacks: {
+          label: function(ctx) {
+            if (ctx.parsed.y === null) return null;
+            const lbl = ctx.dataset.label;
+            if (lbl.includes('Rate')) return `${lbl}: ${ctx.parsed.y}%`;
+            return `${lbl}: ${ctx.parsed.y}K users`;
+          }
+        }
+      }
+    },
+    scales: {
+      x: { ticks: { color: '#8888a0', font: { size: 10 } }, grid: { color: 'rgba(255,255,255,0.03)' } },
+      y: { type: 'linear', position: 'left', title: { display: true, text: 'Rate %', color: '#88BF4D', font: { size: 11 } }, ticks: { color: '#88BF4D', font: { size: 11 }, callback: v => v + '%' }, grid: { color: 'rgba(255,255,255,0.05)' } },
+      y1: { type: 'linear', position: 'right', title: { display: true, text: 'Reactivated (K)', color: '#F2A86F', font: { size: 11 } }, ticks: { color: '#F2A86F', font: { size: 11 }, callback: v => v + 'K' }, grid: { drawOnChartArea: false } }
+    }
+  }
+});
+
+// ---- Seg B chart (after-trial returners + LTV) ----
+const bLabels = ['Oct 2025','Nov 2025','Dec 2025','Jan 2026','Feb 2026','Mar 2026','Apr 2026'];
+const bPct  = [0.54, 0.79, 0.80, 0.48, 0.43, 0.56, null];
+const bPctU = [null, null, null, null, null, 0.56, 0.11];
+const bLtv  = [4.81, 7.84, 9.06, 6.89, 7.27, 14.55, null];
+const bLtvU = [null, null, null, null, null, 14.55, 6.19];
+
+window._segBChart = new Chart(document.getElementById('segBChart'), {
+  type: 'line',
+  data: {
+    labels: bLabels,
+    datasets: [
+      { label: 'Rate % (matured)', data: bPct, borderColor: '#88BF4D', yAxisID: 'y', tension: 0.3, borderWidth: 2.5, pointRadius: 4, pointBackgroundColor: '#88BF4D', fill: false },
+      { label: 'Rate % (current)', data: bPctU, borderColor: '#88BF4D', borderDash: [5, 5], yAxisID: 'y', tension: 0.3, borderWidth: 2, pointRadius: 3, pointBackgroundColor: '#88BF4D', fill: false },
+      { label: 'LTV ₹L (matured)', data: bLtv, borderColor: '#509EE3', yAxisID: 'y1', tension: 0.3, borderWidth: 2.5, pointRadius: 4, pointBackgroundColor: '#509EE3', fill: false },
+      { label: 'LTV ₹L (current)', data: bLtvU, borderColor: '#509EE3', borderDash: [5, 5], yAxisID: 'y1', tension: 0.3, borderWidth: 2, pointRadius: 3, pointBackgroundColor: '#509EE3', fill: false }
     ]
   },
   options: {
