@@ -223,16 +223,16 @@ td strong{color:var(--tx);font-weight:600}
           <tr><th>Month</th><th style="text-align:right">Pool</th><th style="text-align:right">Returners</th><th style="text-align:right">LTV ₹L</th><th style="text-align:right">Rate %</th></tr>
         </thead>
         <tbody>
-          <tr><td><strong>Oct 2025</strong></td><td style="text-align:right">26.9L</td><td style="text-align:right">9,007</td><td style="text-align:right">7.56</td><td style="text-align:right">0.33%</td></tr>
-          <tr><td><strong>Nov 2025</strong></td><td style="text-align:right">28.4L</td><td style="text-align:right">14,482</td><td style="text-align:right">11.03</td><td style="text-align:right;color:var(--gn)"><strong>0.51%</strong> peak</td></tr>
-          <tr><td><strong>Dec 2025</strong></td><td style="text-align:right">30.3L</td><td style="text-align:right">14,041</td><td style="text-align:right">10.70</td><td style="text-align:right">0.46%</td></tr>
-          <tr><td><strong>Jan 2026</strong></td><td style="text-align:right">32.6L</td><td style="text-align:right">10,448</td><td style="text-align:right">8.81</td><td style="text-align:right">0.32%</td></tr>
-          <tr><td><strong>Feb 2026</strong></td><td style="text-align:right">35.0L</td><td style="text-align:right">9,683</td><td style="text-align:right">8.52</td><td style="text-align:right">0.28%</td></tr>
-          <tr><td><strong>Mar 2026</strong></td><td style="text-align:right">37.6L</td><td style="text-align:right">11,246</td><td style="text-align:right;color:var(--cy)"><strong>13.99</strong> peak</td><td style="text-align:right">0.30%</td></tr>
-          <tr style="opacity:0.55"><td><strong>Apr 2026*</strong></td><td style="text-align:right">41.0L</td><td style="text-align:right">3,310</td><td style="text-align:right">7.64</td><td style="text-align:right">0.08%</td></tr>
+          <tr><td><strong>Oct 2025</strong></td><td style="text-align:right">26.9L</td><td style="text-align:right">9,007</td><td style="text-align:right">13.51</td><td style="text-align:right">0.33%</td></tr>
+          <tr><td><strong>Nov 2025</strong></td><td style="text-align:right">28.4L</td><td style="text-align:right">14,482</td><td style="text-align:right">21.72</td><td style="text-align:right;color:var(--gn)"><strong>0.51%</strong> peak</td></tr>
+          <tr><td><strong>Dec 2025</strong></td><td style="text-align:right">30.3L</td><td style="text-align:right">14,041</td><td style="text-align:right">21.06</td><td style="text-align:right">0.46%</td></tr>
+          <tr><td><strong>Jan 2026</strong></td><td style="text-align:right">32.6L</td><td style="text-align:right">10,448</td><td style="text-align:right">16.93</td><td style="text-align:right">0.32%</td></tr>
+          <tr><td><strong>Feb 2026</strong></td><td style="text-align:right">35.0L</td><td style="text-align:right">9,683</td><td style="text-align:right">15.78</td><td style="text-align:right">0.28%</td></tr>
+          <tr><td><strong>Mar 2026</strong></td><td style="text-align:right">37.6L</td><td style="text-align:right">11,246</td><td style="text-align:right;color:var(--cy)"><strong>20.58</strong> peak</td><td style="text-align:right">0.30%</td></tr>
+          <tr style="opacity:0.55"><td><strong>Apr 2026*</strong></td><td style="text-align:right">41.0L</td><td style="text-align:right">3,310</td><td style="text-align:right">8.77</td><td style="text-align:right">0.08%</td></tr>
         </tbody>
       </table>
-      <p style="font-size:11px;color:var(--dim);margin-top:10px">*April is partial (month still filling).</p>
+      <p style="font-size:11px;color:var(--dim);margin-top:10px">*April is partial (month still filling). LTV: discount plans = price + ₹99.5 (renewal at ₹199 std), tiered plans = price × duration multiplier.</p>
     </div>
   </div>
 </div>
@@ -506,8 +506,8 @@ prevBtn.disabled = true;
 const labels = ['Oct 2025','Nov 2025','Dec 2025','Jan 2026','Feb 2026','Mar 2026','Apr 2026'];
 const pct = [0.33, 0.51, 0.46, 0.32, 0.28, 0.30, null];
 const pctPartial = [null, null, null, null, null, 0.30, 0.08];
-const ltv = [7.56, 11.03, 10.70, 8.81, 8.52, 13.99, null];
-const ltvPartial = [null, null, null, null, null, 13.99, 7.64];
+const ltv = [13.51, 21.72, 21.06, 16.93, 15.78, 20.58, null];
+const ltvPartial = [null, null, null, null, null, 20.58, 8.77];
 
 window._reacqChart = new Chart(document.getElementById('reacqChart'), {
   type: 'line',
