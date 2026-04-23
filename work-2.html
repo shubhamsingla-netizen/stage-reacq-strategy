@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Re-acquisition Work Update — STAGE</title>
+<title>Re-acquisition — Walkthrough — STAGE</title>
 <link rel="icon" type="image/x-icon" href="https://www.stage.in/favicon.ico">
 <link rel="shortcut icon" href="https://www.stage.in/favicon.ico">
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
@@ -11,43 +11,69 @@
 @import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700&family=JetBrains+Mono:wght@400;500&display=swap');
 *{margin:0;padding:0;box-sizing:border-box}
 :root{--bg:#0a0b0f;--s1:#12131a;--s2:#1a1b25;--bd:#2a2b38;--tx:#e8e8ed;--dim:#8888a0;--cy:#06b6d4;--am:#f59e0b;--ro:#f43f5e;--gn:#258d58;--pu:#a78bfa}
-body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--tx);line-height:1.6}
-.wrap{max-width:860px;margin:0 auto;padding:32px 24px 120px}
-.top{padding:40px 0 20px;border-bottom:1px solid var(--bd);margin-bottom:40px}
-.top h1{font-size:32px;font-weight:700;letter-spacing:-0.03em;margin-bottom:4px}
-.top h1 span{color:var(--cy)}
-.top .sub{color:var(--dim);font-size:14px;margin-bottom:20px}
-.kpis{display:flex;gap:32px;flex-wrap:wrap}
-.kpi{text-align:center}
-.kpi .v{font-size:22px;font-weight:700;font-family:'JetBrains Mono',monospace}
-.kpi .l{font-size:11px;color:var(--dim);text-transform:uppercase;letter-spacing:0.08em;margin-top:2px}
-.sec{margin-bottom:48px}
-.sec-h{display:flex;align-items:center;gap:10px;margin-bottom:6px}
-.sec-h .dot{width:10px;height:10px;border-radius:50%}
-.sec-h h2{font-size:22px;font-weight:700;letter-spacing:-0.02em}
-.sec-sub{color:var(--dim);font-size:13px;margin-bottom:24px}
-.card{background:var(--s1);border:1px solid var(--bd);border-radius:12px;padding:20px;margin-bottom:12px}
-.card-title{font-size:15px;font-weight:600;margin-bottom:6px;display:flex;align-items:center;gap:8px}
+html,body{height:100%;overflow:hidden}
+body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--tx);line-height:1.55}
+
+/* Navbar */
+.navbar{position:fixed;top:0;left:0;right:0;z-index:50;background:rgba(10,11,15,0.85);backdrop-filter:blur(12px);border-bottom:1px solid var(--bd)}
+.nav-inner{max-width:1100px;margin:0 auto;padding:12px 28px;display:flex;align-items:center;justify-content:space-between}
+.nav-brand{display:flex;align-items:center;gap:10px;text-decoration:none;color:var(--tx)}
+.nav-brand img{height:24px;width:auto;display:block}
+.nav-brand .nav-label{font-size:11px;color:var(--dim);text-transform:uppercase;letter-spacing:0.1em;font-weight:500}
+.nav-right{display:flex;align-items:center;gap:18px}
+.nav-right a{font-size:12px;color:var(--dim);text-decoration:none;font-weight:500}
+.nav-right a:hover{color:var(--cy)}
+
+/* Deck container */
+.deck{position:relative;height:100vh;width:100vw;padding-top:50px}
+.slide{position:absolute;top:50px;left:0;right:0;bottom:0;opacity:0;pointer-events:none;transition:opacity 0.35s ease;overflow-y:auto}
+.slide.active{opacity:1;pointer-events:auto}
+.slide-inner{max-width:1100px;margin:0 auto;padding:40px 48px 80px;min-height:100%;display:flex;flex-direction:column;justify-content:center}
+.slide-label{font-size:11px;color:var(--cy);text-transform:uppercase;letter-spacing:0.12em;font-weight:600;margin-bottom:10px}
+.slide-title{font-size:38px;font-weight:700;letter-spacing:-0.03em;margin-bottom:6px;line-height:1.1}
+.slide-sub{font-size:15px;color:var(--dim);margin-bottom:32px}
+
+/* Deck controls */
+.controls{position:fixed;bottom:24px;left:50%;transform:translateX(-50%);display:flex;align-items:center;gap:14px;z-index:100;background:rgba(26,27,37,0.92);border:1px solid var(--bd);border-radius:100px;padding:8px 14px;backdrop-filter:blur(10px)}
+.controls button{background:transparent;border:none;color:var(--tx);cursor:pointer;width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:14px;transition:background 0.15s}
+.controls button:hover{background:var(--bd)}
+.controls button:disabled{opacity:0.3;cursor:not-allowed}
+.controls .counter{font-size:12px;color:var(--dim);font-family:'JetBrains Mono',monospace;min-width:52px;text-align:center}
+.controls .dots{display:flex;gap:5px;margin-left:6px}
+.controls .dot{width:6px;height:6px;border-radius:50%;background:var(--bd);cursor:pointer;transition:background 0.15s}
+.controls .dot.active{background:var(--cy);width:18px;border-radius:6px}
+
+/* KPIs */
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:16px;margin-bottom:28px}
+.kpi-card{background:var(--s1);border:1px solid var(--bd);border-radius:12px;padding:18px}
+.kpi-card .v{font-size:32px;font-weight:700;font-family:'JetBrains Mono',monospace;letter-spacing:-0.02em}
+.kpi-card .l{font-size:11px;color:var(--dim);text-transform:uppercase;letter-spacing:0.08em;margin-top:4px}
+.kpi-card .goal{font-size:11px;color:var(--am);margin-top:6px;font-weight:500}
+
+/* Cards */
+.card{background:var(--s1);border:1px solid var(--bd);border-radius:12px;padding:18px;margin-bottom:12px}
+.card-title{font-size:15px;font-weight:600;margin-bottom:8px;display:flex;align-items:center;gap:8px}
 .card p,.card li{font-size:13px;color:var(--dim);line-height:1.7}
-.card li{margin-left:16px;margin-bottom:4px}
+.card li{margin-left:18px;margin-bottom:4px}
 .card strong{color:var(--tx);font-weight:500}
 .card .highlight{color:var(--cy);font-weight:500}
-.tag{display:inline-block;padding:2px 10px;border-radius:100px;font-size:11px;font-family:'JetBrains Mono',monospace;font-weight:500;margin-top:6px}
+
+/* Tags */
+.tag{display:inline-block;padding:2px 10px;border-radius:100px;font-size:11px;font-family:'JetBrains Mono',monospace;font-weight:500}
 .tag.cy{background:rgba(6,182,212,0.12);color:var(--cy);border:1px solid rgba(6,182,212,0.25)}
 .tag.am{background:rgba(245,158,11,0.12);color:var(--am);border:1px solid rgba(245,158,11,0.25)}
 .tag.gn{background:rgba(37,141,88,0.12);color:var(--gn);border:1px solid rgba(37,141,88,0.25)}
 .tag.ro{background:rgba(244,63,94,0.12);color:var(--ro);border:1px solid rgba(244,63,94,0.25)}
 .tag.pu{background:rgba(167,139,250,0.12);color:var(--pu);border:1px solid rgba(167,139,250,0.25)}
-table{width:100%;border-collapse:collapse;font-size:13px;margin-top:12px}
-th{text-align:left;padding:10px 12px;font-size:11px;text-transform:uppercase;letter-spacing:0.06em;color:var(--dim);background:var(--s2);border-bottom:1px solid var(--bd)}
-td{padding:10px 12px;border-bottom:1px solid rgba(255,255,255,0.04)}
+
+/* Table */
+table{width:100%;border-collapse:collapse;font-size:12.5px;margin-top:10px}
+th{text-align:left;padding:8px 10px;font-size:10.5px;text-transform:uppercase;letter-spacing:0.06em;color:var(--dim);background:var(--s2);border-bottom:1px solid var(--bd)}
+td{padding:8px 10px;border-bottom:1px solid rgba(255,255,255,0.04);color:var(--dim)}
 td strong{color:var(--tx);font-weight:600}
-.nested{background:var(--s2);border:1px solid var(--bd);border-radius:8px;padding:14px;margin-top:10px;margin-bottom:8px}
-.nested h4{font-size:13px;font-weight:600;margin-bottom:4px}
-.nested p{font-size:12.5px;color:var(--dim);line-height:1.65}
-.nested .tag{margin-top:0;margin-bottom:4px}
-hr{border:none;border-top:1px solid var(--bd);margin:48px 0}
-.callout{background:linear-gradient(135deg,var(--s1),rgba(6,182,212,0.08));border:1px solid rgba(6,182,212,0.2);border-radius:12px;padding:20px;margin-bottom:12px}
+
+/* Callouts */
+.callout{background:linear-gradient(135deg,var(--s1),rgba(6,182,212,0.08));border:1px solid rgba(6,182,212,0.2);border-radius:12px;padding:18px;margin-bottom:10px}
 .callout h4{font-size:14px;font-weight:600;color:var(--cy);margin-bottom:6px}
 .callout p{font-size:13px;color:var(--dim);line-height:1.7}
 .amber-callout{background:linear-gradient(135deg,var(--s1),rgba(245,158,11,0.08));border:1px solid rgba(245,158,11,0.2)}
@@ -56,18 +82,36 @@ hr{border:none;border-top:1px solid var(--bd);margin:48px 0}
 .green-callout h4{color:var(--gn)}
 .red-callout{background:linear-gradient(135deg,var(--s1),rgba(244,63,94,0.08));border:1px solid rgba(244,63,94,0.2)}
 .red-callout h4{color:var(--ro)}
-.backlink{display:inline-block;font-size:12px;color:var(--dim);margin-bottom:18px;text-decoration:none}
-.backlink:hover{color:var(--cy)}
 
-/* Navbar */
-.navbar{position:sticky;top:0;z-index:50;background:rgba(10,11,15,0.85);backdrop-filter:blur(12px);border-bottom:1px solid var(--bd)}
-.nav-inner{max-width:860px;margin:0 auto;padding:14px 24px;display:flex;align-items:center;justify-content:space-between}
-.nav-brand{display:flex;align-items:center;gap:10px;text-decoration:none;color:var(--tx)}
-.nav-brand img{height:28px;width:auto;display:block}
-.nav-brand .nav-label{font-size:12px;color:var(--dim);text-transform:uppercase;letter-spacing:0.1em;font-weight:500}
-.nav-right{display:flex;align-items:center;gap:18px}
-.nav-right a{font-size:12px;color:var(--dim);text-decoration:none;font-weight:500}
-.nav-right a:hover{color:var(--cy)}
+/* Two-arc visual */
+.two-arcs{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-top:28px}
+.arc{background:var(--s1);border:1px solid var(--bd);border-radius:14px;padding:28px;text-align:center;transition:transform 0.2s, border-color 0.2s}
+.arc:hover{transform:translateY(-3px);border-color:var(--cy)}
+.arc .icon{font-size:44px;margin-bottom:10px;display:block}
+.arc h3{font-size:22px;font-weight:700;margin-bottom:6px;letter-spacing:-0.02em}
+.arc p{font-size:13px;color:var(--dim);line-height:1.6}
+
+/* Nested */
+.nested{background:var(--s2);border:1px solid var(--bd);border-radius:8px;padding:14px;margin-top:10px;margin-bottom:8px}
+.nested h4{font-size:13px;font-weight:600;margin-bottom:4px}
+.nested p{font-size:12.5px;color:var(--dim);line-height:1.65}
+.nested .tag{margin-top:6px;margin-bottom:0}
+
+.pill-row{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:14px}
+.pill{font-size:11px;color:var(--dim);background:var(--s2);padding:4px 10px;border-radius:100px;border:1px solid var(--bd)}
+
+.grid-2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+
+/* Chart container */
+.chart-box{background:var(--s1);border:1px solid var(--bd);border-radius:12px;padding:18px;margin-bottom:10px}
+.chart-canvas-wrap{position:relative;height:280px}
+
+@media(max-width:700px){
+  .slide-title{font-size:28px}
+  .slide-inner{padding:24px 20px 60px}
+  .two-arcs{grid-template-columns:1fr}
+  .grid-2{grid-template-columns:1fr}
+}
 </style>
 </head>
 <body>
@@ -76,7 +120,7 @@ hr{border:none;border-top:1px solid var(--bd);margin:48px 0}
   <div class="nav-inner">
     <a class="nav-brand" href="./">
       <img src="https://media.stage.in/static/stage_logo_stack.png" alt="STAGE">
-      <span class="nav-label">Re-acquisition</span>
+      <span class="nav-label">Re-acquisition · Walkthrough</span>
     </a>
     <div class="nav-right">
       <a href="./">Strategy</a>
@@ -85,194 +129,393 @@ hr{border:none;border-top:1px solid var(--bd);margin:48px 0}
   </div>
 </nav>
 
-<div class="wrap">
+<div class="deck">
 
-<div class="top">
-  <h1>Re-acquisition <span>Work Update</span></h1>
-  <div class="sub">What we did, what worked, what didn't, what's next</div>
-  <div class="kpis">
-    <div class="kpi"><div class="v">4.26M</div><div class="l">Churned Base</div></div>
-    <div class="kpi"><div class="v">1.9M</div><div class="l">Gold Tier</div></div>
-    <div class="kpi"><div class="v">2.86×</div><div class="l">Gold vs General SR</div></div>
-    <div class="kpi"><div class="v">All-Time High</div><div class="l">Re-acq % × LTV</div></div>
+<!-- ===== SLIDE 1 — TITLE + GOALS ===== -->
+<div class="slide active" data-slide="1">
+  <div class="slide-inner">
+    <div class="slide-label">Walkthrough · 1 of 10</div>
+    <h1 class="slide-title">Re-acquisition <span style="color:var(--cy)">Work Update</span></h1>
+    <p class="slide-sub">Where we stand, what worked, what didn't, what's next</p>
+
+    <div class="kpis">
+      <div class="kpi-card">
+        <div class="v" style="color:var(--cy)">4.26M</div>
+        <div class="l">Churned Base</div>
+      </div>
+      <div class="kpi-card">
+        <div class="v" style="color:var(--pu)">1.9M</div>
+        <div class="l">Gold Tier (44.6%)</div>
+      </div>
+      <div class="kpi-card">
+        <div class="v" style="color:var(--gn)">0.30%</div>
+        <div class="l">Current Re-acq Rate</div>
+        <div class="goal">Goal: 1.0% &nbsp;→&nbsp; 3.3× lift</div>
+      </div>
+      <div class="kpi-card">
+        <div class="v" style="color:var(--am)">₹14L</div>
+        <div class="l">Current Monthly LTV</div>
+        <div class="goal">Goal: ₹22L &nbsp;→&nbsp; 1.6× lift</div>
+      </div>
+    </div>
+
+    <div class="callout">
+      <h4>The big picture</h4>
+      <p>4.26M users paid Stage, watched content, left. No pod was touching them. We stepped in.</p>
+      <p style="margin-top:6px">Combined target: <strong>Re-acq % × LTV</strong> — we're at an all-time high, but there's 3× headroom to reach goal.</p>
+    </div>
   </div>
 </div>
 
-<!-- ========== LIVE DATA ========== -->
-<div class="sec">
-  <div class="sec-h"><div class="dot" style="background:var(--gn)"></div><h2>Live numbers — Re-acquisition</h2></div>
-  <div class="sec-sub">Monthly rate, returners count &amp; LTV (₹ Lakhs). Last 7 months. Data via <code style="font-size:11px;color:var(--cy)">subscription_taken_manually</code> events + Snowflake.</div>
+<!-- ===== SLIDE 2 — TWO ARCS ===== -->
+<div class="slide" data-slide="2">
+  <div class="slide-inner">
+    <div class="slide-label">Walkthrough · 2 of 10</div>
+    <h1 class="slide-title">Two arcs of work</h1>
+    <p class="slide-sub">Everything we did falls into one of these buckets</p>
 
-  <div class="card" style="padding:20px 20px 8px">
-    <div style="position:relative;height:340px;margin-bottom:10px">
-      <canvas id="reacqChart"></canvas>
+    <div class="two-arcs">
+      <div class="arc">
+        <span class="icon">🎯</span>
+        <h3>Bring Users</h3>
+        <p>Get churned users back to the paywall. Paid ads, push notifications, WhatsApp, AI calls, web channels.</p>
+        <div class="pill-row" style="justify-content:center;margin-top:14px">
+          <span class="pill">Marketing</span>
+        </div>
+      </div>
+      <div class="arc">
+        <span class="icon">🔁</span>
+        <h3>Improve Conversions</h3>
+        <p>Once they land, make them convert. Tiered pricing, Special Access, paywall changes, content-led flows.</p>
+        <div class="pill-row" style="justify-content:center;margin-top:14px">
+          <span class="pill">Product</span>
+        </div>
+      </div>
     </div>
-    <p style="font-size:11px;color:var(--dim);text-align:center;margin-top:8px">
-      <span style="color:#88BF4D">● Rate %</span> &nbsp; • &nbsp;
-      <span style="color:#509EE3">● LTV ₹ Lakhs</span> &nbsp; • &nbsp;
-      Solid = matured, Dotted = current month (partial)
+
+    <div class="callout" style="margin-top:24px">
+      <h4>Both arcs run in parallel</h4>
+      <p>Phase 1 went heavy on both. Phase 2 pivoted on "Bring Users" to owned channels. "Improve Conversions" still has a lot of untapped product levers — we'll cover those at the end.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ===== SLIDE 3 — LIVE NUMBERS ===== -->
+<div class="slide" data-slide="3">
+  <div class="slide-inner">
+    <div class="slide-label">Walkthrough · 3 of 10</div>
+    <h1 class="slide-title">Live numbers</h1>
+    <p class="slide-sub">Monthly re-acq rate &amp; LTV. Last 7 months. Source: <code style="font-size:11px;color:var(--cy)">subscription_taken_manually</code></p>
+
+    <div class="chart-box">
+      <div class="chart-canvas-wrap"><canvas id="reacqChart"></canvas></div>
+      <p style="font-size:11px;color:var(--dim);text-align:center;margin-top:10px">
+        <span style="color:#88BF4D">● Rate %</span> &nbsp; • &nbsp;
+        <span style="color:#509EE3">● LTV ₹ Lakhs</span> &nbsp; • &nbsp;
+        Solid = matured, Dashed = current month (partial)
+      </p>
+    </div>
+
+    <div class="card">
+      <table>
+        <thead>
+          <tr><th>Month</th><th style="text-align:right">Pool</th><th style="text-align:right">Returners</th><th style="text-align:right">LTV ₹L</th><th style="text-align:right">Rate %</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>Oct 2025</strong></td><td style="text-align:right">26.9L</td><td style="text-align:right">9,007</td><td style="text-align:right">7.56</td><td style="text-align:right">0.33%</td></tr>
+          <tr><td><strong>Nov 2025</strong></td><td style="text-align:right">28.4L</td><td style="text-align:right">14,482</td><td style="text-align:right">11.03</td><td style="text-align:right;color:var(--gn)"><strong>0.51%</strong> peak</td></tr>
+          <tr><td><strong>Dec 2025</strong></td><td style="text-align:right">30.3L</td><td style="text-align:right">14,041</td><td style="text-align:right">10.70</td><td style="text-align:right">0.46%</td></tr>
+          <tr><td><strong>Jan 2026</strong></td><td style="text-align:right">32.6L</td><td style="text-align:right">10,448</td><td style="text-align:right">8.81</td><td style="text-align:right">0.32%</td></tr>
+          <tr><td><strong>Feb 2026</strong></td><td style="text-align:right">35.0L</td><td style="text-align:right">9,683</td><td style="text-align:right">8.52</td><td style="text-align:right">0.28%</td></tr>
+          <tr><td><strong>Mar 2026</strong></td><td style="text-align:right">37.6L</td><td style="text-align:right">11,246</td><td style="text-align:right;color:var(--cy)"><strong>13.99</strong> peak</td><td style="text-align:right">0.30%</td></tr>
+          <tr style="opacity:0.55"><td><strong>Apr 2026*</strong></td><td style="text-align:right">41.0L</td><td style="text-align:right">3,310</td><td style="text-align:right">7.64</td><td style="text-align:right">0.08%</td></tr>
+        </tbody>
+      </table>
+      <p style="font-size:11px;color:var(--dim);margin-top:10px">*April is partial (month still filling).</p>
+    </div>
+  </div>
+</div>
+
+<!-- ===== SLIDE 4 — PHASE 1 BRING USERS ===== -->
+<div class="slide" data-slide="4">
+  <div class="slide-inner">
+    <div class="slide-label">Walkthrough · 4 of 10 · Phase 1</div>
+    <h1 class="slide-title">Phase 1 · Bring Users</h1>
+    <p class="slide-sub">Marketing — paid performance push</p>
+
+    <div class="grid-2">
+      <div class="card">
+        <div class="card-title">Content re-targeting</div>
+        <p>Identified what each user watched. Re-targeted with sequels &amp; related content.</p>
+        <p style="margin-top:6px"><strong>Example:</strong> Watched Punarjanam? Showed them Maha Punarjanam.</p>
+      </div>
+      <div class="card">
+        <div class="card-title">Scaled channels</div>
+        <p>Meta App, Meta Web, Google App campaigns. Continuous A/B on creatives. Optimized by content performance.</p>
+      </div>
+    </div>
+
+    <div class="callout green-callout">
+      <h4>Result — 3× higher SR from same ad spend</h4>
+      <p><strong>Gold cohort SR: 30%</strong> &nbsp;vs&nbsp; <strong>General cohort SR: 10%</strong></p>
+      <p style="margin-top:6px">High-relevance creative = high CTR. Validated the Gold Tier insight.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ===== SLIDE 5 — PHASE 1 IMPROVE CONVERSIONS ===== -->
+<div class="slide" data-slide="5">
+  <div class="slide-inner">
+    <div class="slide-label">Walkthrough · 5 of 10 · Phase 1</div>
+    <h1 class="slide-title">Phase 1 · Improve Conversions</h1>
+    <p class="slide-sub">Product — pricing &amp; paywall levers</p>
+
+    <div class="grid-2">
+      <div class="card">
+        <div class="card-title">🧱 Tiered Subscription <span class="tag gn" style="margin-left:6px">Biggest win</span></div>
+        <p><strong>₹199</strong> monthly &nbsp;/&nbsp; <strong>₹399</strong> quarterly &nbsp;/&nbsp; <strong>₹699</strong> yearly</p>
+        <p style="margin-top:6px">Quarterly acts as decoy → users pick yearly. <strong>2× revenue per user</strong> vs single-plan paywall.</p>
+      </div>
+      <div class="card">
+        <div class="card-title">🔓 Special Access</div>
+        <p>Users land on unlocked experience instead of paywall wall.</p>
+        <p style="margin-top:6px"><strong>+30% CVR</strong> vs non-special-access users.</p>
+      </div>
+      <div class="card">
+        <div class="card-title">🎬 Paywall Video</div>
+        <p>30-second montage showing content breadth upfront.</p>
+        <p style="margin-top:6px"><strong>+7% SR</strong> improvement.</p>
+      </div>
+      <div class="card">
+        <div class="card-title">💸 ₹99 Re-acq Price Point</div>
+        <p>Specially-priced plan for churned users to lower re-entry barrier.</p>
+      </div>
+    </div>
+
+    <div class="callout green-callout" style="margin-top:14px">
+      <h4>Combined metric at ATH</h4>
+      <p><strong>Re-acq % × LTV</strong> — we're at an all-time high. Tiered pricing is doing the heavy lifting on per-user value.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ===== SLIDE 6 — WHY WE PAUSED ===== -->
+<div class="slide" data-slide="6">
+  <div class="slide-inner">
+    <div class="slide-label">Walkthrough · 6 of 10 · Phase 1 Wall</div>
+    <h1 class="slide-title">Why we paused paid spend</h1>
+    <p class="slide-sub">Great relative lift, but economics didn't clear</p>
+
+    <div class="callout red-callout">
+      <h4>CAC too high for LTV profile</h4>
+      <p>Even with 30% SR on Gold tier, the acquisition cost per re-sub didn't line up cleanly against LTV on a payback-period basis.</p>
+    </div>
+
+    <div class="callout red-callout">
+      <h4>Renewal dates clustered badly</h4>
+      <p>Re-acquired users' repayment cycles didn't spread evenly — cash inflow was bunched, so recovery on ad cost was slower than the model assumed.</p>
+    </div>
+
+    <div class="callout amber-callout" style="margin-top:14px">
+      <h4>The decision</h4>
+      <p>Stopped broad paid spend. Kept the tiered-pricing product changes live (they were already winning). Rebuilt the marketing motion around cheaper, owned channels.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ===== SLIDE 7 — PHASE 2 ===== -->
+<div class="slide" data-slide="7">
+  <div class="slide-inner">
+    <div class="slide-label">Walkthrough · 7 of 10 · Phase 2</div>
+    <h1 class="slide-title">Phase 2 · Pivot to owned channels</h1>
+    <p class="slide-sub">Smaller budgets. Learn what moves the needle at near-zero cost.</p>
+
+    <div class="nested">
+      <h4>Push Notifications <span class="tag ro" style="margin-left:6px">Hard learning</span></h4>
+      <p style="margin-top:4px">Target: full <strong>40L churned cohort</strong>. Reachability ~<strong>4%</strong>, delivery ~<strong>0.1%</strong>. Edgy content-led messaging to drive recall.</p>
+      <p style="margin-top:4px;color:var(--ro)"><strong>Result: 0 conversions.</strong></p>
+    </div>
+
+    <div class="nested">
+      <h4>WhatsApp <span class="tag ro" style="margin-left:6px">Hard learning</span></h4>
+      <p style="margin-top:4px">Same playbook. <strong>9K messages delivered.</strong></p>
+      <p style="margin-top:4px;color:var(--ro)"><strong>Result: 2 conversions.</strong></p>
+    </div>
+
+    <div class="nested">
+      <h4>New Meta campaigns <span class="tag am" style="margin-left:6px">Partial win</span></h4>
+      <p style="margin-top:4px">Smaller budget, tighter targeting, new re-acq creatives. <strong>CAC ₹800</strong> (lowered from Phase 1, still not great).</p>
+      <p style="margin-top:4px">Combined pool (re-acq + re-activation) → <strong>~₹2K CAC</strong> — too high.</p>
+    </div>
+
+    <div class="nested">
+      <h4>AI calls <span class="tag am" style="margin-left:6px">Parked</span></h4>
+      <p style="margin-top:4px">Cohort built: 7,190 Saanwari users. Scripts ready (Randeep Hooda personalized + Neighborhood generic). <strong>Not yet dispatched — parked until re-activation is fixed first.</strong></p>
+    </div>
+  </div>
+</div>
+
+<!-- ===== SLIDE 8 — NEXT: MARKETING ===== -->
+<div class="slide" data-slide="8">
+  <div class="slide-inner">
+    <div class="slide-label">Walkthrough · 8 of 10 · What's Next</div>
+    <h1 class="slide-title">Next · Marketing</h1>
+    <p class="slide-sub">Stitch channels together. Stop broadcasting, start flowing.</p>
+
+    <div class="card">
+      <div class="card-title">🔔 PN + AI Call workflow <span class="tag cy" style="margin-left:6px">Channel stacking</span></div>
+      <p>PNs cost ₹0. The question is <strong>how to stack them into a flow that actually converts</strong>.</p>
+      <p style="margin-top:8px"><strong>Draft plan:</strong></p>
+      <ul>
+        <li>Invite user via <strong>Special Access</strong> → unlocked landing</li>
+        <li>Get them to <strong>watch content</strong></li>
+        <li>If they drop off → <strong>PN with movie passes</strong> to pull them back</li>
+        <li>Stack with <strong>AI call dispatch</strong> for high-intent cohorts</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <div class="card-title">🌐 Web as a new channel</div>
+      <p>App-side PNs hit reachability ceilings (4%). Web channels — email, browser push, retargeting pixels — haven't been tested for re-acq. Opening this up.</p>
+    </div>
+
+    <div class="card">
+      <div class="card-title">📣 Different communication</div>
+      <p>Generic "come back" messaging is dead. Move to <strong>content-specific, dialect-aware, behavior-triggered</strong> messaging. Use content intelligence layer we already built (Punarjanam = 32.5% conversion bridge).</p>
+    </div>
+  </div>
+</div>
+
+<!-- ===== SLIDE 9 — NEXT: PRODUCT ===== -->
+<div class="slide" data-slide="9">
+  <div class="slide-inner">
+    <div class="slide-label">Walkthrough · 9 of 10 · What's Next</div>
+    <h1 class="slide-title">Next · Product</h1>
+    <p class="slide-sub">Unused levers. Re-order the funnel, add new payment shapes.</p>
+
+    <div class="grid-2">
+      <div class="card">
+        <div class="card-title">🔄 Trial + Subscription flow</div>
+        <p>Combined entry — show both options side-by-side at the paywall. Test if dual-anchor reduces friction vs trial-only.</p>
+      </div>
+      <div class="card">
+        <div class="card-title">⏮ Subscription first, then trial</div>
+        <p>Reverse the funnel. Pitch ₹199 sub first; if they drop, offer trial as fallback. Shifts perceived commitment order.</p>
+      </div>
+      <div class="card">
+        <div class="card-title">🎞 TVOD (pay-per-view)</div>
+        <p>Transactional payment — buy one movie, not a subscription. Lowest commitment re-entry. Validates intent before asking for recurring payment.</p>
+      </div>
+      <div class="card">
+        <div class="card-title">🎁 Free zone + coins carrot</div>
+        <p>Earn coins by watching free content → unlock more content → graduate to paid. Behavior-first engagement loop.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== SLIDE 10 — TL;DR ===== -->
+<div class="slide" data-slide="10">
+  <div class="slide-inner">
+    <div class="slide-label">Walkthrough · 10 of 10 · Wrap</div>
+    <h1 class="slide-title">TL;DR</h1>
+    <p class="slide-sub">Three beats the rest of the org should remember</p>
+
+    <div class="callout">
+      <h4>1 · Phase 1 proved the model</h4>
+      <p>Gold Tier framework works (3× higher SR). Tiered subscription works (2× revenue per user). <strong>Re-acq % × LTV is at all-time high.</strong></p>
+    </div>
+
+    <div class="callout amber-callout">
+      <h4>2 · Phase 1 economics didn't clear, so we pivoted</h4>
+      <p>CAC too high, renewal cycles clustered. Paused paid spend. Pivoted to owned channels — but broadcast PN/WA alone don't convert a cold churned base.</p>
+    </div>
+
+    <div class="callout green-callout">
+      <h4>3 · Next is workflows, not volume</h4>
+      <p>Stitch PN + Special Access + AI calls into a flow. Open web as a new channel. Product experiments: trial-sub ordering, TVOD, free zone with coins. <strong>Goal: 1% re-acq rate, ₹22L monthly LTV.</strong></p>
+    </div>
+
+    <p style="font-size:12px;color:var(--dim);text-align:center;margin-top:30px">
+      Use ← / → or Space to navigate &nbsp;·&nbsp; Esc to jump to title
     </p>
   </div>
-
-  <div class="card" style="margin-top:12px">
-    <div class="card-title">Raw numbers</div>
-    <table>
-      <thead>
-        <tr><th>Month</th><th style="text-align:right">Pool (Seg)</th><th style="text-align:right">Returners</th><th style="text-align:right">LTV ₹L</th><th style="text-align:right">Rate %</th></tr>
-      </thead>
-      <tbody>
-        <tr><td><strong>Oct 2025</strong></td><td style="text-align:right">26.9L</td><td style="text-align:right">9,007</td><td style="text-align:right">7.56</td><td style="text-align:right">0.33%</td></tr>
-        <tr><td><strong>Nov 2025</strong></td><td style="text-align:right">28.4L</td><td style="text-align:right">14,482</td><td style="text-align:right">11.03</td><td style="text-align:right;color:var(--gn)"><strong>0.51%</strong> (peak)</td></tr>
-        <tr><td><strong>Dec 2025</strong></td><td style="text-align:right">30.3L</td><td style="text-align:right">14,041</td><td style="text-align:right">10.70</td><td style="text-align:right">0.46%</td></tr>
-        <tr><td><strong>Jan 2026</strong></td><td style="text-align:right">32.6L</td><td style="text-align:right">10,448</td><td style="text-align:right">8.81</td><td style="text-align:right">0.32%</td></tr>
-        <tr><td><strong>Feb 2026</strong></td><td style="text-align:right">35.0L</td><td style="text-align:right">9,683</td><td style="text-align:right">8.52</td><td style="text-align:right">0.28%</td></tr>
-        <tr><td><strong>Mar 2026</strong></td><td style="text-align:right">37.6L</td><td style="text-align:right">11,246</td><td style="text-align:right;color:var(--cy)"><strong>13.99</strong></td><td style="text-align:right">0.30%</td></tr>
-        <tr style="opacity:0.6"><td><strong>Apr 2026*</strong></td><td style="text-align:right">41.0L</td><td style="text-align:right">3,310</td><td style="text-align:right">7.64</td><td style="text-align:right">0.08%</td></tr>
-      </tbody>
-    </table>
-    <p style="font-size:11px;color:var(--dim);margin-top:10px">*Apr 2026 partial (month still filling).</p>
-  </div>
-
-  <div class="callout green-callout">
-    <h4>What the data shows</h4>
-    <p><strong>Pool grew ~50%</strong> (26.9L → 41L) over 7 months as more users churned.</p>
-    <p style="margin-top:6px"><strong>Rate declined</strong> from peak 0.51% (Nov) to ~0.30% (Mar) — harder to convert a saturating cold base with broadcast channels.</p>
-    <p style="margin-top:6px"><strong>LTV jumped in Mar to ₹14L</strong> — tiered subscription launched Mar 22, lifting per-user value even at flat returner count. That's the combined metric win.</p>
-  </div>
 </div>
 
-<!-- ========== WHAT WE SET OUT TO DO ========== -->
-<div class="sec">
-  <div class="sec-h"><div class="dot" style="background:var(--cy)"></div><h2>What we set out to do</h2></div>
-  <div class="sec-sub">The opportunity no one was owning</div>
-
-  <div class="card">
-    <p><strong>4.26M users paid Stage, watched content, and left.</strong> Nobody was touching them after churn — they were abandoned. We stepped in.</p>
-    <p style="margin-top:10px">We ran a 5-layer churn analysis and carved out a <span class="highlight">Gold Tier of 1.9M users (44.6% of base)</span> — users with 4+ content completions and multi-cycle subscription history. Same ad spend, <strong>2.86× higher return rate</strong>.</p>
-    <span class="tag cy">Strategic Framework</span>
-  </div>
 </div>
 
-<!-- ========== PHASE 1 ========== -->
-<div class="sec">
-  <div class="sec-h"><div class="dot" style="background:var(--am)"></div><h2>Phase 1 — Paid performance push</h2></div>
-  <div class="sec-sub">Scale fast, learn economics</div>
-
-  <div class="card">
-    <div class="card-title">What we shipped</div>
-    <ul>
-      <li><strong>Content re-targeting.</strong> Watched Punarjanam? Showed them Maha Punarjanam.</li>
-      <li><strong>Channels scaled.</strong> Meta App, Meta Web, Google App campaigns. Continuous A/B on creatives.</li>
-      <li><strong>Launched tiered subscription</strong> — ₹199 monthly / ₹399 quarterly / ₹699 yearly. Quarterly acts as decoy → users pick yearly. <strong>2× revenue per user</strong> vs single-plan paywall.</li>
-    </ul>
-    <span class="tag gn">Ads + Pricing</span>
-  </div>
-
-  <div class="callout green-callout">
-    <h4>What worked</h4>
-    <p><strong>Gold cohort SR: 30% vs general 10%</strong> — 3× higher subscription rate from the same spend.</p>
-    <p style="margin-top:6px">On the combined metric of <strong>Re-acq % × LTV</strong>, we're at an <strong>all-time high</strong>. Tiered subscription pushed per-user revenue up materially — even with flat returner counts, revenue moved meaningfully.</p>
-  </div>
-
-  <div class="callout red-callout">
-    <h4>Why we paused paid spend</h4>
-    <p><strong>CAC too high for the LTV profile.</strong> Renewal dates on re-acquired users clustered badly — repayment cycles weren't lining up fast enough to recover ad cost. We called a stop on the paid-heavy approach and rebuilt around lower-cost motions.</p>
-  </div>
-</div>
-
-<!-- ========== PHASE 2 ========== -->
-<div class="sec">
-  <div class="sec-h"><div class="dot" style="background:var(--pu)"></div><h2>Phase 2 — Pivot to owned channels</h2></div>
-  <div class="sec-sub">Smaller budgets, tighter targeting, learn what moves the needle at near-zero cost</div>
-
-  <div class="nested">
-    <h4>Push Notifications</h4>
-    <span class="tag ro">Hard learning</span>
-    <p style="margin-top:6px">Target: full <strong>40L churned cohort</strong>. Reachability ~<strong>4%</strong>, delivery ~<strong>0.1%</strong>. Used edgy content-led messaging to drive recall.</p>
-    <p style="margin-top:6px;color:var(--ro)"><strong>Result: 0 conversions.</strong></p>
-  </div>
-
-  <div class="nested">
-    <h4>WhatsApp</h4>
-    <span class="tag ro">Hard learning</span>
-    <p style="margin-top:6px">Same playbook — content-led re-engagement. <strong>9K messages delivered.</strong></p>
-    <p style="margin-top:6px;color:var(--ro)"><strong>Result: 2 conversions.</strong></p>
-  </div>
-
-  <div class="nested">
-    <h4>New Meta campaigns</h4>
-    <span class="tag am">Partial win</span>
-    <p style="margin-top:6px">Smaller budget, tighter targeting, new re-acq creatives. <strong>CAC ₹800</strong> (lowered from Phase 1 levels, but still not great).</p>
-    <p style="margin-top:6px">Combined pool (re-acq + re-activation) campaigns running at <strong>~₹2K CAC</strong> — too high for our LTV.</p>
-  </div>
-
-  <div class="nested">
-    <h4>AI calls</h4>
-    <span class="tag am">Parked</span>
-    <p style="margin-top:6px">Cohort built — 7,190 Saanwari users. Scripts ready (Randeep Hooda personalized + Neighborhood generic). <strong>Not yet dispatched — parked until we fix the re-activation side first.</strong></p>
-  </div>
-
-  <div class="callout amber-callout">
-    <h4>The lesson</h4>
-    <p>Owned channels at scale don't convert a cold churned base without better personalization and flow. Broadcast-style messaging (PN, WA) hit reachability ceilings. Paid spend on combined pool is too expensive. <strong>We need a workflow that stitches channels together</strong> — not just more volume on any one of them.</p>
-  </div>
-</div>
-
-<!-- ========== NEXT STEPS ========== -->
-<div class="sec">
-  <div class="sec-h"><div class="dot" style="background:var(--cy)"></div><h2>What's next</h2></div>
-  <div class="sec-sub">Stitched workflows + product levers we haven't pulled yet</div>
-
-  <div class="card">
-    <div class="card-title">AI calls + PN workflow</div>
-    <p>PNs cost ₹0 to send. The question isn't "send more" — it's <strong>how do we stack them into a flow</strong> that actually converts?</p>
-    <p style="margin-top:10px"><strong>Draft plan:</strong></p>
-    <ul>
-      <li>Invite user via <strong>Special Access</strong> (unlocked landing experience).</li>
-      <li>Get them to <strong>watch content</strong>.</li>
-      <li>If they drop off → <strong>PN with movie passes</strong> to pull them back.</li>
-      <li>Combine with <strong>AI call dispatch</strong> for high-intent cohorts.</li>
-    </ul>
-    <span class="tag cy">Channel stacking</span>
-  </div>
-
-  <div class="card">
-    <div class="card-title">Product-side experiments</div>
-    <ul>
-      <li><strong>Trial with subscription</strong> — combined flow at entry</li>
-      <li><strong>Subscription first, then trial</strong> — reverse the order</li>
-      <li><strong>TVOD</strong> — pay-per-view / transactional model for content</li>
-      <li><strong>Free zone + coins carrot</strong> — earn by watching, unlock more</li>
-    </ul>
-    <span class="tag pu">Flow experiments</span>
-  </div>
-</div>
-
-<hr>
-
-<div class="callout">
-  <h4>TL;DR for stakeholders</h4>
-  <p>Phase 1 paid push proved the Gold Tier insight and the tiered subscription lever — <strong>Re-acq % × LTV is at all-time high</strong>. But CAC didn't clear LTV cleanly, so we paused broad paid spend.</p>
-  <p style="margin-top:8px">Phase 2 owned-channel pivot taught us that broadcast PN/WA doesn't work alone. We're now building <strong>stitched workflows</strong> (PN + AI call + Special Access) and testing <strong>new product flows</strong> (TVOD, coins, trial-sub ordering) before re-scaling spend.</p>
-</div>
-
+<!-- Deck controls -->
+<div class="controls">
+  <button id="prevBtn" title="Previous">‹</button>
+  <div class="counter"><span id="curNum">1</span> / <span id="totalNum">10</span></div>
+  <div class="dots" id="dotsContainer"></div>
+  <button id="nextBtn" title="Next">›</button>
 </div>
 
 <script>
+// Deck navigation
+const slides = document.querySelectorAll('.slide');
+const totalSlides = slides.length;
+let current = 0;
+const curNum = document.getElementById('curNum');
+const totalNum = document.getElementById('totalNum');
+const prevBtn = document.getElementById('prevBtn');
+const nextBtn = document.getElementById('nextBtn');
+const dotsContainer = document.getElementById('dotsContainer');
+
+totalNum.textContent = totalSlides;
+
+// Build dots
+for (let i = 0; i < totalSlides; i++) {
+  const d = document.createElement('div');
+  d.className = 'dot' + (i === 0 ? ' active' : '');
+  d.onclick = () => goTo(i);
+  dotsContainer.appendChild(d);
+}
+
+function goTo(n) {
+  n = Math.max(0, Math.min(totalSlides - 1, n));
+  slides[current].classList.remove('active');
+  slides[n].classList.add('active');
+  document.querySelectorAll('.dot')[current].classList.remove('active');
+  document.querySelectorAll('.dot')[n].classList.add('active');
+  current = n;
+  curNum.textContent = n + 1;
+  prevBtn.disabled = n === 0;
+  nextBtn.disabled = n === totalSlides - 1;
+  window.scrollTo(0, 0);
+  // Resize chart if we just landed on slide 3
+  if (n === 2 && window._reacqChart) window._reacqChart.resize();
+}
+
+prevBtn.onclick = () => goTo(current - 1);
+nextBtn.onclick = () => goTo(current + 1);
+
+document.addEventListener('keydown', e => {
+  if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
+  if (e.key === 'ArrowRight' || e.key === ' ' || e.key === 'PageDown') { e.preventDefault(); goTo(current + 1); }
+  if (e.key === 'ArrowLeft' || e.key === 'PageUp') { e.preventDefault(); goTo(current - 1); }
+  if (e.key === 'Home' || e.key === 'Escape') goTo(0);
+  if (e.key === 'End') goTo(totalSlides - 1);
+});
+
+prevBtn.disabled = true;
+
+// Chart
 const labels = ['Oct 2025','Nov 2025','Dec 2025','Jan 2026','Feb 2026','Mar 2026','Apr 2026'];
 const pct = [0.33, 0.51, 0.46, 0.32, 0.28, 0.30, null];
 const pctPartial = [null, null, null, null, null, 0.30, 0.08];
 const ltv = [7.56, 11.03, 10.70, 8.81, 8.52, 13.99, null];
 const ltvPartial = [null, null, null, null, null, 13.99, 7.64];
 
-new Chart(document.getElementById('reacqChart'), {
+window._reacqChart = new Chart(document.getElementById('reacqChart'), {
   type: 'line',
   data: {
-    labels: labels,
+    labels,
     datasets: [
-      { label: 'Rate % (matured)', data: pct, borderColor: '#88BF4D', backgroundColor: 'rgba(136,191,77,0.08)', yAxisID: 'y', tension: 0.3, borderWidth: 2.5, pointRadius: 4, pointBackgroundColor: '#88BF4D', fill: false },
+      { label: 'Rate % (matured)', data: pct, borderColor: '#88BF4D', yAxisID: 'y', tension: 0.3, borderWidth: 2.5, pointRadius: 4, pointBackgroundColor: '#88BF4D', fill: false },
       { label: 'Rate % (current)', data: pctPartial, borderColor: '#88BF4D', borderDash: [5, 5], yAxisID: 'y', tension: 0.3, borderWidth: 2, pointRadius: 3, pointBackgroundColor: '#88BF4D', fill: false },
-      { label: 'LTV ₹L (matured)', data: ltv, borderColor: '#509EE3', backgroundColor: 'rgba(80,158,227,0.08)', yAxisID: 'y1', tension: 0.3, borderWidth: 2.5, pointRadius: 4, pointBackgroundColor: '#509EE3', fill: false },
+      { label: 'LTV ₹L (matured)', data: ltv, borderColor: '#509EE3', yAxisID: 'y1', tension: 0.3, borderWidth: 2.5, pointRadius: 4, pointBackgroundColor: '#509EE3', fill: false },
       { label: 'LTV ₹L (current)', data: ltvPartial, borderColor: '#509EE3', borderDash: [5, 5], yAxisID: 'y1', tension: 0.3, borderWidth: 2, pointRadius: 3, pointBackgroundColor: '#509EE3', fill: false }
     ]
   },
@@ -283,12 +526,7 @@ new Chart(document.getElementById('reacqChart'), {
     plugins: {
       legend: { display: false },
       tooltip: {
-        backgroundColor: '#1a1b25',
-        titleColor: '#e8e8ed',
-        bodyColor: '#e8e8ed',
-        borderColor: '#2a2b38',
-        borderWidth: 1,
-        padding: 10,
+        backgroundColor: '#1a1b25', titleColor: '#e8e8ed', bodyColor: '#e8e8ed', borderColor: '#2a2b38', borderWidth: 1, padding: 10,
         callbacks: {
           label: function(ctx) {
             if (ctx.parsed.y === null) return null;
@@ -300,24 +538,9 @@ new Chart(document.getElementById('reacqChart'), {
       }
     },
     scales: {
-      x: {
-        ticks: { color: '#8888a0', font: { size: 11 } },
-        grid: { color: 'rgba(255,255,255,0.03)' }
-      },
-      y: {
-        type: 'linear',
-        position: 'left',
-        title: { display: true, text: 'Rate %', color: '#88BF4D', font: { size: 11 } },
-        ticks: { color: '#88BF4D', font: { size: 11 }, callback: v => v + '%' },
-        grid: { color: 'rgba(255,255,255,0.05)' }
-      },
-      y1: {
-        type: 'linear',
-        position: 'right',
-        title: { display: true, text: 'LTV ₹L', color: '#509EE3', font: { size: 11 } },
-        ticks: { color: '#509EE3', font: { size: 11 }, callback: v => '₹' + v + 'L' },
-        grid: { drawOnChartArea: false }
-      }
+      x: { ticks: { color: '#8888a0', font: { size: 11 } }, grid: { color: 'rgba(255,255,255,0.03)' } },
+      y: { type: 'linear', position: 'left', title: { display: true, text: 'Rate %', color: '#88BF4D', font: { size: 11 } }, ticks: { color: '#88BF4D', font: { size: 11 }, callback: v => v + '%' }, grid: { color: 'rgba(255,255,255,0.05)' } },
+      y1: { type: 'linear', position: 'right', title: { display: true, text: 'LTV ₹L', color: '#509EE3', font: { size: 11 } }, ticks: { color: '#509EE3', font: { size: 11 }, callback: v => '₹' + v + 'L' }, grid: { drawOnChartArea: false } }
     }
   }
 });
