@@ -6,6 +6,7 @@
 <title>Re-acquisition Work Update — STAGE</title>
 <link rel="icon" type="image/x-icon" href="https://www.stage.in/favicon.ico">
 <link rel="shortcut icon" href="https://www.stage.in/favicon.ico">
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
 <style>
 @import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700&family=JetBrains+Mono:wght@400;500&display=swap');
 *{margin:0;padding:0;box-sizing:border-box}
@@ -94,6 +95,49 @@ hr{border:none;border-top:1px solid var(--bd);margin:48px 0}
     <div class="kpi"><div class="v">1.9M</div><div class="l">Gold Tier</div></div>
     <div class="kpi"><div class="v">2.86×</div><div class="l">Gold vs General SR</div></div>
     <div class="kpi"><div class="v">All-Time High</div><div class="l">Re-acq % × LTV</div></div>
+  </div>
+</div>
+
+<!-- ========== LIVE DATA ========== -->
+<div class="sec">
+  <div class="sec-h"><div class="dot" style="background:var(--gn)"></div><h2>Live numbers — Re-acquisition</h2></div>
+  <div class="sec-sub">Monthly rate, returners count &amp; LTV (₹ Lakhs). Last 7 months. Data via <code style="font-size:11px;color:var(--cy)">subscription_taken_manually</code> events + Snowflake.</div>
+
+  <div class="card" style="padding:20px 20px 8px">
+    <div style="position:relative;height:340px;margin-bottom:10px">
+      <canvas id="reacqChart"></canvas>
+    </div>
+    <p style="font-size:11px;color:var(--dim);text-align:center;margin-top:8px">
+      <span style="color:#88BF4D">● Rate %</span> &nbsp; • &nbsp;
+      <span style="color:#509EE3">● LTV ₹ Lakhs</span> &nbsp; • &nbsp;
+      Solid = matured, Dotted = current month (partial)
+    </p>
+  </div>
+
+  <div class="card" style="margin-top:12px">
+    <div class="card-title">Raw numbers</div>
+    <table>
+      <thead>
+        <tr><th>Month</th><th style="text-align:right">Pool (Seg)</th><th style="text-align:right">Returners</th><th style="text-align:right">LTV ₹L</th><th style="text-align:right">Rate %</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><strong>Oct 2025</strong></td><td style="text-align:right">26.9L</td><td style="text-align:right">9,007</td><td style="text-align:right">7.56</td><td style="text-align:right">0.33%</td></tr>
+        <tr><td><strong>Nov 2025</strong></td><td style="text-align:right">28.4L</td><td style="text-align:right">14,482</td><td style="text-align:right">11.03</td><td style="text-align:right;color:var(--gn)"><strong>0.51%</strong> (peak)</td></tr>
+        <tr><td><strong>Dec 2025</strong></td><td style="text-align:right">30.3L</td><td style="text-align:right">14,041</td><td style="text-align:right">10.70</td><td style="text-align:right">0.46%</td></tr>
+        <tr><td><strong>Jan 2026</strong></td><td style="text-align:right">32.6L</td><td style="text-align:right">10,448</td><td style="text-align:right">8.81</td><td style="text-align:right">0.32%</td></tr>
+        <tr><td><strong>Feb 2026</strong></td><td style="text-align:right">35.0L</td><td style="text-align:right">9,683</td><td style="text-align:right">8.52</td><td style="text-align:right">0.28%</td></tr>
+        <tr><td><strong>Mar 2026</strong></td><td style="text-align:right">37.6L</td><td style="text-align:right">11,246</td><td style="text-align:right;color:var(--cy)"><strong>13.99</strong></td><td style="text-align:right">0.30%</td></tr>
+        <tr style="opacity:0.6"><td><strong>Apr 2026*</strong></td><td style="text-align:right">41.0L</td><td style="text-align:right">3,310</td><td style="text-align:right">7.64</td><td style="text-align:right">0.08%</td></tr>
+      </tbody>
+    </table>
+    <p style="font-size:11px;color:var(--dim);margin-top:10px">*Apr 2026 partial (month still filling).</p>
+  </div>
+
+  <div class="callout green-callout">
+    <h4>What the data shows</h4>
+    <p><strong>Pool grew ~50%</strong> (26.9L → 41L) over 7 months as more users churned.</p>
+    <p style="margin-top:6px"><strong>Rate declined</strong> from peak 0.51% (Nov) to ~0.30% (Mar) — harder to convert a saturating cold base with broadcast channels.</p>
+    <p style="margin-top:6px"><strong>LTV jumped in Mar to ₹14L</strong> — tiered subscription launched Mar 22, lifting per-user value even at flat returner count. That's the combined metric win.</p>
   </div>
 </div>
 
@@ -213,5 +257,71 @@ hr{border:none;border-top:1px solid var(--bd);margin:48px 0}
 </div>
 
 </div>
+
+<script>
+const labels = ['Oct 2025','Nov 2025','Dec 2025','Jan 2026','Feb 2026','Mar 2026','Apr 2026'];
+const pct = [0.33, 0.51, 0.46, 0.32, 0.28, 0.30, null];
+const pctPartial = [null, null, null, null, null, 0.30, 0.08];
+const ltv = [7.56, 11.03, 10.70, 8.81, 8.52, 13.99, null];
+const ltvPartial = [null, null, null, null, null, 13.99, 7.64];
+
+new Chart(document.getElementById('reacqChart'), {
+  type: 'line',
+  data: {
+    labels: labels,
+    datasets: [
+      { label: 'Rate % (matured)', data: pct, borderColor: '#88BF4D', backgroundColor: 'rgba(136,191,77,0.08)', yAxisID: 'y', tension: 0.3, borderWidth: 2.5, pointRadius: 4, pointBackgroundColor: '#88BF4D', fill: false },
+      { label: 'Rate % (current)', data: pctPartial, borderColor: '#88BF4D', borderDash: [5, 5], yAxisID: 'y', tension: 0.3, borderWidth: 2, pointRadius: 3, pointBackgroundColor: '#88BF4D', fill: false },
+      { label: 'LTV ₹L (matured)', data: ltv, borderColor: '#509EE3', backgroundColor: 'rgba(80,158,227,0.08)', yAxisID: 'y1', tension: 0.3, borderWidth: 2.5, pointRadius: 4, pointBackgroundColor: '#509EE3', fill: false },
+      { label: 'LTV ₹L (current)', data: ltvPartial, borderColor: '#509EE3', borderDash: [5, 5], yAxisID: 'y1', tension: 0.3, borderWidth: 2, pointRadius: 3, pointBackgroundColor: '#509EE3', fill: false }
+    ]
+  },
+  options: {
+    responsive: true,
+    maintainAspectRatio: false,
+    interaction: { mode: 'index', intersect: false },
+    plugins: {
+      legend: { display: false },
+      tooltip: {
+        backgroundColor: '#1a1b25',
+        titleColor: '#e8e8ed',
+        bodyColor: '#e8e8ed',
+        borderColor: '#2a2b38',
+        borderWidth: 1,
+        padding: 10,
+        callbacks: {
+          label: function(ctx) {
+            if (ctx.parsed.y === null) return null;
+            const lbl = ctx.dataset.label;
+            if (lbl.includes('Rate')) return `${lbl}: ${ctx.parsed.y}%`;
+            return `${lbl}: ₹${ctx.parsed.y}L`;
+          }
+        }
+      }
+    },
+    scales: {
+      x: {
+        ticks: { color: '#8888a0', font: { size: 11 } },
+        grid: { color: 'rgba(255,255,255,0.03)' }
+      },
+      y: {
+        type: 'linear',
+        position: 'left',
+        title: { display: true, text: 'Rate %', color: '#88BF4D', font: { size: 11 } },
+        ticks: { color: '#88BF4D', font: { size: 11 }, callback: v => v + '%' },
+        grid: { color: 'rgba(255,255,255,0.05)' }
+      },
+      y1: {
+        type: 'linear',
+        position: 'right',
+        title: { display: true, text: 'LTV ₹L', color: '#509EE3', font: { size: 11 } },
+        ticks: { color: '#509EE3', font: { size: 11 }, callback: v => '₹' + v + 'L' },
+        grid: { drawOnChartArea: false }
+      }
+    }
+  }
+});
+</script>
+
 </body>
 </html>
