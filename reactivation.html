@@ -1,0 +1,598 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Re-activation — Walkthrough — STAGE</title>
+<link rel="icon" type="image/x-icon" href="https://www.stage.in/favicon.ico">
+<link rel="shortcut icon" href="https://www.stage.in/favicon.ico">
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700&family=JetBrains+Mono:wght@400;500&display=swap');
+*{margin:0;padding:0;box-sizing:border-box}
+:root{--bg:#0a0b0f;--s1:#12131a;--s2:#1a1b25;--bd:#2a2b38;--tx:#e8e8ed;--dim:#8888a0;--cy:#06b6d4;--am:#f59e0b;--ro:#f43f5e;--gn:#258d58;--pu:#a78bfa}
+html,body{height:100%;overflow:hidden}
+body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--tx);line-height:1.55}
+
+.navbar{position:fixed;top:0;left:0;right:0;z-index:50;background:rgba(10,11,15,0.85);backdrop-filter:blur(12px);border-bottom:1px solid var(--bd)}
+.nav-inner{max-width:1100px;margin:0 auto;padding:12px 28px;display:flex;align-items:center;justify-content:space-between}
+.nav-brand{display:flex;align-items:center;gap:10px;text-decoration:none;color:var(--tx)}
+.nav-brand img{height:24px;width:auto;display:block}
+.nav-brand .nav-label{font-size:11px;color:var(--dim);text-transform:uppercase;letter-spacing:0.1em;font-weight:500}
+.nav-right{display:flex;align-items:center;gap:18px}
+.nav-right a{font-size:12px;color:var(--dim);text-decoration:none;font-weight:500}
+.nav-right a:hover{color:var(--cy)}
+
+.deck{position:relative;height:100vh;width:100vw;padding-top:50px}
+.slide{position:absolute;top:50px;left:0;right:0;bottom:0;opacity:0;pointer-events:none;transition:opacity 0.35s ease;overflow-y:auto}
+.slide.active{opacity:1;pointer-events:auto}
+.slide-inner{max-width:1100px;margin:0 auto;padding:40px 48px 80px;min-height:100%;display:flex;flex-direction:column;justify-content:center}
+.slide-label{font-size:11px;color:var(--cy);text-transform:uppercase;letter-spacing:0.12em;font-weight:600;margin-bottom:10px}
+.slide-title{font-size:38px;font-weight:700;letter-spacing:-0.03em;margin-bottom:6px;line-height:1.1}
+.slide-sub{font-size:15px;color:var(--dim);margin-bottom:32px}
+
+.controls{position:fixed;bottom:24px;left:50%;transform:translateX(-50%);display:flex;align-items:center;gap:14px;z-index:100;background:rgba(26,27,37,0.92);border:1px solid var(--bd);border-radius:100px;padding:8px 14px;backdrop-filter:blur(10px)}
+.controls button{background:transparent;border:none;color:var(--tx);cursor:pointer;width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:14px;transition:background 0.15s}
+.controls button:hover{background:var(--bd)}
+.controls button:disabled{opacity:0.3;cursor:not-allowed}
+.controls .counter{font-size:12px;color:var(--dim);font-family:'JetBrains Mono',monospace;min-width:52px;text-align:center}
+.controls .dots{display:flex;gap:5px;margin-left:6px}
+.controls .dot{width:6px;height:6px;border-radius:50%;background:var(--bd);cursor:pointer;transition:background 0.15s}
+.controls .dot.active{background:var(--cy);width:18px;border-radius:6px}
+
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:16px;margin-bottom:28px}
+.kpi-card{background:var(--s1);border:1px solid var(--bd);border-radius:12px;padding:18px}
+.kpi-card .v{font-size:28px;font-weight:700;font-family:'JetBrains Mono',monospace;letter-spacing:-0.02em}
+.kpi-card .l{font-size:11px;color:var(--dim);text-transform:uppercase;letter-spacing:0.08em;margin-top:4px}
+.kpi-card .goal{font-size:11px;color:var(--am);margin-top:6px;font-weight:500}
+
+.card{background:var(--s1);border:1px solid var(--bd);border-radius:12px;padding:18px;margin-bottom:12px}
+.card-title{font-size:15px;font-weight:600;margin-bottom:8px;display:flex;align-items:center;gap:8px}
+.card p,.card li{font-size:13px;color:var(--dim);line-height:1.7}
+.card li{margin-left:18px;margin-bottom:4px}
+.card strong{color:var(--tx);font-weight:500}
+.card .highlight{color:var(--cy);font-weight:500}
+.card a{color:var(--cy);text-decoration:none;border-bottom:1px dotted rgba(6,182,212,0.4);font-size:12px}
+.card a:hover{border-bottom-color:var(--cy)}
+
+.tag{display:inline-block;padding:2px 10px;border-radius:100px;font-size:11px;font-family:'JetBrains Mono',monospace;font-weight:500}
+.tag.cy{background:rgba(6,182,212,0.12);color:var(--cy);border:1px solid rgba(6,182,212,0.25)}
+.tag.am{background:rgba(245,158,11,0.12);color:var(--am);border:1px solid rgba(245,158,11,0.25)}
+.tag.gn{background:rgba(37,141,88,0.12);color:var(--gn);border:1px solid rgba(37,141,88,0.25)}
+.tag.ro{background:rgba(244,63,94,0.12);color:var(--ro);border:1px solid rgba(244,63,94,0.25)}
+.tag.pu{background:rgba(167,139,250,0.12);color:var(--pu);border:1px solid rgba(167,139,250,0.25)}
+
+table{width:100%;border-collapse:collapse;font-size:12.5px;margin-top:10px}
+th{text-align:left;padding:8px 10px;font-size:10.5px;text-transform:uppercase;letter-spacing:0.06em;color:var(--dim);background:var(--s2);border-bottom:1px solid var(--bd)}
+td{padding:8px 10px;border-bottom:1px solid rgba(255,255,255,0.04);color:var(--dim)}
+td strong{color:var(--tx);font-weight:600}
+
+.callout{background:linear-gradient(135deg,var(--s1),rgba(6,182,212,0.08));border:1px solid rgba(6,182,212,0.2);border-radius:12px;padding:18px;margin-bottom:10px}
+.callout h4{font-size:14px;font-weight:600;color:var(--cy);margin-bottom:6px}
+.callout p{font-size:13px;color:var(--dim);line-height:1.7}
+.amber-callout{background:linear-gradient(135deg,var(--s1),rgba(245,158,11,0.08));border:1px solid rgba(245,158,11,0.2)}
+.amber-callout h4{color:var(--am)}
+.green-callout{background:linear-gradient(135deg,var(--s1),rgba(37,141,88,0.08));border:1px solid rgba(37,141,88,0.2)}
+.green-callout h4{color:var(--gn)}
+.red-callout{background:linear-gradient(135deg,var(--s1),rgba(244,63,94,0.08));border:1px solid rgba(244,63,94,0.2)}
+.red-callout h4{color:var(--ro)}
+.purple-callout{background:linear-gradient(135deg,var(--s1),rgba(167,139,250,0.08));border:1px solid rgba(167,139,250,0.2)}
+.purple-callout h4{color:var(--pu)}
+
+.two-arcs{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-top:28px}
+.arc{background:var(--s1);border:1px solid var(--bd);border-radius:14px;padding:26px;transition:transform 0.2s, border-color 0.2s}
+.arc:hover{transform:translateY(-3px);border-color:var(--cy)}
+.arc .icon{font-size:40px;margin-bottom:8px;display:block}
+.arc h3{font-size:22px;font-weight:700;margin-bottom:4px;letter-spacing:-0.02em}
+.arc .seg-size{font-size:12px;color:var(--cy);font-family:'JetBrains Mono',monospace;font-weight:600;margin-bottom:10px}
+.arc p{font-size:13px;color:var(--dim);line-height:1.6}
+.arc .mini-metrics{display:flex;gap:14px;margin-top:14px;padding-top:14px;border-top:1px solid var(--bd)}
+.arc .mini{flex:1}
+.arc .mini .mv{font-size:18px;font-weight:700;font-family:'JetBrains Mono',monospace;color:var(--tx)}
+.arc .mini .ml{font-size:10px;color:var(--dim);text-transform:uppercase;letter-spacing:0.06em;margin-top:2px}
+
+.nested{background:var(--s2);border:1px solid var(--bd);border-radius:8px;padding:14px;margin-top:10px;margin-bottom:8px}
+.nested h4{font-size:13px;font-weight:600;margin-bottom:4px}
+.nested p{font-size:12.5px;color:var(--dim);line-height:1.65}
+.nested .tag{margin-top:6px;margin-bottom:0}
+.nested a{color:var(--cy);text-decoration:none;border-bottom:1px dotted rgba(6,182,212,0.4);font-size:11.5px}
+.nested a:hover{border-bottom-color:var(--cy)}
+
+.grid-2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+
+.chart-box{background:var(--s1);border:1px solid var(--bd);border-radius:12px;padding:18px;margin-bottom:10px}
+.chart-canvas-wrap{position:relative;height:260px}
+
+.pricing-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:16px}
+.price-card{background:var(--s1);border:1px solid var(--bd);border-radius:12px;padding:18px;text-align:center;transition:transform 0.2s, border-color 0.2s}
+.price-card:hover{transform:translateY(-3px);border-color:var(--pu)}
+.price-card.highlight{border-color:var(--am);background:linear-gradient(135deg,var(--s1),rgba(245,158,11,0.06))}
+.price-card .plabel{font-size:11px;color:var(--dim);text-transform:uppercase;letter-spacing:0.1em;margin-bottom:8px}
+.price-card .pval{font-size:28px;font-weight:700;font-family:'JetBrains Mono',monospace;color:var(--tx);margin-bottom:4px}
+.price-card .pdesc{font-size:12px;color:var(--dim)}
+
+@media(max-width:700px){
+  .slide-title{font-size:28px}
+  .slide-inner{padding:24px 20px 60px}
+  .two-arcs,.grid-2,.grid-3,.pricing-grid{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+
+<nav class="navbar">
+  <div class="nav-inner">
+    <a class="nav-brand" href="./">
+      <img src="https://media.stage.in/static/stage_logo_stack.png" alt="STAGE">
+      <span class="nav-label">Re-activation · Walkthrough</span>
+    </a>
+    <div class="nav-right">
+      <a href="./">Re-acq Strategy</a>
+      <a href="./work-2.html">Re-acq Update</a>
+      <a href="./reactivation.html">Re-activation</a>
+    </div>
+  </div>
+</nav>
+
+<div class="deck">
+
+<!-- ===== SLIDE 1 — TITLE + GOALS ===== -->
+<div class="slide active" data-slide="1">
+  <div class="slide-inner">
+    <div class="slide-label">Walkthrough · 1 of 10</div>
+    <h1 class="slide-title">Re-activation <span style="color:var(--cy)">Walkthrough</span></h1>
+    <p class="slide-sub">The 2.56 Cr users who signed up and the 38.8L who trialed but never paid</p>
+
+    <div class="kpis">
+      <div class="kpi-card">
+        <div class="v" style="color:var(--cy)">2.56 Cr</div>
+        <div class="l">Seg A · Pool</div>
+        <div class="goal" style="color:var(--dim)">Saw paywall, never trialed</div>
+      </div>
+      <div class="kpi-card">
+        <div class="v" style="color:var(--pu)">38.8L</div>
+        <div class="l">Seg B · Pool</div>
+        <div class="goal" style="color:var(--dim)">Trialed, cancelled mandate</div>
+      </div>
+      <div class="kpi-card">
+        <div class="v" style="color:var(--gn)">0.45%</div>
+        <div class="l">Seg A · Monthly Rate</div>
+        <div class="goal">Goal: 0.90% &nbsp;→&nbsp; 2×</div>
+      </div>
+      <div class="kpi-card">
+        <div class="v" style="color:var(--am)">0.15%</div>
+        <div class="l">Seg B · Monthly Rate</div>
+        <div class="goal">Goal: 0.30% &nbsp;→&nbsp; 2×</div>
+      </div>
+    </div>
+
+    <div class="callout">
+      <h4>Two cohorts, two journeys</h4>
+      <p><strong>Seg A:</strong> ~3,750 users/day come back organically to take trial. Big pool, low intent.</p>
+      <p style="margin-top:6px"><strong>Seg B:</strong> ~200 users/day take subscription (150 manual + 50 same-day converts). Smaller pool, higher intent — they already saw the product once.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ===== SLIDE 2 — TWO SEGMENTS ===== -->
+<div class="slide" data-slide="2">
+  <div class="slide-inner">
+    <div class="slide-label">Walkthrough · 2 of 10</div>
+    <h1 class="slide-title">Two segments, different tactics</h1>
+    <p class="slide-sub">Different drop-off points → different levers</p>
+
+    <div class="two-arcs">
+      <div class="arc">
+        <span class="icon">👀</span>
+        <h3>Seg A</h3>
+        <div class="seg-size">2.56 Cr · saw paywall, never trialed</div>
+        <p>They browsed, saw the ₹1 trial paywall, but never pulled the trigger. Cold intent. Need to bring them back AND overcome the commitment hurdle.</p>
+        <div class="mini-metrics">
+          <div class="mini"><div class="mv">3,750</div><div class="ml">Daily trials</div></div>
+          <div class="mini"><div class="mv">0.45%</div><div class="ml">Monthly rate</div></div>
+        </div>
+      </div>
+      <div class="arc">
+        <span class="icon">🔁</span>
+        <h3>Seg B</h3>
+        <div class="seg-size">38.8L · trialed, never paid ₹199+</div>
+        <p>They committed to ₹1 trial, cancelled mandate before renewal. Product familiar. Higher intent but price-shocked by ₹199.</p>
+        <div class="mini-metrics">
+          <div class="mini"><div class="mv">200</div><div class="ml">Daily subs</div></div>
+          <div class="mini"><div class="mv">0.15%</div><div class="ml">Monthly rate</div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="callout" style="margin-top:24px">
+      <h4>Each segment has "Bring Users" + "Improve Conversions" work</h4>
+      <p><strong>Bring Users:</strong> Performance marketing, AI calls, CLM (push/WA), web channels.</p>
+      <p style="margin-top:6px"><strong>Improve Conversions:</strong> TVOD, tiered pricing, Coins carrot, paywall redesigns.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ===== SLIDE 3 — LIVE NUMBERS ===== -->
+<div class="slide" data-slide="3">
+  <div class="slide-inner">
+    <div class="slide-label">Walkthrough · 3 of 10</div>
+    <h1 class="slide-title">Live numbers</h1>
+    <p class="slide-sub">Seg B after-trial returners — monthly rate &amp; LTV. Last 7 months.</p>
+
+    <div class="chart-box">
+      <div class="chart-canvas-wrap"><canvas id="reactChart"></canvas></div>
+      <p style="font-size:11px;color:var(--dim);text-align:center;margin-top:10px">
+        <span style="color:#88BF4D">● Seg B Rate %</span> &nbsp; • &nbsp;
+        <span style="color:#509EE3">● Seg B LTV ₹L</span> &nbsp; • &nbsp;
+        Solid = matured, Dashed = current month (partial)
+      </p>
+    </div>
+
+    <div class="card">
+      <div class="card-title">Seg B · Raw numbers (verified + dynamic pool)</div>
+      <table>
+        <thead>
+          <tr><th>Month</th><th style="text-align:right">Pool</th><th style="text-align:right">Returners</th><th style="text-align:right">LTV ₹L</th><th style="text-align:right">Rate %</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>Oct 2025</strong></td><td style="text-align:right">10.8L</td><td style="text-align:right">5,838</td><td style="text-align:right">4.81</td><td style="text-align:right">0.54%</td></tr>
+          <tr><td><strong>Nov 2025</strong></td><td style="text-align:right">13.0L</td><td style="text-align:right">10,341</td><td style="text-align:right">7.84</td><td style="text-align:right">0.79%</td></tr>
+          <tr><td><strong>Dec 2025</strong></td><td style="text-align:right">14.9L</td><td style="text-align:right">11,950</td><td style="text-align:right">9.06</td><td style="text-align:right;color:var(--gn)"><strong>0.80%</strong> peak</td></tr>
+          <tr><td><strong>Jan 2026</strong></td><td style="text-align:right">17.1L</td><td style="text-align:right">8,263</td><td style="text-align:right">6.89</td><td style="text-align:right">0.48%</td></tr>
+          <tr><td><strong>Feb 2026</strong></td><td style="text-align:right">19.6L</td><td style="text-align:right">8,504</td><td style="text-align:right">7.27</td><td style="text-align:right">0.43%</td></tr>
+          <tr><td><strong>Mar 2026</strong></td><td style="text-align:right">21.4L</td><td style="text-align:right">12,032</td><td style="text-align:right;color:var(--cy)"><strong>14.55</strong> peak</td><td style="text-align:right">0.56%</td></tr>
+          <tr style="opacity:0.55"><td><strong>Apr 2026*</strong></td><td style="text-align:right">24.1L</td><td style="text-align:right">2,674</td><td style="text-align:right">6.19</td><td style="text-align:right">0.11%</td></tr>
+        </tbody>
+      </table>
+      <p style="font-size:11px;color:var(--dim);margin-top:10px">*Apr 2026 partial. LTV calc: per-user plan price × duration multiplier (monthly 1.5× / quarterly 1.489× / yearly 1.35×).</p>
+    </div>
+  </div>
+</div>
+
+<!-- ===== SLIDE 4 — SEG A · BRING USERS ===== -->
+<div class="slide" data-slide="4">
+  <div class="slide-inner">
+    <div class="slide-label">Walkthrough · 4 of 10 · Seg A</div>
+    <h1 class="slide-title">Seg A · Bring Users</h1>
+    <p class="slide-sub">Performance marketing + AI calls + CLM workflows</p>
+
+    <div class="grid-2">
+      <div class="card">
+        <div class="card-title">📢 Performance Marketing <span class="tag gn" style="margin-left:6px">Live</span></div>
+        <p><strong>Trial CAC ₹162</strong> (GST included) &nbsp;·&nbsp; <strong>Daily spend ₹21.7K</strong></p>
+        <p style="margin-top:6px">Top campaigns: <strong>TR up to 80%</strong>, <strong>D0 TCR 60%</strong></p>
+        <p style="margin-top:6px">BH campaigns: <strong>60% TR, 35% D0 TCR</strong> — looks promising, watching at scale</p>
+        <p style="margin-top:6px">Will add more budget &amp; optimize for the right ad-sets</p>
+      </div>
+
+      <div class="card">
+        <div class="card-title">📱 Push Notifications <span class="tag cy" style="margin-left:6px">Running + Workflow in design</span></div>
+        <p>Targeted at <strong>1-paywall-view users</strong> — high-intent cohort.</p>
+        <p style="margin-top:6px"><strong>Live campaigns:</strong></p>
+        <ul>
+          <li><a href="https://in1.dashboard.clevertap.com/RKW-WR8-756Z/campaigns/campaign/1776786691/report/stats/trend" target="_blank">Campaign 1 — Stats ↗</a></li>
+          <li><a href="https://in1.dashboard.clevertap.com/RKW-WR8-756Z/campaigns/campaign/1776839484/report/stats/trend" target="_blank">Campaign 2 — Stats ↗</a></li>
+        </ul>
+        <p style="margin-top:8px"><strong>Next:</strong> designing stitched PN workflow (not broadcast) — invite via Special Access → watch → drop-off → PN with incentive.</p>
+      </div>
+    </div>
+
+    <div class="callout" style="margin-top:10px">
+      <h4>🤖 AI Calls — Early signal (~48 hrs)</h4>
+      <p>Flow: AI Call → immediate WhatsApp deeplink → content behind ₹1 trial paywall.</p>
+      <table style="margin-top:12px">
+        <thead>
+          <tr><th>Metric</th><th style="text-align:right">Count</th><th style="text-align:right">Rate</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>Test Users</strong></td><td style="text-align:right">12,830</td><td style="text-align:right">—</td></tr>
+          <tr><td><strong>Test Connected</strong></td><td style="text-align:right">3,828</td><td style="text-align:right">29.8% connect rate</td></tr>
+          <tr><td><strong>Test Converted</strong></td><td style="text-align:right">24</td><td style="text-align:right">0.19% of test</td></tr>
+          <tr><td><strong>Connected &amp; Converted</strong></td><td style="text-align:right;color:var(--gn)"><strong>10</strong></td><td style="text-align:right;color:var(--gn)"><strong>0.26% of connected</strong></td></tr>
+          <tr><td><strong>Control Users</strong></td><td style="text-align:right">3,222</td><td style="text-align:right">—</td></tr>
+          <tr><td><strong>Control Connected</strong></td><td style="text-align:right">0</td><td style="text-align:right">—</td></tr>
+          <tr><td><strong>Control Converted</strong></td><td style="text-align:right">2</td><td style="text-align:right">0.06% of control</td></tr>
+        </tbody>
+      </table>
+      <p style="margin-top:10px"><strong>Uplift: ~3.2× vs control.</strong> Early signal positive — need more volume to confirm.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ===== SLIDE 5 — SEG A · IMPROVE CONVERSIONS ===== -->
+<div class="slide" data-slide="5">
+  <div class="slide-inner">
+    <div class="slide-label">Walkthrough · 5 of 10 · Seg A</div>
+    <h1 class="slide-title">Seg A · Improve Conversions</h1>
+    <p class="slide-sub">Product levers to convert returning users at the paywall</p>
+
+    <div class="grid-2">
+      <div class="card">
+        <div class="card-title">🎟️ TVOD <span class="tag gn" style="margin-left:6px">Live · 4% CVR</span></div>
+        <p>Pay-per-view option — buy one movie instead of ₹199 subscription. Lowest commitment for returning users.</p>
+        <p style="margin-top:8px"><strong>Current:</strong> 4% conversion on the flow.</p>
+        <p style="margin-top:6px"><a href="https://app.amplitude.com/analytics/STAGEAPP/dashboard/kbz0gwc6" target="_blank">Amplitude dashboard — TVOD funnel ↗</a></p>
+      </div>
+
+      <div class="card">
+        <div class="card-title">🪙 Coins Carrot <span class="tag am" style="margin-left:6px">Dev done · Pending launch</span></div>
+        <p>Earn coins by watching free content → unlock more content → graduate to paid.</p>
+        <p style="margin-top:8px">Behavior-first engagement loop. Specifically designed for Seg A — gives them a reason to stay past first paywall view without hitting the ₹1 commitment right away.</p>
+      </div>
+    </div>
+
+    <div class="callout green-callout" style="margin-top:12px">
+      <h4>Why this matters</h4>
+      <p>Seg A is <strong>2.56 Cr users deep</strong>. Getting them to the paywall isn't the hard part — <strong>converting them without a high-CAC ad is</strong>. TVOD and Coins give us low-commitment entry points that respect where these users are.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ===== SLIDE 6 — SEG B · BRING USERS ===== -->
+<div class="slide" data-slide="6">
+  <div class="slide-inner">
+    <div class="slide-label">Walkthrough · 6 of 10 · Seg B</div>
+    <h1 class="slide-title">Seg B · Bring Users</h1>
+    <p class="slide-sub">CLM journeys for users who trialed but didn't pay</p>
+
+    <div class="card">
+      <div class="card-title">📬 CLM Journey for Non-returners <span class="tag cy" style="margin-left:6px">Running + Workflow in design</span></div>
+      <p>Automated cadence (push + WhatsApp) targeted at trial cancellers who haven't returned. Edgy, content-led messaging to drive recall.</p>
+      <p style="margin-top:10px"><strong>Live campaigns:</strong></p>
+      <ul>
+        <li><a href="https://in1.dashboard.clevertap.com/RKW-WR8-756Z/campaigns/campaign/1776692561/report/stats/trend" target="_blank">CLM Journey · Campaign 1 — Stats ↗</a></li>
+        <li><a href="https://in1.dashboard.clevertap.com/RKW-WR8-756Z/campaigns/campaign/1776768018/report/stats/trend" target="_blank">CLM Journey · Campaign 2 — Stats ↗</a></li>
+      </ul>
+    </div>
+
+    <div class="callout" style="margin-top:10px">
+      <h4>Next: Stitched workflow — not broadcast</h4>
+      <p>Same lesson from re-acq: broadcast PN/WA doesn't convert a cold base. Building a stitched flow:</p>
+      <ul style="font-size:13px;color:var(--dim);line-height:1.8;margin-top:8px">
+        <li>Invite trial canceller via <strong>Special Access</strong> or Continue-watching deeplink</li>
+        <li>Get them to <strong>watch again</strong> (free re-entry)</li>
+        <li>If drop-off → <strong>PN/WA with TVOD offer</strong> (₹20) or tiered sub pitch</li>
+        <li>Layer <strong>AI call</strong> for high-intent (recent cancellers with paywall views)</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<!-- ===== SLIDE 7 — SEG B · IMPROVE CONVERSIONS ===== -->
+<div class="slide" data-slide="7">
+  <div class="slide-inner">
+    <div class="slide-label">Walkthrough · 7 of 10 · Seg B</div>
+    <h1 class="slide-title">Seg B · Improve Conversions</h1>
+    <p class="slide-sub">Product experiments targeting the drop-off patterns</p>
+
+    <div class="grid-2">
+      <div class="card">
+        <div class="card-title">🧱 Tiered Sub for In-Trial Revokers <span class="tag am" style="margin-left:6px">In dev</span></div>
+        <p>Users who cancel mandate <em>during</em> trial (still in ₹1 window) will see a tiered pitch — ₹99 / ₹399 quarterly / ₹699 yearly — instead of just the default ₹199.</p>
+        <p style="margin-top:6px">Goal: convert revokers before they fully churn, using the same tiered insight that worked for re-acq.</p>
+      </div>
+
+      <div class="card">
+        <div class="card-title">▶️ Continue Watching for Partial Watchers <span class="tag am" style="margin-left:6px">In dev</span></div>
+        <p>Users who started but didn't finish content → get a targeted "resume where you left off" flow when they return.</p>
+        <p style="margin-top:6px">Content-pull is stronger than promo-pull. C1 cohort (unfinished watchers) already has 35% D0 return rate — this codifies it.</p>
+      </div>
+    </div>
+
+    <div class="callout purple-callout" style="margin-top:12px">
+      <h4>Both ship this month</h4>
+      <p>Tiered-sub for in-trial revokers + Continue Watching are the two highest-leverage Seg B plays currently in eng.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ===== SLIDE 8 — NEW PAYWALL CONCEPT ===== -->
+<div class="slide" data-slide="8">
+  <div class="slide-inner">
+    <div class="slide-label">Walkthrough · 8 of 10 · New Paywall</div>
+    <h1 class="slide-title">Free till hook → 3-option decoy</h1>
+    <p class="slide-sub">A new paywall concept for re-activation cohorts</p>
+
+    <div class="card">
+      <div class="card-title">The idea</div>
+      <p>Returning user lands on <strong>free content until the hook moment</strong> (first cliffhanger / high-retention point) — then sees a <strong>3-option paywall</strong> structured as a decoy.</p>
+    </div>
+
+    <div class="pricing-grid">
+      <div class="price-card">
+        <div class="plabel">Pay-per-view</div>
+        <div class="pval">₹20</div>
+        <div class="pdesc">TVOD — this movie only</div>
+      </div>
+      <div class="price-card highlight">
+        <div class="plabel">Weekly <span class="tag am" style="margin-left:4px">Decoy</span></div>
+        <div class="pval">₹49</div>
+        <div class="pdesc">Full access · 7 days</div>
+      </div>
+      <div class="price-card">
+        <div class="plabel">Subscription</div>
+        <div class="pval">₹99</div>
+        <div class="pdesc">Full access · 1 month</div>
+      </div>
+    </div>
+
+    <div class="callout" style="margin-top:20px">
+      <h4>Why this works</h4>
+      <p><strong>TVOD ₹20</strong> lowers the commitment floor. <strong>Weekly ₹49</strong> anchors the user on "weekly cost" and makes <strong>Monthly ₹99</strong> the obviously-smart choice — same decoy mechanic that drove 2× revenue per user in re-acq tiered pricing.</p>
+      <p style="margin-top:6px"><strong>Ships to Seg A &amp; Seg B re-entry flows.</strong> Replaces the default ₹1 trial or ₹199 hard sub at the critical return moment.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ===== SLIDE 9 — NEXT STEPS ===== -->
+<div class="slide" data-slide="9">
+  <div class="slide-inner">
+    <div class="slide-label">Walkthrough · 9 of 10 · What's Next</div>
+    <h1 class="slide-title">What's next — stitched workflows</h1>
+    <p class="slide-sub">Marketing + Product — roadmap across both segments</p>
+
+    <div class="grid-2">
+      <div class="card">
+        <div class="card-title">📣 Marketing</div>
+        <ul>
+          <li><strong>Stitched PN workflow</strong> — invite → watch → drop → re-PN with offer</li>
+          <li><strong>AI call scale-up</strong> — move from pilot (16K) to ~1L on connected+converted signal</li>
+          <li><strong>Web as a channel</strong> — email, browser push, retargeting for web-heavy users</li>
+          <li><strong>Perf mkt budget expansion</strong> — ₹162 CAC currently; scale where ROAS clears</li>
+          <li><strong>Content-aware comms</strong> — dialect + acquisition-content specific messaging</li>
+        </ul>
+      </div>
+      <div class="card">
+        <div class="card-title">🛠 Product</div>
+        <ul>
+          <li><strong>3-option decoy paywall</strong> — ₹20 / ₹49 / ₹99 for re-entry</li>
+          <li><strong>Tiered sub for in-trial revokers</strong> (Seg B, in dev)</li>
+          <li><strong>Continue Watching</strong> resume flow (Seg B, in dev)</li>
+          <li><strong>Coins carrot</strong> launch (Seg A, dev done)</li>
+          <li><strong>TVOD expansion</strong> — more titles, better discovery</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="callout green-callout" style="margin-top:12px">
+      <h4>Same playbook lesson from re-acq</h4>
+      <p>Stop broadcasting. Start flowing. Every motion — PN, AI call, ad, paywall — should be part of a <strong>stitched workflow</strong> tied to user behavior, not one-shot touches.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ===== SLIDE 10 — TL;DR ===== -->
+<div class="slide" data-slide="10">
+  <div class="slide-inner">
+    <div class="slide-label">Walkthrough · 10 of 10 · Wrap</div>
+    <h1 class="slide-title">TL;DR</h1>
+    <p class="slide-sub">Four beats for stakeholders</p>
+
+    <div class="callout">
+      <h4>1 · Two cohorts, two playbooks</h4>
+      <p><strong>Seg A (2.56 Cr)</strong> — cold pool, push volume + low-commitment entries (TVOD, Coins). <strong>Seg B (38.8L)</strong> — warmer, price-aware, needs tiered pricing + content-pull.</p>
+    </div>
+
+    <div class="callout amber-callout">
+      <h4>2 · Perf marketing + AI calls working, need scale</h4>
+      <p>Trial CAC ₹162, TR up to 80%. AI calls showing <strong>3.2× uplift vs control</strong> on connected+converted. Both ready to scale with more budget &amp; volume.</p>
+    </div>
+
+    <div class="callout purple-callout">
+      <h4>3 · Product has a full pipeline</h4>
+      <p>TVOD live (4% CVR), Coins dev done, Tiered-for-in-trial-revokers in dev, Continue Watching in dev, 3-option decoy paywall queued. <strong>Five plays ship this month.</strong></p>
+    </div>
+
+    <div class="callout green-callout">
+      <h4>4 · Next is workflows, not broadcasts</h4>
+      <p>Build stitched flows: invite → watch → drop → re-engage. Stop one-shot PN blasts. <strong>Goals: 2× rate on both segments — Seg A 0.45%→0.90%, Seg B 0.15%→0.30%.</strong></p>
+    </div>
+
+    <p style="font-size:12px;color:var(--dim);text-align:center;margin-top:20px">
+      Use ← / → or Space to navigate &nbsp;·&nbsp; Esc to jump to title
+    </p>
+  </div>
+</div>
+
+</div>
+
+<div class="controls">
+  <button id="prevBtn" title="Previous">‹</button>
+  <div class="counter"><span id="curNum">1</span> / <span id="totalNum">10</span></div>
+  <div class="dots" id="dotsContainer"></div>
+  <button id="nextBtn" title="Next">›</button>
+</div>
+
+<script>
+const slides = document.querySelectorAll('.slide');
+const totalSlides = slides.length;
+let current = 0;
+const curNum = document.getElementById('curNum');
+const totalNum = document.getElementById('totalNum');
+const prevBtn = document.getElementById('prevBtn');
+const nextBtn = document.getElementById('nextBtn');
+const dotsContainer = document.getElementById('dotsContainer');
+
+totalNum.textContent = totalSlides;
+
+for (let i = 0; i < totalSlides; i++) {
+  const d = document.createElement('div');
+  d.className = 'dot' + (i === 0 ? ' active' : '');
+  d.onclick = () => goTo(i);
+  dotsContainer.appendChild(d);
+}
+
+function goTo(n) {
+  n = Math.max(0, Math.min(totalSlides - 1, n));
+  slides[current].classList.remove('active');
+  slides[n].classList.add('active');
+  document.querySelectorAll('.dot')[current].classList.remove('active');
+  document.querySelectorAll('.dot')[n].classList.add('active');
+  current = n;
+  curNum.textContent = n + 1;
+  prevBtn.disabled = n === 0;
+  nextBtn.disabled = n === totalSlides - 1;
+  window.scrollTo(0, 0);
+  if (n === 2 && window._reactChart) window._reactChart.resize();
+}
+
+prevBtn.onclick = () => goTo(current - 1);
+nextBtn.onclick = () => goTo(current + 1);
+
+document.addEventListener('keydown', e => {
+  if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
+  if (e.key === 'ArrowRight' || e.key === ' ' || e.key === 'PageDown') { e.preventDefault(); goTo(current + 1); }
+  if (e.key === 'ArrowLeft' || e.key === 'PageUp') { e.preventDefault(); goTo(current - 1); }
+  if (e.key === 'Home' || e.key === 'Escape') goTo(0);
+  if (e.key === 'End') goTo(totalSlides - 1);
+});
+
+prevBtn.disabled = true;
+
+const labels = ['Oct 2025','Nov 2025','Dec 2025','Jan 2026','Feb 2026','Mar 2026','Apr 2026'];
+const pct = [0.54, 0.79, 0.80, 0.48, 0.43, 0.56, null];
+const pctPartial = [null, null, null, null, null, 0.56, 0.11];
+const ltv = [4.81, 7.84, 9.06, 6.89, 7.27, 14.55, null];
+const ltvPartial = [null, null, null, null, null, 14.55, 6.19];
+
+window._reactChart = new Chart(document.getElementById('reactChart'), {
+  type: 'line',
+  data: {
+    labels,
+    datasets: [
+      { label: 'Rate % (matured)', data: pct, borderColor: '#88BF4D', yAxisID: 'y', tension: 0.3, borderWidth: 2.5, pointRadius: 4, pointBackgroundColor: '#88BF4D', fill: false },
+      { label: 'Rate % (current)', data: pctPartial, borderColor: '#88BF4D', borderDash: [5, 5], yAxisID: 'y', tension: 0.3, borderWidth: 2, pointRadius: 3, pointBackgroundColor: '#88BF4D', fill: false },
+      { label: 'LTV ₹L (matured)', data: ltv, borderColor: '#509EE3', yAxisID: 'y1', tension: 0.3, borderWidth: 2.5, pointRadius: 4, pointBackgroundColor: '#509EE3', fill: false },
+      { label: 'LTV ₹L (current)', data: ltvPartial, borderColor: '#509EE3', borderDash: [5, 5], yAxisID: 'y1', tension: 0.3, borderWidth: 2, pointRadius: 3, pointBackgroundColor: '#509EE3', fill: false }
+    ]
+  },
+  options: {
+    responsive: true,
+    maintainAspectRatio: false,
+    interaction: { mode: 'index', intersect: false },
+    plugins: {
+      legend: { display: false },
+      tooltip: {
+        backgroundColor: '#1a1b25', titleColor: '#e8e8ed', bodyColor: '#e8e8ed', borderColor: '#2a2b38', borderWidth: 1, padding: 10,
+        callbacks: {
+          label: function(ctx) {
+            if (ctx.parsed.y === null) return null;
+            const lbl = ctx.dataset.label;
+            if (lbl.includes('Rate')) return `${lbl}: ${ctx.parsed.y}%`;
+            return `${lbl}: ₹${ctx.parsed.y}L`;
+          }
+        }
+      }
+    },
+    scales: {
+      x: { ticks: { color: '#8888a0', font: { size: 11 } }, grid: { color: 'rgba(255,255,255,0.03)' } },
+      y: { type: 'linear', position: 'left', title: { display: true, text: 'Rate %', color: '#88BF4D', font: { size: 11 } }, ticks: { color: '#88BF4D', font: { size: 11 }, callback: v => v + '%' }, grid: { color: 'rgba(255,255,255,0.05)' } },
+      y1: { type: 'linear', position: 'right', title: { display: true, text: 'LTV ₹L', color: '#509EE3', font: { size: 11 } }, ticks: { color: '#509EE3', font: { size: 11 }, callback: v => '₹' + v + 'L' }, grid: { drawOnChartArea: false } }
+    }
+  }
+});
+</script>
+
+</body>
+</html>
