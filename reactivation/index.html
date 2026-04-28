@@ -353,13 +353,13 @@ td strong{color:var(--tx);font-weight:600}
           <tr><th>Month</th><th style="text-align:right">Pool</th><th style="text-align:right">Returners</th><th style="text-align:right">LTV ₹L</th><th style="text-align:right">Rate %</th></tr>
         </thead>
         <tbody>
-          <tr><td><strong>Oct 2025</strong></td><td style="text-align:right">10.8L</td><td style="text-align:right">5,838</td><td style="text-align:right">8.76</td><td style="text-align:right">0.54%</td></tr>
-          <tr><td><strong>Nov 2025</strong></td><td style="text-align:right">13.0L</td><td style="text-align:right">10,341</td><td style="text-align:right">15.51</td><td style="text-align:right">0.79%</td></tr>
-          <tr><td><strong>Dec 2025</strong></td><td style="text-align:right">14.9L</td><td style="text-align:right">11,950</td><td style="text-align:right">17.93</td><td style="text-align:right;color:var(--gn)"><strong>0.80%</strong> peak</td></tr>
-          <tr><td><strong>Jan 2026</strong></td><td style="text-align:right">17.1L</td><td style="text-align:right">8,263</td><td style="text-align:right">13.39</td><td style="text-align:right">0.48%</td></tr>
-          <tr><td><strong>Feb 2026</strong></td><td style="text-align:right">19.6L</td><td style="text-align:right">8,504</td><td style="text-align:right">13.86</td><td style="text-align:right">0.43%</td></tr>
-          <tr><td><strong>Mar 2026</strong></td><td style="text-align:right">21.4L</td><td style="text-align:right">12,032</td><td style="text-align:right;color:var(--cy)"><strong>22.02</strong> peak</td><td style="text-align:right">0.56%</td></tr>
-          <tr style="opacity:0.55"><td><strong>Apr 2026*</strong></td><td style="text-align:right">24.1L</td><td style="text-align:right">2,674</td><td style="text-align:right">7.09</td><td style="text-align:right">0.11%</td></tr>
+          <tr><td><strong>Oct 2025</strong></td><td style="text-align:right">27.9L</td><td style="text-align:right">9,019</td><td style="text-align:right">14.14</td><td style="text-align:right">0.32%</td></tr>
+          <tr><td><strong>Nov 2025</strong></td><td style="text-align:right">29.4L</td><td style="text-align:right">14,452</td><td style="text-align:right;color:var(--cy)"><strong>21.77</strong> peak</td><td style="text-align:right;color:var(--gn)"><strong>0.49%</strong> peak</td></tr>
+          <tr><td><strong>Dec 2025</strong></td><td style="text-align:right">31.3L</td><td style="text-align:right">14,034</td><td style="text-align:right">21.12</td><td style="text-align:right">0.45%</td></tr>
+          <tr><td><strong>Jan 2026</strong></td><td style="text-align:right">33.7L</td><td style="text-align:right">10,442</td><td style="text-align:right">16.26</td><td style="text-align:right">0.31%</td></tr>
+          <tr><td><strong>Feb 2026</strong></td><td style="text-align:right">36.2L</td><td style="text-align:right">9,632</td><td style="text-align:right">15.24</td><td style="text-align:right">0.27%</td></tr>
+          <tr><td><strong>Mar 2026</strong></td><td style="text-align:right">38.8L</td><td style="text-align:right">11,247</td><td style="text-align:right">20.76</td><td style="text-align:right">0.29%</td></tr>
+          <tr style="opacity:0.55"><td><strong>Apr 2026*</strong></td><td style="text-align:right">42.4L</td><td style="text-align:right">4,017</td><td style="text-align:right">10.99</td><td style="text-align:right">0.09%</td></tr>
         </tbody>
       </table>
       <p style="font-size:11px;color:var(--dim);margin-top:10px">*Apr 2026 partial. LTV: discount plans (₹29/₹51/₹77/₹79/₹99) = price + ₹99.5 (renewal at std ₹199); tiered (₹199/₹399/₹699) = price × 1.50 (R1=35%, R2+=30% renewal chain). Returners match Amplitude chart <a href="https://app.amplitude.com/analytics/STAGEAPP/chart/new/coodx6dv" target="_blank">coodx6dv</a>.</p>
@@ -646,10 +646,10 @@ window._segAChart = new Chart(document.getElementById('segAChart'), {
 
 // ---- Seg B chart (after-trial returners + LTV) ----
 const bLabels = ['Oct 2025','Nov 2025','Dec 2025','Jan 2026','Feb 2026','Mar 2026','Apr 2026'];
-const bPct  = [0.54, 0.79, 0.80, 0.48, 0.43, 0.56, null];
-const bPctU = [null, null, null, null, null, 0.56, 0.11];
-const bLtv  = [8.76, 15.51, 17.93, 13.39, 13.86, 22.02, null];
-const bLtvU = [null, null, null, null, null, 22.02, 7.09];
+const bPct  = [0.3238, 0.4916, 0.4479, 0.3099, 0.2662, 0.2895, null];
+const bPctU = [null, null, null, null, null, 0.2895, 0.0948];
+const bLtv  = [14.14, 21.77, 21.12, 16.26, 15.24, 20.76, null];
+const bLtvU = [null, null, null, null, null, 20.76, 10.99];
 
 window._segBChart = new Chart(document.getElementById('segBChart'), {
   type: 'line',
