@@ -8,132 +8,269 @@
 <style>
 @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
 *{margin:0;padding:0;box-sizing:border-box}
-:root{--bg:#0a0b0f;--s1:#12131a;--s2:#1a1b25;--bd:#2a2b38;--tx:#e8e8ed;--dim:#8888a0;--cy:#06b6d4;--am:#f59e0b;--ro:#f43f5e;--gn:#258d58;--pu:#a78bfa}
-body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--tx);line-height:1.5;padding:32px 24px;min-height:100vh}
-.slide{max-width:1180px;margin:0 auto}
-.slide-label{font-size:11px;color:var(--cy);text-transform:uppercase;letter-spacing:0.12em;font-weight:600;margin-bottom:8px}
-.slide-title{font-size:32px;font-weight:700;letter-spacing:-0.03em;margin-bottom:4px;line-height:1.1}
-.slide-sub{font-size:14px;color:var(--dim);margin-bottom:24px}
+:root{--bg:#0a0b0f;--s1:#12131a;--s2:#1a1b25;--bd:#2a2b38;--tx:#e8e8ed;--dim:#a8a8b8;--cy:#06b6d4;--am:#f59e0b;--ro:#f43f5e;--gn:#258d58;--pu:#a78bfa}
+html,body{height:100%;overflow:hidden}
+body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--tx);line-height:1.5}
 
-.section-head{font-size:11px;color:var(--cy);text-transform:uppercase;letter-spacing:0.1em;font-weight:600;margin:18px 0 10px;display:flex;align-items:center;gap:10px}
-.section-head::before{content:"";flex:0 0 4px;height:4px;background:var(--cy);border-radius:2px}
+/* Navbar */
+.navbar{position:fixed;top:0;left:0;right:0;z-index:50;background:rgba(10,11,15,0.85);backdrop-filter:blur(12px);border-bottom:1px solid var(--bd)}
+.nav-inner{max-width:1180px;margin:0 auto;padding:14px 32px;display:flex;align-items:center;justify-content:space-between}
+.nav-brand{display:flex;align-items:center;gap:10px;text-decoration:none;color:var(--tx)}
+.nav-brand img{height:24px}
+.nav-brand .nav-label{font-size:11px;color:var(--dim);text-transform:uppercase;letter-spacing:0.1em;font-weight:500}
+.nav-right{display:flex;align-items:center;gap:18px}
+.nav-right a{font-size:12px;color:var(--dim);text-decoration:none;font-weight:500}
+.nav-right a:hover{color:var(--cy)}
+
+.deck{position:relative;height:100vh;width:100vw;padding-top:54px}
+.slide{position:absolute;top:54px;left:0;right:0;bottom:0;opacity:0;pointer-events:none;transition:opacity 0.35s ease;overflow-y:auto}
+.slide.active{opacity:1;pointer-events:auto}
+.slide-inner{max-width:1180px;margin:0 auto;padding:36px 48px 100px;min-height:100%;display:flex;flex-direction:column;justify-content:center}
+.slide-label{font-size:12px;color:var(--cy);text-transform:uppercase;letter-spacing:0.12em;font-weight:600;margin-bottom:10px}
+.slide-title{font-size:42px;font-weight:700;letter-spacing:-0.03em;margin-bottom:8px;line-height:1.1}
+.slide-sub{font-size:17px;color:var(--dim);margin-bottom:32px}
+
+.section-head{font-size:13px;color:var(--cy);text-transform:uppercase;letter-spacing:0.1em;font-weight:600;margin:22px 0 14px;display:flex;align-items:center;gap:12px}
+.section-head::before{content:"";flex:0 0 5px;height:5px;background:var(--cy);border-radius:3px}
 .section-head::after{content:"";flex:1;height:1px;background:var(--bd)}
 
-.cohort-row{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px}
-.cohort{background:var(--s1);border:1px solid var(--bd);border-radius:10px;padding:14px 16px}
-.cohort .lbl{font-size:11px;color:var(--cy);text-transform:uppercase;letter-spacing:0.08em;font-weight:600}
-.cohort .name{font-size:15px;font-weight:600;margin:4px 0 4px}
-.cohort .desc{font-size:12px;color:var(--dim);line-height:1.5}
-.cohort .pool{display:inline-block;margin-top:6px;font-family:'JetBrains Mono',monospace;font-size:13px;color:var(--am);font-weight:500}
+.cohort-row{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-bottom:14px}
+.cohort{background:var(--s1);border:1px solid var(--bd);border-radius:14px;padding:22px 24px}
+.cohort .lbl{font-size:13px;color:var(--cy);text-transform:uppercase;letter-spacing:0.1em;font-weight:700}
+.cohort .name{font-size:20px;font-weight:700;margin:6px 0 8px;letter-spacing:-0.01em}
+.cohort .desc{font-size:15px;color:var(--dim);line-height:1.6}
+.cohort .pool{display:inline-block;margin-top:12px;font-family:'JetBrains Mono',monospace;font-size:16px;color:var(--am);font-weight:600}
 
-.grid-2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
-.grid-3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px}
-.card{background:var(--s1);border:1px solid var(--bd);border-radius:10px;padding:14px 16px}
-.card-title{font-size:13px;font-weight:600;margin-bottom:8px;display:flex;align-items:center;gap:8px;color:var(--tx)}
-.card-title .badge{font-family:'JetBrains Mono',monospace;font-size:10px;padding:2px 7px;border-radius:100px;font-weight:500}
-.card-title .badge.cy{background:rgba(6,182,212,0.12);color:var(--cy)}
-.card-title .badge.gn{background:rgba(37,141,88,0.18);color:#34d399}
-.card-title .badge.am{background:rgba(245,158,11,0.12);color:var(--am)}
-.card p{font-size:12.5px;color:var(--dim);line-height:1.6}
-.card strong{color:var(--tx);font-weight:500}
-.kpi-inline{font-family:'JetBrains Mono',monospace;color:var(--am);font-weight:600}
+.grid-2{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.grid-3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:18px}
+.card{background:var(--s1);border:1px solid var(--bd);border-radius:14px;padding:22px 24px}
+.card-title{font-size:18px;font-weight:600;margin-bottom:12px;display:flex;align-items:center;gap:10px;color:var(--tx);flex-wrap:wrap}
+.card-title .badge{font-family:'JetBrains Mono',monospace;font-size:11px;padding:3px 10px;border-radius:100px;font-weight:500}
+.card-title .badge.cy{background:rgba(6,182,212,0.15);color:var(--cy)}
+.card-title .badge.gn{background:rgba(37,141,88,0.22);color:#34d399}
+.card-title .badge.am{background:rgba(245,158,11,0.15);color:var(--am)}
+.card p{font-size:15px;color:var(--dim);line-height:1.65}
+.card strong{color:var(--tx);font-weight:600}
+.kpi-inline{font-family:'JetBrains Mono',monospace;color:var(--am);font-weight:700}
 .kpi-inline.gn{color:#34d399}
 .kpi-inline.cy{color:var(--cy)}
 
-.callout{background:linear-gradient(135deg,var(--s1),rgba(245,158,11,0.06));border:1px solid rgba(245,158,11,0.2);border-radius:10px;padding:12px 16px;margin-top:14px}
-.callout h4{font-size:12px;font-weight:600;color:var(--am);margin-bottom:4px;text-transform:uppercase;letter-spacing:0.06em}
-.callout p{font-size:12.5px;color:var(--dim);line-height:1.6}
-.callout strong{color:var(--tx);font-weight:500}
+.bullet{display:flex;gap:10px;margin-top:8px}
+.bullet .dot{flex:0 0 5px;height:5px;border-radius:50%;background:var(--cy);margin-top:11px}
+.bullet p{flex:1;font-size:15px;color:var(--dim);line-height:1.6}
+.bullet p strong{color:var(--tx);font-weight:600}
 
-.tvod-pill{background:linear-gradient(135deg,rgba(167,139,250,0.1),rgba(6,182,212,0.06));border:1px solid rgba(167,139,250,0.25);border-radius:10px;padding:12px 16px;margin-top:14px;display:flex;align-items:center;gap:14px}
-.tvod-pill .what{font-family:'JetBrains Mono',monospace;font-size:13px;color:var(--pu);font-weight:600;letter-spacing:0.04em}
-.tvod-pill .desc{font-size:12.5px;color:var(--dim);flex:1}
-.tvod-pill .desc strong{color:var(--tx)}
+.callout{background:linear-gradient(135deg,var(--s1),rgba(245,158,11,0.10));border:1px solid rgba(245,158,11,0.3);border-radius:14px;padding:22px 26px;margin-top:18px}
+.callout h4{font-size:14px;font-weight:700;color:var(--am);margin-bottom:10px;text-transform:uppercase;letter-spacing:0.08em}
+.callout p{font-size:16px;color:var(--dim);line-height:1.7}
+.callout strong{color:var(--tx);font-weight:600}
 
-.next-row{margin-top:14px;display:flex;align-items:center;gap:10px;font-size:12.5px;color:var(--dim);padding:10px 14px;background:var(--s2);border:1px solid var(--bd);border-left:3px solid var(--cy);border-radius:8px}
-.next-row .label{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--cy);text-transform:uppercase;letter-spacing:0.08em;font-weight:600}
+.tvod-block{background:linear-gradient(135deg,rgba(167,139,250,0.12),rgba(6,182,212,0.08));border:1px solid rgba(167,139,250,0.3);border-radius:14px;padding:32px 36px;margin-bottom:18px;text-align:center}
+.tvod-block .what{font-family:'JetBrains Mono',monospace;font-size:42px;color:var(--pu);font-weight:700;letter-spacing:0.04em;margin-bottom:8px}
+.tvod-block .desc{font-size:18px;color:var(--tx);font-weight:500}
+.tvod-block .desc-sub{font-size:14px;color:var(--dim);margin-top:6px}
 
-.bullet{display:flex;gap:8px;margin-bottom:6px}
-.bullet:last-child{margin-bottom:0}
-.bullet .dot{flex:0 0 4px;height:4px;border-radius:50%;background:var(--cy);margin-top:9px}
-.bullet p{flex:1}
+.next-row{margin-top:18px;display:flex;align-items:center;gap:14px;font-size:16px;color:var(--tx);padding:18px 22px;background:var(--s2);border:1px solid var(--bd);border-left:4px solid var(--cy);border-radius:10px;line-height:1.5}
+.next-row .label{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--cy);text-transform:uppercase;letter-spacing:0.1em;font-weight:700;flex-shrink:0}
+
+/* Controls */
+.controls{position:fixed;bottom:24px;left:50%;transform:translateX(-50%);display:flex;align-items:center;gap:14px;z-index:100;background:rgba(26,27,37,0.92);border:1px solid var(--bd);border-radius:100px;padding:8px 14px;backdrop-filter:blur(10px)}
+.controls button{background:transparent;border:none;color:var(--tx);cursor:pointer;width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:18px;transition:background 0.15s}
+.controls button:hover{background:var(--bd)}
+.controls button:disabled{opacity:0.3;cursor:not-allowed}
+.controls .counter{font-size:13px;color:var(--dim);font-family:'JetBrains Mono',monospace;min-width:48px;text-align:center}
+.controls .dots{display:flex;gap:6px;margin-left:6px}
+.controls .dot{width:7px;height:7px;border-radius:50%;background:var(--bd);cursor:pointer;transition:background 0.15s}
+.controls .dot.active{background:var(--cy);width:22px;border-radius:6px}
+
+@media(max-width:780px){
+  .slide-title{font-size:30px}
+  .slide-inner{padding:24px 20px 90px}
+  .grid-2,.grid-3,.cohort-row{grid-template-columns:1fr}
+  .tvod-block .what{font-size:32px}
+}
 </style>
 </head>
 <body>
-<div class="slide">
 
-  <div class="slide-label">Re-activation · Walkthrough</div>
-  <h1 class="slide-title">Re-activation Update</h1>
-  <p class="slide-sub">Marketing &amp; product progress — what shipped, what's next</p>
-
-  <!-- COHORTS -->
-  <div class="section-head">Two cohorts</div>
-  <div class="cohort-row">
-    <div class="cohort">
-      <div class="lbl">Seg A</div>
-      <div class="name">Saw paywall, never trialed</div>
-      <div class="desc">Cold intent — need to bring back AND overcome the trial commitment hurdle.</div>
-      <span class="pool">Pool: 2.56 Cr</span>
-    </div>
-    <div class="cohort">
-      <div class="lbl">Seg B</div>
-      <div class="name">Trialed, never paid ₹199+</div>
-      <div class="desc">Familiar with product, cancelled before renewal. Higher intent, price-shocked.</div>
-      <span class="pool">Pool: 38.8L</span>
+<nav class="navbar">
+  <div class="nav-inner">
+    <a class="nav-brand" href="./">
+      <img src="https://media.stage.in/static/stage_logo_stack.png" alt="STAGE">
+      <span class="nav-label">Re-activation · Update</span>
+    </a>
+    <div class="nav-right">
+      <a href="./">Strategy</a>
+      <a href="./work-2.html">Re-acq Update</a>
+      <a href="./reactivation/">Re-activation</a>
     </div>
   </div>
+</nav>
 
-  <!-- MARKETING -->
-  <div class="section-head">Marketing</div>
-  <div class="grid-2">
-    <div class="card">
-      <div class="card-title">Ads <span class="badge gn">Live · scaling</span></div>
-      <p>Continuously optimised. Funnel beating baseline:</p>
-      <div class="bullet"><div class="dot"></div><p>TR <span class="kpi-inline gn">41.4%</span> vs 32.9% (+26%)</p></div>
-      <div class="bullet"><div class="dot"></div><p>Net paying <span class="kpi-inline gn">23.31%</span> vs 19.5% (+19.5% lift)</p></div>
-      <div class="bullet"><div class="dot"></div><p>CAC <span class="kpi-inline">₹190</span> — slowly scaling budget</p></div>
+<div class="deck">
+
+<!-- ===== SLIDE 1 — COHORTS + MARKETING ===== -->
+<div class="slide active" data-slide="1">
+  <div class="slide-inner">
+    <div class="slide-label">Update · 1 of 3</div>
+    <h1 class="slide-title">Re-activation <span style="color:var(--cy)">Update</span></h1>
+    <p class="slide-sub">Two cohorts. Marketing channels delivering. Product launches landing.</p>
+
+    <div class="section-head">Two cohorts</div>
+    <div class="cohort-row">
+      <div class="cohort">
+        <div class="lbl">Seg A</div>
+        <div class="name">Saw paywall, never trialed</div>
+        <div class="desc">Cold intent. Need to bring back AND overcome the trial commitment hurdle.</div>
+        <span class="pool">Pool: 2.56 Cr</span>
+      </div>
+      <div class="cohort">
+        <div class="lbl">Seg B</div>
+        <div class="name">Trialed, never paid ₹199+</div>
+        <div class="desc">Familiar with product, cancelled before renewal. Higher intent, price-shocked.</div>
+        <span class="pool">Pool: 38.8L</span>
+      </div>
     </div>
-    <div class="card">
-      <div class="card-title">AI Calls <span class="badge am">Setting up</span></div>
-      <p>Earlier cohort delivered <span class="kpi-inline">CAC ~₹180</span>. Setting up next cycle for users with <strong>6–10 paywall views</strong> (Seg A).</p>
+
+    <div class="section-head">Marketing</div>
+    <div class="grid-2">
+      <div class="card">
+        <div class="card-title">Ads <span class="badge gn">Live · scaling</span></div>
+        <p>Continuously optimised. <strong>Funnel beating baseline:</strong></p>
+        <div class="bullet"><div class="dot"></div><p>TR <span class="kpi-inline gn">41.4%</span> vs 32.9% (+26%)</p></div>
+        <div class="bullet"><div class="dot"></div><p>Net paying <span class="kpi-inline gn">23.31%</span> vs 19.5% (+19.5% lift)</p></div>
+        <div class="bullet"><div class="dot"></div><p>CAC <span class="kpi-inline">₹190</span> — slowly scaling budget</p></div>
+      </div>
+      <div class="card">
+        <div class="card-title">AI Calls <span class="badge am">Setting up</span></div>
+        <p>Earlier cohort delivered <span class="kpi-inline">CAC ~₹180</span>.</p>
+        <p style="margin-top:10px">Setting up next cycle for users with <strong>6–10 paywall views</strong> (Seg A focus).</p>
+      </div>
     </div>
   </div>
+</div>
 
-  <!-- PRODUCT -->
-  <div class="section-head">Product</div>
-  <div class="grid-3">
-    <div class="card">
-      <div class="card-title">Coin paywall <span class="badge gn">Live · 15%</span></div>
-      <p><strong>Seg A.</strong> Early data promising. Selfie-section viewers convert <span class="kpi-inline gn">+1.5%</span> better.</p>
+<!-- ===== SLIDE 2 — PRODUCT ===== -->
+<div class="slide" data-slide="2">
+  <div class="slide-inner">
+    <div class="slide-label">Update · 2 of 3 · Product</div>
+    <h1 class="slide-title">Product <span style="color:var(--cy)">launches</span></h1>
+    <p class="slide-sub">Live experiments + what ships next cycle</p>
+
+    <div class="grid-3">
+      <div class="card">
+        <div class="card-title">Coin paywall <span class="badge gn">Live · 15%</span></div>
+        <p><strong>Seg A.</strong> Early data promising.</p>
+        <p style="margin-top:10px">Selfie-section viewers convert <span class="kpi-inline gn">+1.5%</span> better.</p>
+      </div>
+      <div class="card">
+        <div class="card-title">TVOD <span class="badge cy">Earlier rollout</span></div>
+        <p><strong>Seg A.</strong> Movie pass — pay per content.</p>
+        <p style="margin-top:10px"><span class="kpi-inline gn">5%</span> of users who view TVOD take subscription.</p>
+      </div>
+      <div class="card">
+        <div class="card-title">Multi-pitch on revoke <span class="badge am">In testing</span></div>
+        <p><strong>Seg B.</strong> TVOD / Tiered / Trial / Standard sub for trial-revoked users.</p>
+        <p style="margin-top:10px">Resolving backend issues before rollout.</p>
+      </div>
     </div>
-    <div class="card">
-      <div class="card-title">TVOD (movie pass) <span class="badge cy">Earlier rollout</span></div>
-      <p><strong>Seg A.</strong> <span class="kpi-inline gn">5%</span> of users who view TVOD take subscription.</p>
-    </div>
-    <div class="card">
-      <div class="card-title">Multi-pitch on revoke <span class="badge am">In testing</span></div>
-      <p><strong>Seg B.</strong> TVOD / Tiered / Trial / Standard sub for trial-revoked users. Resolving backend issues before rollout.</p>
+
+    <div class="callout">
+      <h4>Shipping next cycle · TVOD post trial rejection</h4>
+      <p>When a user rejects the ₹1 trial (won't commit to auto-renewal), instead of losing them, pitch <strong>"Don't want subscription? Buy just this show for ₹X."</strong></p>
+      <p style="margin-top:10px">Lower-friction transactional offer captures intent we'd otherwise lose. <strong>Bonus:</strong> TVOD purchasers become a remarketing list of users who've already paid us — strong upsell candidates for subscription later.</p>
     </div>
   </div>
+</div>
 
-  <!-- BIG IDEA: TVOD post trial rejection -->
-  <div class="callout">
-    <h4>Shipping next cycle · TVOD offer post trial rejection</h4>
-    <p>When a user rejects the ₹1 trial (won't commit to auto-renewal), instead of losing them, pitch <strong>"Don't want subscription? Buy just this show for ₹X."</strong> Lower-friction transactional offer captures intent we'd otherwise lose. Bonus: TVOD purchasers become a remarketing list of users who've already paid us — strong upsell candidates for subscription later.</p>
-  </div>
+<!-- ===== SLIDE 3 — WHAT'S NEXT + TVOD ===== -->
+<div class="slide" data-slide="3">
+  <div class="slide-inner">
+    <div class="slide-label">Update · 3 of 3 · What's next</div>
+    <h1 class="slide-title">Phase 2 · <span style="color:var(--pu)">TVOD timing</span></h1>
+    <p class="slide-sub">When to pitch TVOD vs subscription for max conversion</p>
 
-  <!-- TVOD definition -->
-  <div class="tvod-pill">
-    <div class="what">TVOD</div>
-    <div class="desc"><strong>Movie pass.</strong> Pay per content, no subscription commitment.</div>
-  </div>
+    <div class="tvod-block">
+      <div class="what">TVOD</div>
+      <div class="desc">Movie pass. Pay per content, no subscription commitment.</div>
+      <div class="desc-sub">Currently: 5% of TVOD viewers take subscription · Goal: optimise pitch timing to lift this</div>
+    </div>
 
-  <!-- WHAT NEXT -->
-  <div class="next-row">
-    <span class="label">Next · Phase 2</span>
-    <span>Optimise TVOD pitch timing — when to show TVOD vs subscription for max conversion.</span>
+    <div class="grid-2">
+      <div class="card">
+        <div class="card-title">Open questions</div>
+        <div class="bullet"><div class="dot"></div><p>Pitch TVOD <strong>before</strong> trial paywall, or only <strong>after</strong> rejection?</p></div>
+        <div class="bullet"><div class="dot"></div><p>What's the right TVOD price ladder vs subscription anchor?</p></div>
+        <div class="bullet"><div class="dot"></div><p>Which content gets TVOD pricing — premium-only or all?</p></div>
+      </div>
+      <div class="card">
+        <div class="card-title">Forward bets</div>
+        <div class="bullet"><div class="dot"></div><p>TVOD-post-rejection ships next cycle (Seg A)</p></div>
+        <div class="bullet"><div class="dot"></div><p>Multi-pitch on revoke goes live after backend fix (Seg B)</p></div>
+        <div class="bullet"><div class="dot"></div><p>AI calls cycle 2 starts on 6–10 paywall view cohort</p></div>
+      </div>
+    </div>
+
+    <div class="next-row">
+      <span class="label">Phase 2 goal</span>
+      <span>Lift TVOD → subscription conversion from <strong>5% → 10%+</strong> by optimising pitch timing &amp; content/price selection.</span>
+    </div>
+
+    <p style="font-size:12px;color:var(--dim);text-align:center;margin-top:30px">
+      Use ← / → or Space to navigate · Esc to jump to title
+    </p>
   </div>
+</div>
 
 </div>
+
+<!-- Deck controls -->
+<div class="controls">
+  <button id="prevBtn" title="Previous">‹</button>
+  <div class="counter"><span id="curNum">1</span> / <span id="totalNum">3</span></div>
+  <div class="dots" id="dotsContainer"></div>
+  <button id="nextBtn" title="Next">›</button>
+</div>
+
+<script>
+const slides = document.querySelectorAll('.slide');
+const totalSlides = slides.length;
+let current = 0;
+const curNum = document.getElementById('curNum');
+const totalNum = document.getElementById('totalNum');
+const prevBtn = document.getElementById('prevBtn');
+const nextBtn = document.getElementById('nextBtn');
+const dotsContainer = document.getElementById('dotsContainer');
+totalNum.textContent = totalSlides;
+for (let i = 0; i < totalSlides; i++) {
+  const d = document.createElement('div');
+  d.className = 'dot' + (i === 0 ? ' active' : '');
+  d.onclick = () => goTo(i);
+  dotsContainer.appendChild(d);
+}
+function goTo(n) {
+  n = Math.max(0, Math.min(totalSlides - 1, n));
+  slides[current].classList.remove('active');
+  slides[n].classList.add('active');
+  document.querySelectorAll('.dot')[current].classList.remove('active');
+  document.querySelectorAll('.dot')[n].classList.add('active');
+  current = n;
+  curNum.textContent = n + 1;
+  prevBtn.disabled = n === 0;
+  nextBtn.disabled = n === totalSlides - 1;
+  window.scrollTo(0, 0);
+}
+prevBtn.onclick = () => goTo(current - 1);
+nextBtn.onclick = () => goTo(current + 1);
+document.addEventListener('keydown', e => {
+  if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
+  if (e.key === 'ArrowRight' || e.key === ' ' || e.key === 'PageDown') { e.preventDefault(); goTo(current + 1); }
+  if (e.key === 'ArrowLeft' || e.key === 'PageUp') { e.preventDefault(); goTo(current - 1); }
+  if (e.key === 'Home' || e.key === 'Escape') goTo(0);
+  if (e.key === 'End') goTo(totalSlides - 1);
+});
+prevBtn.disabled = true;
+</script>
+
 </body>
 </html>
