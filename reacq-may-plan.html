@@ -1,0 +1,519 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Re-acquisition · May Plan — STAGE</title>
+<link rel="icon" type="image/x-icon" href="https://www.stage.in/favicon.ico">
+<style>
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
+*{margin:0;padding:0;box-sizing:border-box}
+:root{--bg:#0a0b0f;--s1:#12131a;--s2:#1a1b25;--bd:#2a2b38;--tx:#e8e8ed;--dim:#a8a8b8;--cy:#06b6d4;--am:#f59e0b;--ro:#f43f5e;--gn:#258d58;--pu:#a78bfa}
+html,body{height:100%;overflow:hidden}
+body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--tx);line-height:1.5}
+
+.navbar{position:fixed;top:0;left:0;right:0;z-index:50;background:rgba(10,11,15,0.85);backdrop-filter:blur(12px);border-bottom:1px solid var(--bd)}
+.nav-inner{max-width:1200px;margin:0 auto;padding:14px 32px;display:flex;align-items:center;justify-content:space-between}
+.nav-brand{display:flex;align-items:center;gap:10px;text-decoration:none;color:var(--tx)}
+.nav-brand img{height:24px}
+.nav-brand .nav-label{font-size:11px;color:var(--dim);text-transform:uppercase;letter-spacing:0.1em;font-weight:500}
+.nav-right{display:flex;align-items:center;gap:18px}
+.nav-right a{font-size:12px;color:var(--dim);text-decoration:none;font-weight:500}
+.nav-right a:hover{color:var(--cy)}
+
+.deck{position:relative;height:100vh;width:100vw;padding-top:54px}
+.slide{position:absolute;top:54px;left:0;right:0;bottom:0;opacity:0;pointer-events:none;transition:opacity 0.35s ease;overflow-y:auto}
+.slide.active{opacity:1;pointer-events:auto}
+.slide-inner{max-width:1200px;margin:0 auto;padding:34px 48px 100px;min-height:100%;display:flex;flex-direction:column;justify-content:center}
+.slide-label{font-size:12px;color:var(--cy);text-transform:uppercase;letter-spacing:0.12em;font-weight:600;margin-bottom:8px}
+.slide-title{font-size:38px;font-weight:700;letter-spacing:-0.03em;margin-bottom:6px;line-height:1.1}
+.slide-sub{font-size:16px;color:var(--dim);margin-bottom:26px}
+
+.section-head{font-size:13px;color:var(--cy);text-transform:uppercase;letter-spacing:0.1em;font-weight:600;margin:18px 0 12px;display:flex;align-items:center;gap:12px}
+.section-head::before{content:"";flex:0 0 5px;height:5px;background:var(--cy);border-radius:3px}
+.section-head::after{content:"";flex:1;height:1px;background:var(--bd)}
+
+/* Funnel diagram */
+.funnel{display:flex;flex-direction:column;align-items:center;gap:10px;margin:14px auto;max-width:780px}
+.funnel-layer{width:100%;border-radius:12px;padding:18px 22px;text-align:center;position:relative}
+.funnel-pool{background:linear-gradient(135deg,var(--s1),rgba(245,158,11,0.10));border:1px solid rgba(245,158,11,0.3);max-width:760px}
+.funnel-bring{background:linear-gradient(135deg,var(--s1),rgba(6,182,212,0.10));border:1px solid rgba(6,182,212,0.3);max-width:680px}
+.funnel-engaged{background:var(--s2);border:1px solid var(--bd);max-width:580px}
+.funnel-convert{background:linear-gradient(135deg,var(--s1),rgba(167,139,250,0.10));border:1px solid rgba(167,139,250,0.3);max-width:480px}
+.funnel-target{background:linear-gradient(135deg,var(--s1),rgba(37,141,88,0.18));border:1px solid rgba(37,141,88,0.35);max-width:380px}
+.funnel-layer .lbl{font-size:11px;text-transform:uppercase;letter-spacing:0.1em;font-weight:700;margin-bottom:4px}
+.funnel-pool .lbl{color:var(--am)}
+.funnel-bring .lbl{color:var(--cy)}
+.funnel-engaged .lbl{color:var(--dim)}
+.funnel-convert .lbl{color:var(--pu)}
+.funnel-target .lbl{color:#34d399}
+.funnel-layer .num{font-family:'JetBrains Mono',monospace;font-size:22px;font-weight:700;letter-spacing:-0.01em}
+.funnel-layer .desc{font-size:13px;color:var(--dim);margin-top:4px;line-height:1.5}
+.funnel-layer .desc strong{color:var(--tx);font-weight:600}
+.funnel-arrow{font-size:18px;color:var(--bd);line-height:1}
+
+/* Cohort cards */
+.cohort-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:8px}
+.cohort-card{background:var(--s1);border:1px solid var(--bd);border-radius:10px;padding:14px}
+.cohort-card.t1{border-left:4px solid var(--ro)}
+.cohort-card.t2{border-left:4px solid var(--am)}
+.cohort-card.t3{border-left:4px solid var(--cy)}
+.cohort-card.t4{border-left:4px solid var(--dim)}
+.cohort-card .tier{font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.06em}
+.cohort-card.t1 .tier{color:var(--ro)}
+.cohort-card.t2 .tier{color:var(--am)}
+.cohort-card.t3 .tier{color:var(--cy)}
+.cohort-card.t4 .tier{color:var(--dim)}
+.cohort-card .name{font-size:14px;font-weight:600;margin:4px 0}
+.cohort-card .def{font-size:11.5px;color:var(--dim);line-height:1.5;margin-bottom:6px}
+.cohort-card .pool{font-family:'JetBrains Mono',monospace;font-size:13px;font-weight:600;color:var(--tx)}
+
+/* Workflow row */
+.flow-row{display:flex;align-items:stretch;gap:8px;margin:14px 0 10px;flex-wrap:wrap}
+.flow-step{flex:1;min-width:140px;background:var(--s1);border:1px solid var(--bd);border-radius:10px;padding:12px 14px;position:relative}
+.flow-step .num{position:absolute;top:-10px;left:14px;background:var(--cy);color:#0a0b0f;font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:700;width:22px;height:22px;border-radius:50%;display:flex;align-items:center;justify-content:center}
+.flow-step .h{font-size:13px;font-weight:600;margin-top:4px;margin-bottom:4px}
+.flow-step .d{font-size:11.5px;color:var(--dim);line-height:1.5}
+.flow-step .d strong{color:var(--tx);font-weight:600}
+.flow-arrow{display:flex;align-items:center;color:var(--bd);font-size:20px}
+
+/* Channel matrix */
+table.matrix{width:100%;border-collapse:collapse;font-size:12.5px;margin-top:12px;background:var(--s1);border:1px solid var(--bd);border-radius:10px;overflow:hidden}
+table.matrix th{text-align:left;padding:10px 12px;font-size:11px;text-transform:uppercase;letter-spacing:0.06em;color:var(--dim);background:var(--s2);border-bottom:1px solid var(--bd)}
+table.matrix td{padding:10px 12px;border-bottom:1px solid rgba(255,255,255,0.04);color:var(--dim)}
+table.matrix tr:last-child td{border-bottom:none}
+table.matrix td strong{color:var(--tx);font-weight:600}
+table.matrix .yes{color:#34d399;font-weight:600}
+table.matrix .pri{color:var(--ro);font-weight:600}
+table.matrix .no{color:var(--bd)}
+
+/* Cards */
+.grid-2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.grid-3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px}
+.card{background:var(--s1);border:1px solid var(--bd);border-radius:12px;padding:16px 18px}
+.card-title{font-size:15px;font-weight:600;margin-bottom:8px;color:var(--tx);display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.card-title .badge{font-family:'JetBrains Mono',monospace;font-size:10px;padding:2px 8px;border-radius:100px;font-weight:500}
+.card-title .badge.cy{background:rgba(6,182,212,0.15);color:var(--cy)}
+.card-title .badge.am{background:rgba(245,158,11,0.15);color:var(--am)}
+.card-title .badge.gn{background:rgba(37,141,88,0.20);color:#34d399}
+.card-title .badge.pu{background:rgba(167,139,250,0.18);color:var(--pu)}
+.card p{font-size:13px;color:var(--dim);line-height:1.6}
+.card strong{color:var(--tx);font-weight:600}
+
+.kpi-inline{font-family:'JetBrains Mono',monospace;color:var(--am);font-weight:700}
+.kpi-inline.gn{color:#34d399}
+.kpi-inline.cy{color:var(--cy)}
+.kpi-inline.pu{color:var(--pu)}
+
+/* Pitch step list */
+.pitch-list{counter-reset:step;list-style:none;padding:0;margin:8px 0 0}
+.pitch-list li{counter-increment:step;position:relative;padding:7px 0 7px 30px;font-size:13px;color:var(--dim);line-height:1.55;border-left:1px dashed var(--bd);margin-left:10px;padding-left:24px}
+.pitch-list li::before{content:counter(step);position:absolute;left:-12px;top:7px;width:22px;height:22px;background:var(--s2);border:1px solid var(--bd);border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:'JetBrains Mono',monospace;font-size:10.5px;color:var(--cy);font-weight:700}
+.pitch-list li:last-child{border-left:1px dashed transparent}
+.pitch-list strong{color:var(--tx);font-weight:600}
+
+/* Comparison block */
+.compare{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:10px}
+.compare-card{background:var(--s2);border:1px solid var(--bd);border-radius:10px;padding:14px;text-align:center}
+.compare-card.tvod{border-color:rgba(167,139,250,0.4)}
+.compare-card.sub{border-color:rgba(37,141,88,0.4)}
+.compare-card .price{font-family:'JetBrains Mono',monospace;font-size:24px;font-weight:700;letter-spacing:-0.02em}
+.compare-card.tvod .price{color:var(--pu)}
+.compare-card.sub .price{color:#34d399}
+.compare-card .lbl{font-size:11px;text-transform:uppercase;letter-spacing:0.08em;color:var(--dim);font-weight:500;margin-bottom:4px}
+.compare-card .what{font-size:13px;color:var(--tx);font-weight:600;margin-top:4px}
+
+/* Gantt */
+.gantt{margin-top:10px;background:var(--s1);border:1px solid var(--bd);border-radius:10px;padding:14px;overflow-x:auto}
+.gantt-row{display:grid;grid-template-columns:200px repeat(4,1fr);gap:6px;align-items:center;font-size:12px;margin-bottom:6px}
+.gantt-row.head{font-size:10.5px;text-transform:uppercase;letter-spacing:0.08em;color:var(--dim);font-weight:600;border-bottom:1px solid var(--bd);padding-bottom:6px;margin-bottom:8px}
+.gantt-row .item{color:var(--tx);font-weight:500;padding-right:8px}
+.gantt-row .week{height:22px;border-radius:5px;background:var(--s2);position:relative}
+.gantt-row .week.fill-cy{background:rgba(6,182,212,0.4);border:1px solid var(--cy)}
+.gantt-row .week.fill-am{background:rgba(245,158,11,0.35);border:1px solid var(--am)}
+.gantt-row .week.fill-pu{background:rgba(167,139,250,0.35);border:1px solid var(--pu)}
+.gantt-row .week.fill-gn{background:rgba(37,141,88,0.4);border:1px solid var(--gn)}
+.gantt-row .week.fill-half{background:linear-gradient(90deg,rgba(6,182,212,0.4) 50%,transparent 50%);border:1px solid var(--cy)}
+.gantt-legend{display:flex;gap:14px;margin-top:10px;font-size:11px;color:var(--dim);flex-wrap:wrap}
+.gantt-legend .lk{display:flex;align-items:center;gap:6px}
+.gantt-legend .sw{width:14px;height:10px;border-radius:3px}
+
+/* Targets */
+.targets{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:14px}
+.target-card{background:var(--s1);border:1px solid var(--bd);border-radius:12px;padding:16px;text-align:center}
+.target-card .lbl{font-size:11px;text-transform:uppercase;letter-spacing:0.08em;color:var(--dim);font-weight:500;margin-bottom:6px}
+.target-card .from-to{font-family:'JetBrains Mono',monospace;font-size:18px;font-weight:700;color:var(--tx)}
+.target-card .from-to .arrow{color:var(--cy);margin:0 4px}
+.target-card .from-to .from{color:var(--dim)}
+.target-card .delta{font-size:11.5px;color:#34d399;font-weight:600;margin-top:4px}
+
+/* Controls */
+.controls{position:fixed;bottom:24px;left:50%;transform:translateX(-50%);display:flex;align-items:center;gap:14px;z-index:100;background:rgba(26,27,37,0.92);border:1px solid var(--bd);border-radius:100px;padding:8px 14px;backdrop-filter:blur(10px)}
+.controls button{background:transparent;border:none;color:var(--tx);cursor:pointer;width:30px;height:30px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:16px;transition:background 0.15s}
+.controls button:hover{background:var(--bd)}
+.controls button:disabled{opacity:0.3;cursor:not-allowed}
+.controls .counter{font-size:13px;color:var(--dim);font-family:'JetBrains Mono',monospace;min-width:48px;text-align:center}
+.controls .dots{display:flex;gap:6px;margin-left:6px}
+.controls .dot{width:7px;height:7px;border-radius:50%;background:var(--bd);cursor:pointer;transition:background 0.15s}
+.controls .dot.active{background:var(--cy);width:22px;border-radius:6px}
+
+@media(max-width:780px){
+  .slide-title{font-size:28px}
+  .slide-inner{padding:24px 20px 90px}
+  .grid-2,.grid-3,.cohort-grid,.compare,.targets{grid-template-columns:1fr}
+  .gantt-row{grid-template-columns:140px repeat(4,1fr)}
+}
+</style>
+</head>
+<body>
+
+<nav class="navbar">
+  <div class="nav-inner">
+    <a class="nav-brand" href="./">
+      <img src="https://media.stage.in/static/stage_logo_stack.png" alt="STAGE">
+      <span class="nav-label">Re-acquisition · May Plan</span>
+    </a>
+    <div class="nav-right">
+      <a href="./">Strategy</a>
+      <a href="./work-2.html">Re-acq Update</a>
+      <a href="./reactivation-update.html">Re-activation</a>
+    </div>
+  </div>
+</nav>
+
+<div class="deck">
+
+<!-- ========== SLIDE 1 — OVERVIEW FUNNEL ========== -->
+<div class="slide active" data-slide="1">
+  <div class="slide-inner">
+    <div class="slide-label">May Plan · 1 of 4</div>
+    <h1 class="slide-title">May Plan — <span style="color:var(--cy)">Re-acquisition</span></h1>
+    <p class="slide-sub">Two pillars: <strong style="color:var(--cy)">Bring users</strong> via Ads + CLM, <strong style="color:var(--pu)">Convert</strong> via TVOD + Freemium.</p>
+
+    <div class="funnel">
+      <div class="funnel-layer funnel-pool">
+        <div class="lbl">Pool</div>
+        <div class="num">4.26M</div>
+        <div class="desc">Churned paid subscribers · 4 priority cohorts (T1 hot premium → T4 long tail)</div>
+      </div>
+      <div class="funnel-arrow">▼</div>
+      <div class="funnel-layer funnel-bring">
+        <div class="lbl">Bring (Pillar 1)</div>
+        <div class="num">~600K monthly reach</div>
+        <div class="desc"><strong>Ads</strong> (broad + retargeting) · <strong>CLM stack</strong> — Push → WhatsApp → RCS → AI Calls (escalation by intent)</div>
+      </div>
+      <div class="funnel-arrow">▼</div>
+      <div class="funnel-layer funnel-engaged">
+        <div class="lbl">Engaged · paywall views</div>
+        <div class="num">~150K</div>
+        <div class="desc">Users who land on paywall / app from CLM or ad click</div>
+      </div>
+      <div class="funnel-arrow">▼</div>
+      <div class="funnel-layer funnel-convert">
+        <div class="lbl">Convert (Pillar 2)</div>
+        <div class="num">TVOD · Freemium · Comparison</div>
+        <div class="desc"><strong>₹20 movie pass</strong> as primary lever · <strong>Free zone</strong> seeds engagement · <strong>Side-by-side framing</strong> (TVOD vs ₹199)</div>
+      </div>
+      <div class="funnel-arrow">▼</div>
+      <div class="funnel-layer funnel-target">
+        <div class="lbl">May target</div>
+        <div class="num">18,000 returners · ₹32L LTV</div>
+        <div class="desc">Rate <strong>0.35% → 0.42%</strong> · LTV <strong>₹25L → ₹32L</strong> · CAC <strong>₹700 → ₹600</strong></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ========== SLIDE 2 — BRING USERS ========== -->
+<div class="slide" data-slide="2">
+  <div class="slide-inner">
+    <div class="slide-label">May Plan · 2 of 4 · Bring Users</div>
+    <h1 class="slide-title">Bring Users — <span style="color:var(--cy)">workflow + cohorts</span></h1>
+    <p class="slide-sub">Sequential CLM (cheap → premium) layered with cohort-targeted ads.</p>
+
+    <div class="section-head">Cohort tiers</div>
+    <div class="cohort-grid">
+      <div class="cohort-card t1">
+        <div class="tier">T1 · Hot Premium</div>
+        <div class="name">0–30d × 4+ cycles</div>
+        <div class="def">Freshest churn, proven multi-cycle payers. Highest conversion potential.</div>
+        <div class="pool">~24K (P1)</div>
+      </div>
+      <div class="cohort-card t2">
+        <div class="tier">T2 · Hot Casual</div>
+        <div class="name">0–30d × 1–3c &amp; 31–60d × 4+c</div>
+        <div class="def">Recent churn, lower cycle history OR proven payers with mid-recency.</div>
+        <div class="pool">~80K</div>
+      </div>
+      <div class="cohort-card t3">
+        <div class="tier">T3 · Warm</div>
+        <div class="name">31–90d (all cycles)</div>
+        <div class="def">Memory recoverable. Standard CLM nudge + ads.</div>
+        <div class="pool">~520K</div>
+      </div>
+      <div class="cohort-card t4">
+        <div class="tier">T4 · Long Tail</div>
+        <div class="name">90+ days</div>
+        <div class="def">Volume play. Broad performance ads only.</div>
+        <div class="pool">~3.7M</div>
+      </div>
+    </div>
+
+    <div class="section-head">CLM workflow — sequential escalation</div>
+    <div class="flow-row">
+      <div class="flow-step">
+        <span class="num">1</span>
+        <div class="h">Push Notification</div>
+        <div class="d">Daily nudge to <strong>all T1–T3 with app</strong>. Personalised content hook (last show watched).</div>
+      </div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-step">
+        <span class="num">2</span>
+        <div class="h">WhatsApp blast</div>
+        <div class="d">Sent to <strong>T1–T3</strong>, dialect-targeted creative. Click-tracked.</div>
+      </div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-step">
+        <span class="num">3</span>
+        <div class="h">RCS / Deep WA</div>
+        <div class="d">For users who <strong>clicked PN/WA</strong> but didn't convert. Richer creative, video.</div>
+      </div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-step">
+        <span class="num">4</span>
+        <div class="h">AI Call</div>
+        <div class="d"><strong>T1 only</strong> — users still uncommitted after WA/RCS click. Voice pitch + WA link send.</div>
+      </div>
+    </div>
+
+    <div class="section-head">Channel × cohort matrix</div>
+    <table class="matrix">
+      <thead>
+        <tr><th>Channel</th><th>T1 Hot Premium</th><th>T2 Hot Casual</th><th>T3 Warm</th><th>T4 Long Tail</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Performance ads</strong> (broad + lookalike)</td>
+          <td class="yes">✓</td><td class="yes">✓</td><td class="yes">✓</td><td class="pri">✓ Primary</td>
+        </tr>
+        <tr>
+          <td><strong>Retargeting ads</strong> (recall creative)</td>
+          <td class="pri">✓ Primary</td><td class="yes">✓</td><td class="yes">✓</td><td class="no">—</td>
+        </tr>
+        <tr>
+          <td><strong>Push Notification</strong> (daily, content hook)</td>
+          <td class="yes">✓</td><td class="yes">✓</td><td class="yes">✓</td><td class="no">—</td>
+        </tr>
+        <tr>
+          <td><strong>WhatsApp</strong> (dialect-creative)</td>
+          <td class="pri">✓ Primary</td><td class="yes">✓</td><td class="yes">✓</td><td class="no">—</td>
+        </tr>
+        <tr>
+          <td><strong>RCS / Deep WA</strong> (post-click)</td>
+          <td class="yes">✓</td><td class="yes">✓</td><td class="no">—</td><td class="no">—</td>
+        </tr>
+        <tr>
+          <td><strong>AI Calls</strong> (post-click, intent-qualified)</td>
+          <td class="pri">✓ Primary</td><td class="no">—</td><td class="no">—</td><td class="no">—</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- ========== SLIDE 3 — CONVERT USERS ========== -->
+<div class="slide" data-slide="3">
+  <div class="slide-inner">
+    <div class="slide-label">May Plan · 3 of 4 · Convert Users</div>
+    <h1 class="slide-title">Convert — <span style="color:var(--pu)">TVOD + Freemium</span></h1>
+    <p class="slide-sub">Three product mechanics, all converging on dual-CTA: <strong>₹20 TVOD</strong> or <strong>₹199 full</strong>.</p>
+
+    <div class="grid-2">
+      <div class="card">
+        <div class="card-title">TVOD pitch flow <span class="badge pu">Movie pass</span></div>
+        <p>Triggered when user lands on a movie detail page from Ad/CLM.</p>
+        <ol class="pitch-list">
+          <li>User lands on <strong>movie detail page</strong> from CLM/Ad click</li>
+          <li><strong>2-min teaser auto-plays</strong> (free) — emotional hook lands</li>
+          <li>At hook moment, <strong>overlay freezes video</strong>: "Continue watching this movie?"</li>
+          <li>Side-by-side CTAs: <strong>₹20 just this</strong> · <strong>₹199 unlimited</strong></li>
+          <li>If neither → fallback "<strong>Watch 5 min more free</strong>" → coin gate at end</li>
+        </ol>
+      </div>
+      <div class="card">
+        <div class="card-title">Freemium / Free zone <span class="badge cy">Seed engagement</span></div>
+        <p>Triggered for users who reject paywall on first session.</p>
+        <ol class="pitch-list">
+          <li>Open app → <strong>Free zone</strong> with curated lighter content</li>
+          <li>User watches <strong>X mins / Y episodes</strong> for free</li>
+          <li>At <strong>climax / cliffhanger</strong> → pitch overlay (don't interrupt mid-scene)</li>
+          <li>Same dual-CTA: <strong>₹20 unlock this</strong> · <strong>₹199 unlock everything</strong></li>
+          <li>If user dismisses → unlock 5 more free min, repeat at next climax</li>
+        </ol>
+      </div>
+    </div>
+
+    <div class="section-head">Comparison framing — every paywall, side-by-side</div>
+    <div class="card">
+      <p style="margin-bottom:8px">Replace single-CTA paywall with <strong>dual-option visual</strong>. Don't force commitment to subscription.</p>
+      <div class="compare">
+        <div class="compare-card tvod">
+          <div class="lbl">Just this movie</div>
+          <div class="price">₹20</div>
+          <div class="what">TVOD · 48hr access</div>
+        </div>
+        <div class="compare-card sub">
+          <div class="lbl">All Stage content</div>
+          <div class="price">₹199</div>
+          <div class="what">Full subscription · Auto-renews</div>
+        </div>
+      </div>
+      <p style="margin-top:10px;font-size:12.5px"><strong>Why this works:</strong> users who reject ₹199 (commitment shock) often accept ₹20. TVOD purchase = paid customer = remarketing list for subscription upsell later.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ========== SLIDE 4 — TIMELINE + TARGETS ========== -->
+<div class="slide" data-slide="4">
+  <div class="slide-inner">
+    <div class="slide-label">May Plan · 4 of 4 · Timeline + Targets</div>
+    <h1 class="slide-title">May timeline &amp; <span style="color:#34d399">targets</span></h1>
+    <p class="slide-sub">Week-by-week rollout. Targets vs current April baseline.</p>
+
+    <div class="section-head">Week-by-week Gantt</div>
+    <div class="gantt">
+      <div class="gantt-row head">
+        <div class="item">Initiative</div>
+        <div style="text-align:center">May W1</div>
+        <div style="text-align:center">May W2</div>
+        <div style="text-align:center">May W3</div>
+        <div style="text-align:center">May W4</div>
+      </div>
+
+      <div class="gantt-row">
+        <div class="item">Ads · scale + new creative</div>
+        <div class="week fill-cy"></div><div class="week fill-cy"></div><div class="week fill-cy"></div><div class="week fill-cy"></div>
+      </div>
+      <div class="gantt-row">
+        <div class="item">Push Notification (T1–T3)</div>
+        <div class="week fill-cy"></div><div class="week fill-cy"></div><div class="week fill-cy"></div><div class="week fill-cy"></div>
+      </div>
+      <div class="gantt-row">
+        <div class="item">WhatsApp blast (dialect)</div>
+        <div class="week fill-cy"></div><div class="week fill-cy"></div><div class="week fill-cy"></div><div class="week fill-cy"></div>
+      </div>
+      <div class="gantt-row">
+        <div class="item">RCS rollout</div>
+        <div class="week"></div><div class="week fill-am"></div><div class="week fill-am"></div><div class="week fill-am"></div>
+      </div>
+      <div class="gantt-row">
+        <div class="item">AI Calls — P2 cohort (6–10 paywall views)</div>
+        <div class="week fill-am"></div><div class="week fill-am"></div><div class="week fill-am"></div><div class="week fill-am"></div>
+      </div>
+      <div class="gantt-row">
+        <div class="item">TVOD post-trial-rejection (live)</div>
+        <div class="week fill-pu"></div><div class="week fill-pu"></div><div class="week fill-pu"></div><div class="week fill-pu"></div>
+      </div>
+      <div class="gantt-row">
+        <div class="item">Free zone / Freemium experiment</div>
+        <div class="week"></div><div class="week"></div><div class="week fill-pu"></div><div class="week fill-pu"></div>
+      </div>
+      <div class="gantt-row">
+        <div class="item">Comparison paywall A/B</div>
+        <div class="week"></div><div class="week fill-pu"></div><div class="week fill-pu"></div><div class="week fill-pu"></div>
+      </div>
+      <div class="gantt-row">
+        <div class="item">Multi-pitch on revoke (Seg B)</div>
+        <div class="week"></div><div class="week"></div><div class="week fill-gn"></div><div class="week fill-gn"></div>
+      </div>
+
+      <div class="gantt-legend">
+        <div class="lk"><div class="sw" style="background:rgba(6,182,212,0.4);border:1px solid var(--cy)"></div>Marketing / Always-on</div>
+        <div class="lk"><div class="sw" style="background:rgba(245,158,11,0.35);border:1px solid var(--am)"></div>CLM rollout</div>
+        <div class="lk"><div class="sw" style="background:rgba(167,139,250,0.35);border:1px solid var(--pu)"></div>Product / TVOD</div>
+        <div class="lk"><div class="sw" style="background:rgba(37,141,88,0.4);border:1px solid var(--gn)"></div>Re-activation hand-off</div>
+      </div>
+    </div>
+
+    <div class="section-head">May targets vs April baseline</div>
+    <div class="targets">
+      <div class="target-card">
+        <div class="lbl">Returners / month</div>
+        <div class="from-to"><span class="from">~13K</span><span class="arrow">→</span>18K</div>
+        <div class="delta">+38%</div>
+      </div>
+      <div class="target-card">
+        <div class="lbl">Re-acq rate</div>
+        <div class="from-to"><span class="from">0.35%</span><span class="arrow">→</span>0.42%</div>
+        <div class="delta">+20%</div>
+      </div>
+      <div class="target-card">
+        <div class="lbl">Monthly LTV</div>
+        <div class="from-to"><span class="from">₹25L</span><span class="arrow">→</span>₹32L</div>
+        <div class="delta">+28%</div>
+      </div>
+      <div class="target-card">
+        <div class="lbl">CAC (ads)</div>
+        <div class="from-to"><span class="from">₹700</span><span class="arrow">→</span>₹600</div>
+        <div class="delta">-14%</div>
+      </div>
+    </div>
+
+    <p style="font-size:12px;color:var(--dim);text-align:center;margin-top:24px">
+      Use ← / → or Space to navigate · Esc to jump to title · Detail sheet: <a href="./reacq-may-plan-detail.csv" style="color:var(--cy)">reacq-may-plan-detail.csv</a>
+    </p>
+  </div>
+</div>
+
+</div>
+
+<!-- Deck controls -->
+<div class="controls">
+  <button id="prevBtn" title="Previous">‹</button>
+  <div class="counter"><span id="curNum">1</span> / <span id="totalNum">4</span></div>
+  <div class="dots" id="dotsContainer"></div>
+  <button id="nextBtn" title="Next">›</button>
+</div>
+
+<script>
+const slides = document.querySelectorAll('.slide');
+const totalSlides = slides.length;
+let current = 0;
+const curNum = document.getElementById('curNum');
+const totalNum = document.getElementById('totalNum');
+const prevBtn = document.getElementById('prevBtn');
+const nextBtn = document.getElementById('nextBtn');
+const dotsContainer = document.getElementById('dotsContainer');
+totalNum.textContent = totalSlides;
+for (let i = 0; i < totalSlides; i++) {
+  const d = document.createElement('div');
+  d.className = 'dot' + (i === 0 ? ' active' : '');
+  d.onclick = () => goTo(i);
+  dotsContainer.appendChild(d);
+}
+function goTo(n) {
+  n = Math.max(0, Math.min(totalSlides - 1, n));
+  slides[current].classList.remove('active');
+  slides[n].classList.add('active');
+  document.querySelectorAll('.dot')[current].classList.remove('active');
+  document.querySelectorAll('.dot')[n].classList.add('active');
+  current = n;
+  curNum.textContent = n + 1;
+  prevBtn.disabled = n === 0;
+  nextBtn.disabled = n === totalSlides - 1;
+  window.scrollTo(0, 0);
+}
+prevBtn.onclick = () => goTo(current - 1);
+nextBtn.onclick = () => goTo(current + 1);
+document.addEventListener('keydown', e => {
+  if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
+  if (e.key === 'ArrowRight' || e.key === ' ' || e.key === 'PageDown') { e.preventDefault(); goTo(current + 1); }
+  if (e.key === 'ArrowLeft' || e.key === 'PageUp') { e.preventDefault(); goTo(current - 1); }
+  if (e.key === 'Home' || e.key === 'Escape') goTo(0);
+  if (e.key === 'End') goTo(totalSlides - 1);
+});
+prevBtn.disabled = true;
+</script>
+
+</body>
+</html>
