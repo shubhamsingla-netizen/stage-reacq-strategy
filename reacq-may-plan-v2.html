@@ -1,0 +1,512 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Re-Acquisition — May Plan</title>
+<link rel="icon" type="image/x-icon" href="https://www.stage.in/favicon.ico">
+<style>
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap');
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'DM Sans',sans-serif;background:#0a0b0f;color:#e8e8ed;-webkit-font-smoothing:antialiased;line-height:1.5}
+.slide{width:1280px;min-height:720px;margin:32px auto;padding:56px 72px;background:#12131a;border:1px solid #2a2b38;border-radius:12px;box-shadow:0 4px 24px rgba(0,0,0,0.4);display:flex;flex-direction:column;justify-content:flex-start;position:relative;page-break-after:always}
+.slide-tall{min-height:auto}
+.sn{position:absolute;top:28px;right:40px;font-size:14px;color:#555;font-weight:600}
+.tag{font-size:13px;font-weight:700;letter-spacing:2.5px;text-transform:uppercase;color:#f43f5e;margin-bottom:10px}
+.tag-blue{color:#06b6d4}
+h1{font-size:48px;font-weight:700;margin-bottom:10px;line-height:1.15;color:#fff}
+h2{font-size:36px;font-weight:700;margin-bottom:8px;line-height:1.25;color:#fff}
+h3{font-size:22px;font-weight:600;margin-bottom:8px;color:#fff}
+.sub{font-size:18px;color:#a8a8b8;margin-bottom:32px;line-height:1.6}
+
+.stats{display:flex;gap:20px;margin:24px 0;flex-wrap:wrap}
+.stat{border:1px solid #2a2b38;border-radius:12px;padding:24px 28px;flex:1;min-width:180px;background:#1a1b25}
+.stat b{font-size:32px;font-weight:700;display:block;color:#fff}
+.stat span{font-size:15px;color:#a8a8b8;display:block;margin-top:5px}
+.stat-green b{color:#34d399}
+.stat-blue b{color:#06b6d4}
+.stat-amber b{color:#f59e0b}
+
+table{width:100%;border-collapse:collapse;font-size:15px;margin:14px 0;color:#e8e8ed}
+th{text-align:left;padding:12px 12px;background:#1a1b25;color:#a8a8b8;font-weight:600;font-size:12px;text-transform:uppercase;letter-spacing:0.5px;border-bottom:2px solid #2a2b38}
+td{padding:10px 12px;border-bottom:1px solid #2a2b38;vertical-align:top;line-height:1.5;color:#cfcfdb}
+td strong{color:#fff;font-weight:600}
+
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:36px}
+.three-col{display:grid;grid-template-columns:1fr 1fr 1fr;gap:24px}
+.card{border:1px solid #2a2b38;border-radius:12px;padding:24px;background:#1a1b25}
+.hl{background:#1a1b25;border-radius:12px;padding:22px 24px;margin:14px 0;border:1px solid #2a2b38}
+
+.green-row{background:rgba(37,141,88,0.12)}
+.amber-row{background:rgba(245,158,11,0.10)}
+
+.tier-label{font-size:14px;font-weight:700;letter-spacing:1px;text-transform:uppercase;padding:5px 12px;border-radius:5px;display:inline-block;margin-bottom:14px}
+.tier-1{background:rgba(244,63,94,0.18);color:#f43f5e}
+.tier-2{background:rgba(245,158,11,0.18);color:#f59e0b}
+.tier-3{background:rgba(6,182,212,0.18);color:#06b6d4}
+.tier-4{background:rgba(168,168,184,0.15);color:#a8a8b8}
+
+.priority{display:inline-block;padding:4px 10px;border-radius:4px;font-size:12px;font-weight:600}
+.p1{background:rgba(244,63,94,0.18);color:#f43f5e}
+.p2{background:rgba(245,158,11,0.18);color:#f59e0b}
+.p3{background:rgba(168,168,184,0.15);color:#a8a8b8}
+
+.fw-box{border-left:5px solid #06b6d4;padding:18px 22px;background:#1a1b25;margin:10px 0;border-radius:0 10px 10px 0}
+.fw-box-red{border-left-color:#f43f5e}
+.fw-box-amber{border-left-color:#f59e0b}
+
+.section-divider{background:#06b6d4;color:#0a0b0f;padding:10px 18px;border-radius:6px;font-size:15px;font-weight:700;margin:16px 0 12px;display:inline-block}
+.section-divider-red{background:#f43f5e;color:#fff}
+.section-divider-amber{background:#f59e0b;color:#0a0b0f}
+
+.exec-divider{background:#3a3b48;color:#fff;padding:8px 16px;border-radius:6px;font-size:14px;font-weight:600;margin:20px 0 10px;display:inline-block}
+
+.funnel{display:flex;gap:4px;margin:20px 0}
+.fs{flex:1;background:#1a1b25;padding:20px 16px;text-align:center;border:1px solid #2a2b38}
+.fs:first-child{border-radius:10px 0 0 10px}
+.fs:last-child{border-radius:0 10px 10px 0}
+.fv{font-size:28px;font-weight:700;color:#fff}
+.fl{font-size:12px;color:#a8a8b8;text-transform:uppercase;letter-spacing:0.5px;margin-top:5px}
+.fp{font-size:14px;color:#a8a8b8}
+.fd{font-size:12px;color:#f43f5e;font-weight:600;margin-top:4px}
+.fw{background:rgba(244,63,94,0.10);border-color:rgba(244,63,94,0.3)}
+
+.highlight-box{border:2px solid #06b6d4;border-radius:12px;padding:24px;margin:16px 0;background:#1a1b25}
+small{font-size:14px;color:#a8a8b8}
+
+.flow-container{display:flex;gap:6px;align-items:stretch;margin:16px 0}
+.flow-step{flex:1;border:1px solid #2a2b38;border-radius:10px;padding:16px;text-align:center;display:flex;flex-direction:column;justify-content:center;background:#1a1b25}
+.flow-step h4{font-size:15px;font-weight:600;margin-bottom:5px;color:#fff}
+.flow-step p{font-size:14px;color:#a8a8b8;line-height:1.4}
+.flow-arrow{display:flex;align-items:center;color:#3a3b48;font-size:22px;padding:0 3px}
+
+.mono{font-family:'JetBrains Mono','Courier New',monospace}
+
+.kpi-row{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin:14px 0}
+.kpi-cell{background:#1a1b25;border:1px solid #2a2b38;border-radius:10px;padding:18px;text-align:center}
+.kpi-cell .lbl{font-size:11px;color:#a8a8b8;text-transform:uppercase;letter-spacing:0.08em;font-weight:600;margin-bottom:8px}
+.kpi-cell .from-to{font-size:18px;font-weight:700;color:#fff}
+.kpi-cell .from-to .arrow{color:#06b6d4;margin:0 5px}
+.kpi-cell .from-to .from{color:#a8a8b8}
+.kpi-cell .delta{font-size:12px;color:#34d399;font-weight:600;margin-top:6px}
+
+@media print{
+  .slide{min-height:auto;padding:40px;box-shadow:none;margin:0;border-radius:0}
+  body{background:#0a0b0f}
+}
+</style>
+</head>
+<body>
+
+<!-- ==================== SLIDE 1: TITLE ==================== -->
+<div class="slide">
+<span class="sn">01</span>
+<div style="margin-top:72px">
+<div class="tag">MAY 2026</div>
+<h1>Re-Acquisition Plan</h1>
+<p class="sub">Bringing back paid subscribers who lapsed</p>
+
+<div class="stats">
+<div class="stat">
+<span>CHURNED PAID BASE</span>
+<b>4.26M</b>
+<span>Paid 1+ cycle, lapsed 30+ days</span>
+</div>
+<div class="stat stat-amber">
+<span>APRIL BASELINE</span>
+<b>4,794 returners</b>
+<span>0.11% (partial) · Mar 0.35% peak</span>
+</div>
+<div class="stat stat-green">
+<span>MAY TARGET</span>
+<b>0.42% · ~17.9K returners</b>
+<span>1.2× the Mar peak</span>
+</div>
+</div>
+
+<h3 style="margin-top:44px;margin-bottom:18px">Execution Framework</h3>
+<div class="two-col">
+<div class="fw-box">
+<h3>Bring Users Back</h3>
+<p style="font-size:17px;color:#a8a8b8;margin-top:6px">Performance ads (CAC ₹700), AI calls (P1 cohort, CAC ₹200), CLM stack (PN/WA/RCS), retargeting</p>
+</div>
+<div class="fw-box fw-box-red">
+<h3>Convert Users</h3>
+<p style="font-size:17px;color:#a8a8b8;margin-top:6px">₹99 discount offer, TVOD ₹20 movie pass, Free Zone seeding, Tiered subscription emphasis</p>
+</div>
+</div>
+</div>
+</div>
+
+<!-- ==================== SLIDE 2: RCA ==================== -->
+<div class="slide slide-tall">
+<span class="sn">02</span>
+<div class="tag">ROOT CAUSE</div>
+<h2>Why did paid users churn and not return?</h2>
+<p class="sub">3 root causes — each addressed by a specific lever</p>
+
+<table>
+<thead>
+<tr>
+<th style="background:#0e3a4a;color:#06b6d4;font-size:13px;width:25%">Why didn't they come back?</th>
+<th style="background:#0e3a4a;color:#06b6d4;font-size:13px;width:25%">Why?</th>
+<th style="background:#0e3a4a;color:#06b6d4;font-size:13px;width:25%">Why?</th>
+<th style="background:#0e3a4a;color:#06b6d4;font-size:13px;width:25%">Lever to fix</th>
+</tr>
+</thead>
+<tbody>
+<tr class="green-row">
+<td><strong>Content dry-up</strong></td>
+<td>Show they liked ended; no new compelling reason</td>
+<td>No content discovery or recall after they leave</td>
+<td><strong>"Since you left, X new shows"</strong> recall messaging in CLM<br><small>Hot users: same show new episode · Cold users: trending in genre</small></td>
+</tr>
+<tr class="amber-row">
+<td><strong>Mandate auto-cancelled</strong></td>
+<td>Let renewal lapse — value perception slipped at ₹199</td>
+<td>Felt ₹199/mo wasn't worth current usage; cancelled "just in case"</td>
+<td><strong>₹99/month discount offer</strong> as re-entry hurdle reducer<br><small>Tiered ₹399/₹699 for high-cycle users (proven payers)</small></td>
+</tr>
+<tr>
+<td><strong>Forgot / moved on</strong></td>
+<td>Life got busy; no nudge brought them back</td>
+<td>Stage didn't reach them post-cancellation; no app nudge / message</td>
+<td><strong>CLM stack</strong>: Push → WhatsApp → AI Call sequence<br><small>Plus retargeting ads recall last-watched show</small></td>
+</tr>
+</tbody>
+</table>
+
+<div class="hl" style="margin-top:24px">
+<strong style="color:#fff">Insight:</strong> <span style="color:#a8a8b8">Re-acq users have <strong style="color:#fff">product memory + proven willingness to pay</strong> — unlike re-activation users who never committed. Right hook brings them back faster than acquiring fresh users (CAC ₹700 re-acq vs ₹2,200+ acquisition).</span>
+</div>
+</div>
+
+<!-- ==================== SLIDE 3: TASKS ==================== -->
+<div class="slide slide-tall">
+<span class="sn">03</span>
+<h2>Tasks — Month Execution</h2>
+<p class="sub" style="margin-bottom:18px">Marketing (Bring) + Product (Convert) — by tier priority</p>
+
+<div class="section-divider">Marketing — Bring Users</div>
+<table>
+<thead>
+<tr>
+<th style="width:30%">Task</th>
+<th style="width:15%">Tier</th>
+<th style="width:13%">Channel</th>
+<th style="width:12%">Week</th>
+<th style="width:30%">Success metric</th>
+</tr>
+</thead>
+<tbody>
+<tr><td><strong>Performance ads scaling</strong> — +25% budget, new creative</td><td>T1–T4</td><td>Meta + Google</td><td>W1–4</td><td>CAC ≤ ₹600 · 8K returners</td></tr>
+<tr><td><strong>Retargeting</strong> — last-watched show recall</td><td>T1+T2</td><td>Meta</td><td>W1–4</td><td>CTR ≥ 2.5% · CAC ≤ ₹500</td></tr>
+<tr><td><strong>Push Notification</strong> — daily, content-hook</td><td>T1+T2+T3</td><td>CleverTap</td><td>W1–4</td><td>15% open · 5% click</td></tr>
+<tr><td><strong>WhatsApp blast</strong> — dialect-creative, weekend</td><td>T1+T2+T3</td><td>WA Business</td><td>W1–4</td><td>12% click-through</td></tr>
+<tr><td><strong>RCS rollout</strong> — for users who clicked but didn't convert</td><td>T1+T2</td><td>RCS</td><td>W2–4</td><td>+8% lift over WA-only</td></tr>
+<tr><td><strong>AI Calls</strong> — P1 cohort (24K) + new wave</td><td>T1</td><td>Vani vendor</td><td>W1–4</td><td>8–12% CVR · CAC ≤ ₹200</td></tr>
+</tbody>
+</table>
+
+<div class="section-divider section-divider-red" style="margin-top:18px">Product — Convert Users</div>
+<table>
+<thead>
+<tr>
+<th style="width:30%">Task</th>
+<th style="width:15%">Tier</th>
+<th style="width:13%">Surface</th>
+<th style="width:12%">Week</th>
+<th style="width:30%">Success metric</th>
+</tr>
+</thead>
+<tbody>
+<tr><td><strong>TVOD ₹20 post-rejection</strong> — fallback when ₹99 rejected</td><td>All</td><td>In-app</td><td>W1–4</td><td>5% rejectors take TVOD</td></tr>
+<tr><td><strong>Free Zone</strong> — content seeding for non-converters</td><td>All</td><td>In-app</td><td>W3–4</td><td>30% reach climax · 8% convert</td></tr>
+<tr><td><strong>Comparison paywall A/B</strong> — ₹20 vs ₹199 side-by-side</td><td>All</td><td>Statsig</td><td>W1–4</td><td>+10% combined CVR</td></tr>
+<tr><td><strong>Tiered emphasis</strong> — push ₹399/₹699 for 4+c users</td><td>T1+T2</td><td>In-app</td><td>W1–4</td><td>5% mix on tiered (vs &lt;1% now)</td></tr>
+<tr><td><strong>Multi-pitch on revoke</strong> — TVOD/Tiered/Standard sub</td><td>All</td><td>In-app</td><td>W1–4</td><td>12% click any · 4% convert</td></tr>
+</tbody>
+</table>
+</div>
+
+<!-- ==================== SLIDE 4: TVOD STRATEGY ==================== -->
+<div class="slide slide-tall">
+<span class="sn">04</span>
+<div class="tag">CONVERT</div>
+<h2>TVOD Strategy</h2>
+<p class="sub">₹20 Movie Pass · No mandate · 36hr access · Single title unlock</p>
+
+<h3>Approach</h3>
+<div class="hl">
+<p style="font-size:16px">When a re-acq user lands on the paywall and rejects ₹99, instead of losing them, pitch <strong style="color:#fff">"Don't want subscription? Buy just this movie for ₹20."</strong> Lower-friction transactional offer captures intent we'd otherwise lose. <strong style="color:#fff">Bonus:</strong> TVOD purchasers become a paid-customer remarketing list — strong upsell candidates for ₹99 / tiered subscription later.</p>
+</div>
+
+<h3 style="margin-top:24px">Current Purchase Funnel (Apr Amplitude)</h3>
+<div class="funnel">
+<div class="fs"><div class="fv">100K</div><div class="fl">TVOD page view</div></div>
+<div class="fs"><div class="fv">8.4K</div><div class="fl">Coin store visit</div><div class="fp">8.4%</div></div>
+<div class="fs"><div class="fv">1.9K</div><div class="fl">Coin purchased</div><div class="fp">23%</div></div>
+<div class="fs fw"><div class="fv">~5%</div><div class="fl">TVOD → Sub</div><div class="fd">conversion lever</div></div>
+</div>
+
+<h3 style="margin-top:18px">Possible Solutions (May)</h3>
+<div class="three-col">
+<div class="card">
+<h3 style="font-size:16px">1. Free scenes first</h3>
+<p style="color:#a8a8b8">2-min teaser auto-plays at hook moment → freeze video → dual-CTA (₹20 TVOD or ₹199 sub)</p>
+</div>
+<div class="card">
+<h3 style="font-size:16px">2. Comparison framing</h3>
+<p style="color:#a8a8b8">Side-by-side: <strong>₹20 just this movie</strong> vs <strong>₹199 unlimited</strong>. Don't force commitment.</p>
+</div>
+<div class="card">
+<h3 style="font-size:16px">3. Post-rejection fallback</h3>
+<p style="color:#a8a8b8">User rejects ₹99 → automatic TVOD offer overlay before they exit</p>
+</div>
+</div>
+</div>
+
+<!-- ==================== SLIDE 5: FREE ZONE STRATEGY ==================== -->
+<div class="slide slide-tall">
+<span class="sn">05</span>
+<div class="tag">CONVERT</div>
+<h2>Free Zone Strategy</h2>
+<p class="sub">Curated free content as a fallback for ₹99 rejectors → seeds future Special Access conversions</p>
+
+<h3>How it works</h3>
+<div class="flow-container">
+<div class="flow-step">
+<h4>1. User rejects ₹99</h4>
+<p>Doesn't take subscription, about to exit</p>
+</div>
+<div class="flow-arrow">→</div>
+<div class="flow-step">
+<h4>2. Land in Free Zone</h4>
+<p>Curated lighter content based on their genre history</p>
+</div>
+<div class="flow-arrow">→</div>
+<div class="flow-step">
+<h4>3. Watch X mins free</h4>
+<p>Hook lands at climax / cliffhanger</p>
+</div>
+<div class="flow-arrow">→</div>
+<div class="flow-step">
+<h4>4. Pitch overlay at climax</h4>
+<p>Dual-CTA: TVOD ₹20 or ₹99 sub</p>
+</div>
+<div class="flow-arrow">→</div>
+<div class="flow-step">
+<h4>5. Special Access later</h4>
+<p>Same content moves to paid tier as exclusive drop</p>
+</div>
+</div>
+
+<h3 style="margin-top:24px">Content Packages</h3>
+<table>
+<thead>
+<tr><th>Package</th><th>Cohort</th><th>Content type</th><th>Duration</th></tr>
+</thead>
+<tbody>
+<tr><td><strong>Hot users (0–90d)</strong></td><td>T1+T2</td><td>Same shows + new episode of last-watched</td><td>15–20 min free</td></tr>
+<tr><td><strong>Cold users (90+d)</strong></td><td>T3+T4</td><td>Trending in their preferred genre (refreshed weekly)</td><td>15–20 min free</td></tr>
+<tr><td><strong>High-cycle (4+c)</strong></td><td>T1</td><td>Premium tier exclusive content (not in regular sub)</td><td>5–10 min teaser</td></tr>
+</tbody>
+</table>
+
+<h3 style="margin-top:18px">How Free Zone fits</h3>
+<div class="hl">
+<p>Free Zone is <strong style="color:#fff">acquisition funnel + content seeding for future paid moments.</strong> Users who don't convert at the moment still stay engaged. The same content moves to <strong style="color:#fff">Special Access</strong> (paid tier) later, creating a re-targeting loop. Based on Special Access model, expect <strong style="color:#fff">~12% conversion uplift</strong> vs cold paywall.</p>
+</div>
+</div>
+
+<!-- ==================== SLIDE 6a: COHORT MATRIX ==================== -->
+<div class="slide slide-tall">
+<span class="sn">06</span>
+<div class="tag tag-blue">SEGMENT</div>
+<h2>Cohort Matrix — Recency × Cycles</h2>
+<p class="sub">4 priority tiers · Right pitch + content angle for each</p>
+
+<table>
+<thead>
+<tr>
+<th style="width:18%">Recency \ Cycles</th>
+<th style="width:20%">1 cycle</th>
+<th style="width:20%">2–3 cycles</th>
+<th style="width:20%">4+ cycles</th>
+<th style="width:22%">Content angle</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Hot (0–90d)</strong></td>
+<td><span class="priority p2">T2</span> ~30K</td>
+<td><span class="priority p2">T2</span> ~50K</td>
+<td><span class="priority p1">T1 · 24K (P1)</span></td>
+<td>Last-watched show / new episode</td>
+</tr>
+<tr>
+<td><strong>Cold (90+d)</strong></td>
+<td><span class="priority p3">T4</span> ~2.05M</td>
+<td><span class="priority p3">T3</span> ~1.6M</td>
+<td><span class="priority p2">T2</span> ~80K</td>
+<td>Trending in their preferred genre</td>
+</tr>
+</tbody>
+</table>
+
+<div class="three-col" style="margin-top:18px">
+<div class="card" style="border-left:4px solid #f43f5e">
+<h3 style="font-size:16px;color:#f43f5e">T1 · Hot Premium</h3>
+<p style="color:#a8a8b8"><strong>0–30d × 4+ cycles</strong> · ~24K (P1 cohort)<br>Freshest churn, proven multi-cycle payers · highest conversion potential · AI calls primary</p>
+</div>
+<div class="card" style="border-left:4px solid #f59e0b">
+<h3 style="font-size:16px;color:#f59e0b">T2 · Hot Casual</h3>
+<p style="color:#a8a8b8"><strong>0–30d × 1–3c &amp; 31–60d × 4+c</strong> · ~80K<br>Recent churn, mid-intent · WA blast + retargeting ads</p>
+</div>
+<div class="card" style="border-left:4px solid #06b6d4">
+<h3 style="font-size:16px;color:#06b6d4">T3 / T4 · Warm + Long Tail</h3>
+<p style="color:#a8a8b8"><strong>31–90d (T3) · 90+d (T4)</strong> · ~3.7M<br>Memory recoverable / volume play · broad ads + occasional WA</p>
+</div>
+</div>
+
+<div class="hl" style="margin-top:18px">
+<strong style="color:#fff">Why this matrix:</strong> <span style="color:#a8a8b8"><strong style="color:#fff">Recency</strong> tells us memory state (Hot = remembers, Cold = needs new hook). <strong style="color:#fff">Cycles</strong> tells us propensity (4+ = 3.1× conversion vs 1c). Combined, the matrix points each user to the right channel and content — and lets us prioritise spend on highest-yield tiers.</span>
+</div>
+</div>
+
+<!-- ==================== SLIDE 6b: CLM SEQUENTIAL ==================== -->
+<div class="slide slide-tall">
+<span class="sn">07</span>
+<div class="tag tag-blue">CLM</div>
+<h2>CLM — Sequential Escalation</h2>
+<p class="sub">Start cheap, escalate to richer channels based on intent signals</p>
+
+<h3>Users WITH app installed</h3>
+<div class="flow-container">
+<div class="flow-step">
+<h4>Day 0 · Push</h4>
+<p>Cohort-targeted creative · last-watched hook</p>
+</div>
+<div class="flow-arrow">→</div>
+<div class="flow-step">
+<h4>Filter · clicked PN</h4>
+<p>Didn't convert</p>
+</div>
+<div class="flow-arrow">→</div>
+<div class="flow-step">
+<h4>Day 2 · WhatsApp</h4>
+<p>Dialect creative + image</p>
+</div>
+<div class="flow-arrow">→</div>
+<div class="flow-step">
+<h4>Filter · clicked WA</h4>
+<p>Still no convert</p>
+</div>
+<div class="flow-arrow">→</div>
+<div class="flow-step">
+<h4>Day 5 · AI Call</h4>
+<p>Voice pitch + WA link · T1 only</p>
+</div>
+</div>
+
+<h3 style="margin-top:24px">Users WITHOUT app installed</h3>
+<div class="flow-container">
+<div class="flow-step">
+<h4>Day 0 · WhatsApp</h4>
+<p>Image + install link + content hook</p>
+</div>
+<div class="flow-arrow">→</div>
+<div class="flow-step">
+<h4>Filter · clicked WA</h4>
+<p>Didn't install</p>
+</div>
+<div class="flow-arrow">→</div>
+<div class="flow-step">
+<h4>Day 3 · AI Call</h4>
+<p>Voice pitch addressing re-install hesitation</p>
+</div>
+<div class="flow-arrow">→</div>
+<div class="flow-step">
+<h4>Day 5 · Push</h4>
+<p>After re-install — welcome back</p>
+</div>
+</div>
+
+<h3 style="margin-top:24px">Channel × Tier Matrix</h3>
+<table>
+<thead>
+<tr><th>Channel</th><th>T1 Hot Premium</th><th>T2 Hot Casual</th><th>T3 Warm</th><th>T4 Long Tail</th></tr>
+</thead>
+<tbody>
+<tr><td><strong>Performance ads</strong></td><td>✓</td><td>✓</td><td>✓</td><td><span style="color:#f43f5e">✓ Primary</span></td></tr>
+<tr><td><strong>Retargeting ads</strong></td><td><span style="color:#f43f5e">✓ Primary</span></td><td>✓</td><td>✓</td><td>—</td></tr>
+<tr><td><strong>Push Notification</strong></td><td>✓</td><td>✓</td><td>✓</td><td>—</td></tr>
+<tr><td><strong>WhatsApp</strong></td><td><span style="color:#f43f5e">✓ Primary</span></td><td>✓</td><td>✓</td><td>—</td></tr>
+<tr><td><strong>RCS / Deep WA</strong></td><td>✓</td><td>✓</td><td>—</td><td>—</td></tr>
+<tr><td><strong>AI Calls</strong></td><td><span style="color:#f43f5e">✓ Primary</span></td><td>—</td><td>—</td><td>—</td></tr>
+</tbody>
+</table>
+</div>
+
+<!-- ==================== SLIDE 7: TARGET ==================== -->
+<div class="slide slide-tall">
+<span class="sn">08</span>
+<div class="tag">TARGET</div>
+<h2>May Goal — How we reach 0.42%</h2>
+<p class="sub">Single cohort: 4.26M lapsed paid users · Single metric: re-acquisition %</p>
+
+<div class="kpi-row">
+<div class="kpi-cell">
+<div class="lbl">Churned base</div>
+<div class="from-to">4.26M</div>
+<div class="delta">hold</div>
+</div>
+<div class="kpi-cell">
+<div class="lbl">Re-acq rate</div>
+<div class="from-to"><span class="from">0.35%</span><span class="arrow">→</span>0.42%</div>
+<div class="delta">+20%</div>
+</div>
+<div class="kpi-cell">
+<div class="lbl">Returners / month</div>
+<div class="from-to"><span class="from">~13K</span><span class="arrow">→</span>~17.9K</div>
+<div class="delta">+38%</div>
+</div>
+<div class="kpi-cell">
+<div class="lbl">CAC (ads)</div>
+<div class="from-to"><span class="from">₹700</span><span class="arrow">→</span>₹600</div>
+<div class="delta">-14%</div>
+</div>
+</div>
+
+<h3 style="margin-top:18px">Lever contribution to bridge 0.35% → 0.42%</h3>
+<table>
+<thead>
+<tr>
+<th style="width:35%">Lever</th>
+<th style="width:18%">Tier impact</th>
+<th style="width:17%">Expected uplift</th>
+<th style="width:30%">Why we're confident</th>
+</tr>
+</thead>
+<tbody>
+<tr><td><strong>Ads scaling + new creative</strong></td><td>T1–T4</td><td>+0.025 pp</td><td>CAC already at ₹700 (down from ₹1,100)</td></tr>
+<tr><td><strong>AI Calls — P1 cohort + scale</strong></td><td>T1</td><td>+0.015 pp</td><td>Earlier cohort 8% CVR · CAC ~₹200</td></tr>
+<tr><td><strong>TVOD post-rejection fallback</strong></td><td>All</td><td>+0.010 pp</td><td>5% of rejectors take TVOD = additional captures</td></tr>
+<tr><td><strong>Free Zone seeding</strong></td><td>All</td><td>+0.008 pp</td><td>Special Access model showed 12% lift</td></tr>
+<tr><td><strong>Comparison paywall A/B</strong></td><td>All</td><td>+0.012 pp</td><td>Dual-CTA captures ₹99-rejectors</td></tr>
+</tbody>
+</table>
+
+<h3 style="margin-top:18px">Total Expected Uplift: ~0.07pp (0.35% → 0.42%)</h3>
+
+<div class="hl" style="margin-top:18px">
+<strong style="color:#fff">Why re-acq % is the right metric:</strong> <span style="color:#a8a8b8">Single denominator (4.26M churned base), single numerator (monthly returners). Easy to track month-over-month. Levers compound — any one moves the rate. Volume baseline (returners/month) flows naturally from rate × cohort.</span>
+</div>
+
+<div class="hl" style="margin-top:14px;border-color:rgba(245,158,11,0.3);border-left:4px solid #f59e0b">
+<strong style="color:#fff">Caveat on April:</strong> <span style="color:#a8a8b8">April rate at 0.11% is partial-month + paywall view drop. Mar 0.35% is the right baseline. May 0.42% target assumes recovery + lever stacking.</span>
+</div>
+</div>
+
+</body>
+</html>
